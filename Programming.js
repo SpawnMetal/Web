@@ -965,12 +965,12 @@
 	
 	Function Declaration (Объявление Функции, можно вызвать до объявления):
 	function sayHi() {
-	  alert( "Привет" );
+	  alert("Привет");
 	}
 	
 	Function Expression (Функциональное Выражение, нельзя вызвать до объявления):
 	let sayHi = function() {
-	  alert( "Привет" );
+	  alert("Привет");
 	};
 	
 	{//#Зона выражения
@@ -1303,7 +1303,7 @@
 	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise
 	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 	https://learn.javascript.ru/promise
-	Пример es/es-6-8/11_promises es/es-2020/2_promises
+	Пример es/es-6-8/11_promises.js es/es-2020/2_promises.js
 	Promise (промис) - это объект, представляющий результат успешного или неудачного завершения асинхронной операции. Так как большинство людей пользуются уже созданными промисами, это руководство начнём с объяснения использования вернувшихся промисов до объяснения принципов создания. 
 	В сущности, промис - это возвращаемый объект, в который вы записываете два колбэка вместо того, чтобы передать их функции.
 	Объект Promise (промис) используется для отложенных и асинхронных вычислений.
@@ -1464,28 +1464,31 @@
 	Google Cloud (Google Cloud Platform)
 }
 
-{//#Примеры кода, фишки, методы
+{//#Примеры кода, фишки, методы #.js
 	{https://youtu.be/Ti2Q4sQkNdU
-		#Константы #let #const es/es-6-8/1_let_const
-		#Стрелочные #лямбда функции es/es-6-8/2_arrow_functions
-		Параметры по умолчанию es/es-6-8/3_default_params
-		#Строки #string es/es-6-8/4_strings
-		Рест и спреад es/es-6-8/5_rest_spread
-		Объекты es/es-6-8/6_objects
-		Модули es/es-6-8/7_modules/module
-		#Классы #Classes es/es-6-8/8_classes examples/classes.js
-		#Символы #Symbol es/es-6-8/9_symbols
-		Генераторы es/es-6-8/10_generators
-		Промисы es/es-6-8/11_promises es/es-2020/2_promises
-		Мап и сет es/es-6-8/12_map_set
-		Рефлект es/es-6-8/13_reflect
-		Прокси es/es-6-8/14_proxy
+		#Константы #let #const es/es-6-8/1_let_const.js
+		#Стрелочные #лямбда функции es/es-6-8/2_arrow_functions.js
+		Параметры по умолчанию es/es-6-8/3_default_params.js
+		#Строки #string es/es-6-8/4_strings.js
+		Рест и спреад es/es-6-8/5_rest_spread.js
+		Объекты es/es-6-8/6_objects.js
+		Модули es/es-6-8/7_modules/module.js
+		#Классы #Classes es/es-6-8/8_classes.js examples/classes.js
+		#Символы #Symbol es/es-6-8/9_symbols.js
+		Генераторы es/es-6-8/10_generators.js
+		Промисы es/es-6-8/11_promises es/es-2020/2_promises.js
+		Мап и сет es/es-6-8/12_map_set.js
+		Рефлект es/es-6-8/13_reflect.js
+		Прокси es/es-6-8/14_proxy.js
 	}
-	
-	Импорты es/es-2020/1_imports
-	?? за место || es/es-2020/3_nullable
-	bill?.bank?.amount?.value проверяет на undefined es/es-2020/4_optional
-	MVC examples/mvc.js
+
+	#Замыкания #Closures examples/closure.js
+	#Контекст #Context examples/context.js
+	#Примеры examples/example.js
+	#MVC examples/mvc.js
+	#Импорты #Imports es/es-2020/1_imports.js
+	#?? #Nullable es/es-2020/3_nullable.js
+	#?. #Optional es/es-2020/4_optional.js
 	
 	async - вернёт Promise, хорошая практика обработки в теле async функции с помощью try catch
 	await - заставляет ждать Promise, выполнение функции, а затем продолжает код
@@ -1494,7 +1497,7 @@
 	export default - запускает функцию по умолчанию при импорте модуля. Например импорт класса из модуля: const Person = module.default
 	globalThis - это стандартизированный window / global и т. д. для всех платформ
 	?? - это || за исключением того, что нормальные типизированные значения считает приемлемыми, например false || 'default false' = false
-	? - проверка на существование, например свойства объекта или DOM элемента. key1?.key2?.key3 либо document.querySelector('div')?, массив: key1?.key2?.[id], функция: key1?.key2?.func.?()
+	?. - проверка на существование, например свойства объекта или DOM элемента. key1?.key2?.key3 либо document.querySelector('div')?, массив: key1?.key2?.[id], функция: key1?.key2?.func.?()
 	|> - pipeline operator, передаёт в следующую функцию результат выполнения предыдущей: func1(func2(func3('qwe'))) = 'qwe' |> func3 |> func2 |> func1;
 	function* FunctionName() - функция-генератор, yield - пошаговый return на котором функция приостанавливает выполнение и возвращает это значение, если функция будет вызвана заново, то она продолжит выполнение после yield
 	В js 7 типов данных: null, undefined, boolean, number, string, objext, symbol, среди них все примитивные, кроме object
@@ -1748,4 +1751,26 @@
 	Map – это коллекция ключ/значение, как и Object. Но основное отличие в том, что Map позволяет использовать ключи любого типа.
 	Map - реализация простого ассоциативного массива (словаря). Он содержит данные в виде набора пар ключ/значение(ключи уникальны) и предоставляет методы для доступа и манипулирования этими данными.  
 	Объект Set – это особый вид коллекции: «множество» значений (без ключей), где каждое значение может появляться только один раз.
+}
+
+{//#Reflect #Рефлект
+	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Reflect
+	Reflect - это встроенный объект, который предоставляет методы для перехватывания JavaScript операций. Эти методы аналогичны методам proxy handler ов. Reflect - это не функциональный, а простой объект, он не является сконструированным.
+	В отличие от большинства глобальных объектов, Reflect - это не конструктор. Вы не можете использовать его с оператором new или вызывать Reflect, как функцию. Все свойства и методы объекта Reflect являются статическими (так же, как и у объекта Math).
+}
+
+{//#Proxy #Прокси
+	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+	Объект Proxy позволяет создать прокси для другого объекта, может перехватывать и переопределить основные операции для данного объекта.
+}
+
+{//#Nullable #??
+	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator
+	Оператор нулевого слияния (??) это логический оператор, который возвращает значение правого операнда когда значение левого операнда равно null или undefined, в противном случае будет возвращено значение левого операнда.
+}
+
+{//#Optional #?.
+	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Optional_chaining
+	Оператор опциональной последовательности ?. позволяет получить значение свойства, находящегося на любом уровне вложенности в цепочке связанных между собой объектов, без необходимости проверять каждое из промежуточных свойств в ней на существование. ?. работает подобно оператору ., за исключением того, что не выбрасывает исключение, если объект, к свойству или методу которого идёт обращение, равен null или undefined. В этих случаях он возвращает undefined.
+	Таким образом, мы получаем более короткий и понятный код при обращении к вложенным по цепочке свойствам объекта, когда есть вероятность, что какое-то из них отсутствует.
 }
