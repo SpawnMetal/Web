@@ -495,12 +495,15 @@
 
 		{//#useState
 			Пример в localhost\react2
-			Задаём в хуке useState начальное состояние значений.
+			const [state, setState] = useState(initialState)
+			Возвращает текущее значение в первом параметре диструктуризации и задаёт с помощью хука (второй параметр) начальное состояние значений либо получает предыдущее, если в параметр передана функция.
 			Функция возвращает всегда два значения в массиве, первое - это дефолтное состояние, заданное сейчас, а второй элемент - коллбэк, с помощью него можно менять значения
 		}
 
 		{//#useEffect
-			Передаётся два параметра, в первом коллбэк, во втором массив со списком зависимостей, чтобы отрабатывать данному коллбэку переданному в первый параметр
+			useEffect(() => {}, props.source)
+			Запускается после рендера, при асинхронном получении данных не отображает для SEO
+			Передаётся два параметра, в первом коллбэк, во втором массив со списком зависимостей, чтобы отрабатывал коллбэк, переданный в первый параметр
 			Чтобы функция отработала один раз, передаётся пустой массив
 		}
 		
@@ -512,13 +515,23 @@
 	}
 
 	{//#Next.js
-		Пример в localhost/nextjs
+		Пример в localhost/create-next-app localhost/nextjs
 		
 		Next.js — бесплатный и открытый JavaScript фреймворк, созданный поверх React.js для создания SSR-приложений.
 		Помогает создавать пользовательский интерфейс приложений (чаще всего, с помощью React, не придерживаясь его принципа — SPA (Single Page Application)).
 		SSR — принцип, используемый Next.js. Переводится с английского языка как «Отрисовка на стороне сервера». SSR помогает снизить нагрузку на устройство, ведь большинство операций производимых в приложении, происходит на сервере, а не на устройстве пользователя.
 		SSR также помогает улучшить SEO, так как в обычном подходе, который использует React (подход SPA), все отрисовывается на стороне клиента (браузера), поэтому код страниц подгружается когда пользователь заходит на страницу, но робот поисковых систем может только просмотреть изначальный код страницы, ещё не обработанный React.
 		SSR помогает избежать эту проблему изначальной загрузкой контента на всех страницах сайта.
+
+		Установка: npx create-next-app
+		<Link href=""><a>Текст</a></Link> реализует динамическую загрузку контента без перезагрузки страницы
+		Папка pages - зарезервирована для создания страниц, адрес в строке сайта = названию файла
+		filder/index.js - переход к странице в адресе folder, исполняющим файлом будет index.js
+		<style jsx global></style> для установки глобальных стилей, а не только для компонента. localhost/create-next-app/components/MainLayout.js
+		Пользовательский "Документ" pages/__document.js для переосмысления и возможности переписать html документ https://nextjs.org/docs/advanced-features/custom-document
+		pages/__app.js используется при инициализации страниц https://nextjs.org/docs/migrating/from-create-react-app
+		У error.module.scss после обработки next локализует стили за счёт .module в названии файла
+		next-env.d.ts - namespace описаны некоторые параметры для работы с next. <reference types="next/types/global" /> означает, что ненужно импортировать React в те файлы, где используется jsx
 	}
 
 	{//#SSR
@@ -550,8 +563,54 @@
 			npm show react version - установленная версия пакета
 			npm view git version - доступная версия пакета на сервере
 			npm view git - информация о пакете
-			--save-dev - пакет установленный с помощью данного параметра, будет доступен только для разработки
+			--save-dev либо -D - пакет установленный с помощью данного параметра, будет доступен только для разработки, добавлен в devDependencies
 			npm uninstall git -g
+
+			npm i nodemon - динамическое обновление сайта при внесении изменения в код, используется для разработки и запускается с помощью команды nodemon script.js
+			npm i concurrently - для одновременного запуска скриптов, например backend и frontend
+			npm i config - пакет для работы с конфигурационным файлом. Создаётся папка config в которой default.json и production.json https://www.npmjs.com/package/config
+			
+			Библиотека для шифрования / хеширования
+			https://www.npmjs.com/package/bcryptjs
+			npm i bcryptjs
+			
+			npm i express-validator - для проверки полей на валидацию
+			
+			jsonwebtoken библиотека для генерации веб-токенов JSON
+			https://www.npmjs.com/package/jsonwebtoken
+			npm i jsonwebtoken
+			
+			https://materializecss.com/
+			npm install materialize-css@next - Materialize, Material Design
+			
+			npm i react-router-dom - для роутинга в react
+			
+			https://www.npmjs.com/package/shortid
+			Сокращение ссылок
+			npm i shortid
+			
+			https://www.npmjs.com/package/cross-env
+			Добавление кросс-операционных переменных для запуска скрипта, настройки прописываются у команд в package.json - scripts
+			npm install --save-dev cross-env
+
+			Поддельный REST API
+			https://www.npmjs.com/package/json-server
+			npm install -g json-server
+			Запуск сервера с db: json-server --watch db.json --port 4200 --delay 450 (сокращённо: json-server -w db.json -p 4200 -d 450)
+
+			Клиентский fetch
+			isomorphic-unfetch
+
+			https://www.npmjs.com/package/nextjs-progressbar
+			npm i nextjs-progressbar
+
+			typescript typescriptreact
+			npm install --save-dev typescript @types/react
+
+			Dotenv - это модуль с нулевой зависимостью, который загружает переменные среды из .env файла process.env. Хранение конфигурации в среде отдельно от кода основано на методологии Двенадцатифакторного приложения.
+			https://www.npmjs.com/package/dotenv
+			npm install dotenv
+
 			
 			{Ошибка при установке пакета
 				N:\web\htdocs_php5\php_site\files\11736>npm i --save-dev @babel/core @babel/cli
@@ -597,33 +656,6 @@
 		
 		Асинхронные методы пишутся без приписки Sync
 		В callback первый параметр всегда является содержанием информации об ошибке
-		
-		npm i nodemon - динамическое обновление сайта при внесении изменения в код, используется для разработки и запускается с помощью команды nodemon script.js
-		npm i concurrently - для одновременного запуска backend и frontend
-		npm i config - пакет для работы с конфигурационным файлом. Создаётся папка config в которой default.json и production.json https://www.npmjs.com/package/config
-		
-		Библиотека для шифрования / хеширования
-		https://www.npmjs.com/package/bcryptjs
-		npm i bcryptjs
-		
-		npm i express-validator - для проверки полей на валидацию
-		
-		jsonwebtoken библиотека для генерации веб-токенов JSON
-		https://www.npmjs.com/package/jsonwebtoken
-		npm i jsonwebtoken
-		
-		https://materializecss.com/
-		npm install materialize-css@next - Materialize, Material Design
-		
-		npm i react-router-dom - для роутинга в react
-		
-		https://www.npmjs.com/package/shortid
-		Сокращение ссылок
-		npm i shortid
-		
-		https://www.npmjs.com/package/cross-env
-		Добавление кросс-операционных переменных для запуска скрипта, настройки прописываются у команд в package.json - scripts
-		npm install --save-dev cross-env
 	}
 	
 	Предшествующее сообщение в консоли сервера: [nodemon] app crashed - waiting for file changes before starting...
@@ -953,7 +985,7 @@
 
 {//#Декларативное #Императивное программирование
 	https://habr.com/ru/post/324688/
-	Декларативное программирование - это когда в коде описано что должно получиться, а императивное - когда написано как это сделать. 
+	Декларативное программирование - это когда в коде описано что должно получиться, а императивное - когда написано как это сделать.
 	
 	Декларати́вное программи́рование — это парадигма программирования, в которой задаётся спецификация решения задачи, то есть описывается, что представляет собой проблема и ожидаемый результат.
 	Противоположностью декларативного является императивное программирование, описывающее на том или ином уровне детализации, как решить задачу и представить результат. В общем и целом, декларативное программирование идёт от человека к машине, тогда как императивное — от машины к человеку.
@@ -1405,6 +1437,9 @@
 				"[javascript]": {
 					"editor.defaultFormatter": "esbenp.prettier-vscode"
 				},
+				"[typescriptreact]": {
+						"editor.defaultFormatter": "esbenp.prettier-vscode"
+				},
 				"editor.formatOnSave": true,
 				"prettier.semi": false,
 				"prettier.singleQuote": true,
@@ -1602,6 +1637,12 @@
 	alert(title);  // Меню
 	alert(width);  // 100
 	alert(height); // 200
+
+	let {title: t, width: w, height: h} = options;
+	
+	alert(t);  // Меню
+	alert(w);  // 100
+	alert(h); // 200
 }
 
 {//#Тернарный оператор
@@ -1773,4 +1814,12 @@
 	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Optional_chaining
 	Оператор опциональной последовательности ?. позволяет получить значение свойства, находящегося на любом уровне вложенности в цепочке связанных между собой объектов, без необходимости проверять каждое из промежуточных свойств в ней на существование. ?. работает подобно оператору ., за исключением того, что не выбрасывает исключение, если объект, к свойству или методу которого идёт обращение, равен null или undefined. В этих случаях он возвращает undefined.
 	Таким образом, мы получаем более короткий и понятный код при обращении к вложенным по цепочке свойствам объекта, когда есть вероятность, что какое-то из них отсутствует.
+}
+
+{//#Layout
+	Неизменная часть сайта, некий шаблон
+}
+
+{//#Fonts #Шрифты
+	#Google https://fonts.google.com
 }
