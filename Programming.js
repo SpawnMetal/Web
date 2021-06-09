@@ -61,6 +61,7 @@
 	}
 	
 	{//#Файлы, основные && связки:
+		git add . && git commit -m "Updated date" && git push
 		git init && git remote add origin link && git add . && git commit -m "First commit" && git push -u origin master
 		commit 				git commit -m ""
 		pull 				git pull origin develop --no-ff
