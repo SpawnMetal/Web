@@ -515,7 +515,8 @@
 	}
 
 	{//#Next.js
-		Пример в localhost/create-next-app localhost/nextjs
+		Пример 1: localhost/create-next-app https://youtu.be/_EOrSmjdOZQ
+		Пример 2: localhost/nextjs
 		
 		Next.js — бесплатный и открытый JavaScript фреймворк, созданный поверх React.js для создания SSR-приложений.
 		Помогает создавать пользовательский интерфейс приложений (чаще всего, с помощью React, не придерживаясь его принципа — SPA (Single Page Application)).
@@ -532,6 +533,7 @@
 		pages/__app.js используется при инициализации страниц https://nextjs.org/docs/migrating/from-create-react-app
 		У error.module.scss после обработки next локализует стили за счёт .module в названии файла
 		next-env.d.ts - namespace описаны некоторые параметры для работы с next. <reference types="next/types/global" /> означает, что ненужно импортировать React в те файлы, где используется jsx
+		getServerSideProps серверная функция. export default отрабатывает на сервере при открытии страницы в адресной строке для предварительной отрисовки - getServerSideProps + export default на клиенте и сервере. Переход на страницу из другой - getServerSideProps + export default только на клиенте
 	}
 
 	{//#SSR
@@ -564,6 +566,7 @@
 			npm view git version - доступная версия пакета на сервере
 			npm view git - информация о пакете
 			--save-dev либо -D - пакет установленный с помощью данного параметра, будет доступен только для разработки, добавлен в devDependencies
+			--save - dependencies
 			npm uninstall git -g
 
 			npm i nodemon - динамическое обновление сайта при внесении изменения в код, используется для разработки и запускается с помощью команды nodemon script.js
@@ -574,23 +577,28 @@
 			https://www.npmjs.com/package/bcryptjs
 			npm i bcryptjs
 			
-			npm i express-validator - для проверки полей на валидацию
+			An express.js middleware for validator. Для проверки полей на валидацию
+			https://www.npmjs.com/package/express-validator
+			npm install express-validator
 			
-			jsonwebtoken библиотека для генерации веб-токенов JSON
+			#Токен jsonwebtoken библиотека для генерации веб-токенов JSON
 			https://www.npmjs.com/package/jsonwebtoken
 			npm i jsonwebtoken
 			
+			Materialize, Material Design
 			https://materializecss.com/
-			npm install materialize-css@next - Materialize, Material Design
+			npm install materialize-css@next
 			
-			npm i react-router-dom - для роутинга в react
+			DOM bindings for React Router.
+			https://www.npmjs.com/package/react-router-dom
+			npm install --save react-router-dom
 			
-			https://www.npmjs.com/package/shortid
 			Сокращение ссылок
+			https://www.npmjs.com/package/shortid
 			npm i shortid
 			
-			https://www.npmjs.com/package/cross-env
 			Добавление кросс-операционных переменных для запуска скрипта, настройки прописываются у команд в package.json - scripts
+			https://www.npmjs.com/package/cross-env
 			npm install --save-dev cross-env
 
 			Поддельный REST API
@@ -599,30 +607,73 @@
 			Запуск сервера с db: json-server --watch db.json --port 4200 --delay 450 (сокращённо: json-server -w db.json -p 4200 -d 450)
 
 			Клиентский fetch
+			https://www.npmjs.com/package/isomorphic-fetch
 			isomorphic-unfetch
 
+			Индикатор загрузки
 			https://www.npmjs.com/package/nextjs-progressbar
 			npm i nextjs-progressbar
 
 			typescript typescriptreact
+			https://www.npmjs.com/package/typescript
+			https://www.npmjs.com/package/@types/react
 			npm install --save-dev typescript @types/react
 
 			Dotenv - это модуль с нулевой зависимостью, который загружает переменные среды из .env файла process.env. Хранение конфигурации в среде отдельно от кода основано на методологии Двенадцатифакторного приложения.
 			https://www.npmjs.com/package/dotenv
 			npm install dotenv
 
+			#MaterialUI
+			https://www.npmjs.com/package/@material-ui/core
+			npm i @material-ui/core
+
+			#Redux
+			https://www.npmjs.com/package/redux
+			npm i redux
+
+			Официальные привязки React для #Redux 
+			https://www.npmjs.com/package/react-redux
+			npm install react-redux
+
+			#Redux #middleware для работы с асинхроном
+			https://www.npmjs.com/package/redux-thunk
+			npm i redux-thunk
+
+			#Регистратор для #Redux
+			https://www.npmjs.com/package/redux-logger
+			npm i redux-logger
+
+			Расширение Redux DevTools. Например applyMiddleware, который позволяет диспатчить асинхроны. store = createStore(rootReducer, applyMiddleware(thunk, logger))
+			https://www.npmjs.com/package/redux-devtools-extension
+			npm install redux-devtools-extension
+
+			#MobX
+			https://mobx.js.org
+			npm i mobx mobx-react-lite
+			Хранилище состояний, lite пакет для функциональных компонентов
 			
 			{Ошибка при установке пакета
-				N:\web\htdocs_php5\php_site\files\11736>npm i --save-dev @babel/core @babel/cli
-				npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@~2.3.1 (node_modules\chokidar\node_modules\fsevents):
-				npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
-				npm WARN interactive_instructions@1.0.0 No repository field.
-				npm ERR! Maximum call stack size exceeded
-				npm ERR! A complete log of this run can be found in:
-				npm ERR!     C:\Users\kushkov-pa.ALPHA\AppData\Roaming\npm-cache\_logs\2021-03-25T04_21_28_748Z-debug.log
+				{//1
+					N:\web\htdocs_php5\php_site\files\11736>npm i --save-dev @babel/core @babel/cli
+					npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@~2.3.1 (node_modules\chokidar\node_modules\fsevents):
+					npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+					npm WARN interactive_instructions@1.0.0 No repository field.
+					npm ERR! Maximum call stack size exceeded
+					npm ERR! A complete log of this run can be found in:
+					npm ERR!     C:\Users\kushkov-pa.ALPHA\AppData\Roaming\npm-cache\_logs\2021-03-25T04_21_28_748Z-debug.log
 
-				Решение, обновить файл с зависимостями: npm i --package-lock-only
-				Если не поможет, удалить node_modules и заново установить все пакеты
+					Решение, обновить файл с зависимостями: npm i --package-lock-only
+					Если не поможет, удалить node_modules и заново установить все пакеты
+				}
+
+				{//2
+					npm ERR! code ENOSELF
+					npm ERR! Refusing to install package with name "mobx" under a package
+					npm ERR! also called "mobx". Did you name your project the same
+					npm ERR! as the dependency you're installing?
+
+					Переименовать name в package.json, имя проекта не должно называться так же, как зависимость
+				}
 			}
 		}
 		
@@ -805,6 +856,10 @@
 	Является одной из немногих исключительных ситуаций, перед которой ставится точка с запятой
 }
 
+{//#Pure Functions
+	Функция, логика которой происходит внутри без взаимодействия с глобальными переменными и т. д., такие функции можно переиспользовать
+}
+
 {//#Классы #Classes
 	https://youtu.be/uLY9GXGMXaA
 	https://learn.javascript.ru/es-class
@@ -816,7 +871,7 @@
 
 	{//#super
 		https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/super
-		Ключевое слово super используется для вызова функций, принадлежащих родителю объекта.
+		Ключевое слово super используется для вызова конструктора родителя
 	}
 }
 
@@ -1126,6 +1181,29 @@
 {//#Redux
 	Redux — библиотека для JavaScript с открытым исходным кодом, предназначенная для управления состоянием приложения. Чаще всего используется в связке с React или Angular для разработки клиентской части. Содержит ряд инструментов, позволяющих значительно упростить передачу данных хранилища через контекст.
 	Redux – библиотека с простым API, предсказуемое хранилище состояния приложений.
+
+	Пример 1: localhost\react-redux-course https://youtu.be/G3GGXIhggGs
+	Пример 2: localhost\redux https://youtu.be/YdYyYMFPa44
+
+	Redux не привязан к фреймворку, это технология для разделения данных и способа отображения.
+	Всё состояние приложения - это единый объект в Redux.
+
+	Component -> Action -> Store -> Reducer -> Store -> Component
+	Component / View общается со Store через Action
+	Action - объект с типом действия, который диспатчится в Store
+	Store - содержит само состояние, которое меняется через Reducer
+	Reducer правила: всегда должны вернуть state, если action.type совпадает с тем, что мы меняем в Reducer, тогда мы должны вернуть новый объект - это иммутабельность (неизменный объект). Reducer - это чистая функция, которая вычисляет следующее состояние на основании предыдущего.
+	Затем в Store отрабатывает observer / subscribers, обновляя тем самым Component
+
+	createStore -> Reducer switch(action.type) case CREATE_POST -> return всте старые state в Store и новый state(Store)
+	В action есть dispatch
+	const dispatch = useDispatch() // Позволяет диспатчить action в store
+	В dispatch передаётся {type: action}
+	dispatch вызывает Reducer из createStore в котором вычисляется новый state(Store)
+	const loading = useSelector(state => state.app.loading) // Получить значение из state
+	connect(f(state) return {key: state...}, {{type: action}, ...})(Component) arg1: Преобразовывает стейты в пропсы. arg2: Сработает диспатч
+
+	Функция connect возвращает функцию, тот же самый компонент, но уже с дополнительным функционалом
 }
 
 {//#TypeScript
@@ -1822,4 +1900,31 @@
 
 {//#Fonts #Шрифты
 	#Google https://fonts.google.com
+}
+
+{//#БЭМ
+	БЭМ (Блок-Элемент-Модификатор) — методология web-разработки, а также набор интерфейсных библиотек, фреймворков и вспомогательных инструментов.
+	https://habr.com/ru/company/ruvds/blog/347194/
+
+	#Блок
+	Блок — это независимый интерфейсный компонент. Блок может быть простым или составным (содержать другие блоки). При создании блока нужно обеспечивать возможность его использования в любом месте web-страницы, а также повторения в том же самом месте страницы (родительском элементе). Блок должен включать в себя всю реализацию, необходимую для представления части интерфейса, которую он выражает.
+	Пример: .stick-man
+
+	#Элемент
+	Элемент — это составная часть блока. Элементы контекстно-зависимы: они имеют смысл только в рамках своего блока. Элемент — не обязательная составляющая блока, небольшие блоки обходятся без элементов.
+	Пример: .stick-man__head
+
+	#Модификатор
+	Модификатор — это свойство блока или элемента, задающее изменения в их внешнем виде или поведении. Модификатор может быть булевым (например, button_big) или парой ключ-значение (например, menu_type_bullet, menu_type_numbers). У блока или элемента может быть несколько модификаторов одновременно.
+	Пример: .stick-man--red
+
+	Цель создания БЭМ
+	БЭМ предлагает общую семантическую модель для всех технологий, использующихся во фронтэнд разработке (HTML, CSS, JavaScript, шаблоны и др.)
+
+	Используя понятия «блок», «элемент» и «модификатор» можно описать древовидную структуру документа. Такое описание называется BEM tree и является семантическим представлением интерфейса, абстракцией над DOM tree.
+}
+
+{//#Redux
+	https://redux.js.org/
+	Predictable State Container for JS Apps (Контейнер предсказуемого состояния для JS-приложений)
 }
