@@ -56,15 +56,15 @@
 	{//#Проект
 		git clone <url> - скопировать содержимое проекта в текущую папку git clone <url> . - с точкой вконце скопирует содержимое в папку, а не саму папку. Создаёт папку .git и делает git add origin
 		git init - инициализация проекта. Создаст папку .git
-		git remote add <url_name> <url> - привязать проект link к названию link_name. Не ветке, просто названию, чтобы не писать длинную ссылку постоянно. Например name = origin
+		git remote add <url_name> <url> - привязать проект url к названию url_name. Не ветке, просто названию, чтобы не писать длинную ссылку постоянно. Например name = origin
 		git remote show <url_name> - показать информацию об удалённом репозитории, ветки, HEAD и т д
-		git remote -v - покажет все добавленные link и их link_name
-		git remote rm <url_name> - удалить привязку link_name к link из списка
+		git remote -v - покажет все добавленные url и их url_name
+		git remote rm <url_name> - удалить привязку url_name к url из списка
 	}
 	
 	{//#Файлы, основные && связки:
 		git add . && git commit -m "Updated date" && git push
-		git init && git remote add origin link && git add . && git commit -m "First commit" && git push -u origin master
+		git init && git remote add origin url && git add . && git commit -m "First commit" && git push -u origin master
 		commit 				git commit -m ""
 		pull 				git pull origin develop --no-ff
 		push 				git push
@@ -76,7 +76,7 @@
 	
 	{//#Файлы
 		git push - залить в текущую ветку на сервер
-		git push -u <url_name> <branch> - Заливает НОВУЮ!!! branch в link_name. Создаёт pull request при необходимости. -u: upstream. link_name: название ссылки, которое устанавливал с помощью git remote add <url_name> <url>. branch: ветка, которую будем заливать.
+		git push -u <url_name> <branch> - Заливает НОВУЮ!!! branch в url_name. Создаёт pull request при необходимости. -u: upstream. url_name: название ссылки, которое устанавливал с помощью git remote add <url_name> <url>. branch: ветка, которую будем заливать.
 		Флаг --force отменяет необходимость в pull и подгоняет ветку удаленного репозитория под вашу локальную ветку, удаляя любые вышестоящие изменения, которые могли быть внесены с момента последнего выполнения вами команды pull.
 		
 		git pull <remote> <branch> - шоткод для команд git fetch и git merge. <remote> и <branch> по умолчанию текущие. Получит с сервера и объединит с локальной.
@@ -84,7 +84,7 @@
 		--rebase - Жёсткий пулл без вопросов, попробовать дописать ещё --skip, чтобы не писать в дальнейшем отдельно git rebase --skip. То же, что и git rebase, это merge, только он соблюдает историю и пуллит изменения перед твоими коммитами, а не в текущий. Использовать при пулле из upstream в origin https://www.atlassian.com/ru/git/tutorials/syncing/git-pull
 
 		git add <file> или . - добавляет file или все файлы в отслеживаемые. Несколько перечисляются через пробел. Вызывать каждый раз при внесении изменений с целью добавления в отслеживаемые (commits)
-		git fetch <url_name> <branch> - получить изменения с сервера из текущей ветки, но не делать слияние - git merge. Если указан link_name либо branch, скачает оттуда
+		git fetch <url_name> <branch> - получить изменения с сервера из текущей ветки, но не делать слияние - git merge. Если указан url_name либо branch, скачает оттуда
 		git merge <branch> --no-ff - совместить скачанные изменения с локальной версией, либо branch, если указана, в таком случае из branch будут получены все изменения. Флаг --no-ff вынуждает Git всегда создавать новый объект коммита при слиянии, даже если слияние может быть осуществлено алгоритмом fast-forward. Это позволяет не терять информацию о том, что ветка существовала, и группирует вместе все внесённые изменения.
 		git commit -m <text> - зафиксировать отслеживаемые файлы. -m = -message. После ввода команды будет выведен хэш коммита
 		//git commit -a -m <text> - коммит с add всех файлов, -a не работает в некоторых случаях по неизвестным причинам
@@ -128,7 +128,7 @@
 		git checkout -b <branch> - создать и переключиться на ветку name, копию текущей
 		git checkout -b <branch> <url_name> - создать и переключиться на ветку branch, ответвление от name_from
 		git checkout -b <branch> <url_name_from>/<branch> - скопировать удалённую ветку и переключиться в неё
-		git push -u <url_name> <branch> - Заливает НОВУЮ!!! branch в link_name. Создаёт pull request при необходимости. -u: upstream. link_name: название ссылки, которое устанавливал с помощью git remote add <url_name> <url>. branch: ветка, которую будем заливать.
+		git push -u <url_name> <branch> - Заливает НОВУЮ!!! branch в url_name. Создаёт pull request при необходимости. -u: upstream. url_name: название ссылки, которое устанавливал с помощью git remote add <url_name> <url>. branch: ветка, которую будем заливать.
 		git show <branch> просмотр информации о теге, коммите, ветке
 	}
 
@@ -502,7 +502,7 @@
 		{//#useState
 			Пример в localhost\react2
 			const [state, setState] = useState(initialState)
-			Возвращает текущее значение в первом параметре диструктуризации и задаёт с помощью хука (второй параметр) начальное состояние значений либо получает предыдущее, если в параметр передана функция.
+			Возвращает текущее значение в первом параметре деструктуризации и задаёт с помощью хука (второй параметр) начальное состояние значений либо получает предыдущее, если в параметр передана функция.
 			Функция возвращает всегда два значения в массиве, первое - это дефолтное состояние, заданное сейчас, а второй элемент - коллбэк, с помощью него можно менять значения
 		}
 
@@ -596,6 +596,10 @@
 			npm i nodemon - динамическое обновление сайта при внесении изменения в код, используется для разработки и запускается с помощью команды nodemon script.js
 			npm i concurrently - для одновременного запуска скриптов, например backend и frontend
 			npm i config - пакет для работы с конфигурационным файлом. Создаётся папка config в которой default.json и production.json https://www.npmjs.com/package/config
+
+			Смена раскладки и транслит
+			https://github.com/alexanderkx/ai-switcher-translit
+			npm i ai-switcher-translit
 			
 			Библиотека для шифрования / хеширования
 			https://www.npmjs.com/package/bcryptjs
@@ -866,7 +870,7 @@
 				Decorator (Декоратор) (patterns/2 structural/6_decorator.js) - позволяет навесить новый функционал на существующий объект класса
 				Façade (Фасад) (patterns/2 structural/7_facade.js) - создание классов через if type, например как библиотека JQuery, куда подавалось что угодно в селектор $(значение). Это значение ведь не может быть ключом объекта, чтобы реализовать как у фабрики
 				Flyweight (Флайвейт) (patterns/2 structural/8_flyweight.js) - пресекает повторную загрузку данных, кэширует, сохраняет в памяти и т д
-				Proxy (Прокси) (patterns/2 structural/9_proxy.js) - избавляет веб сервер от лишних запросов на сервер, расставляет ловушки
+				Proxy (Прокси) (patterns/2 structural/9_proxy.js) - избавляет веб сервер от лишних запросов на сервер, расставляет ловушки, валидацию
 			}
 			{//#Behaviour Design Pattern - поведенческие паттерны для налаживания коммуникации между существующими сущностями разного типа, API, версии
 				Chain of Responsibility (Цепочка обязанностей) (patterns/3 behaviour/10_chain_of_responsebility.js) - позволяет строить цепочки вызовов функций, как у JQuery $(значение).метод1.метод2.метод3
@@ -1649,6 +1653,9 @@
 }
 
 {//#W3C #DOM #Events
+	https://ru.wikipedia.org/wiki/Консорциум_Всемирной_паутины
+	Организация, разрабатывающая и внедряющая технологические стандарты для Всемирной паутины.
+
 	https://www.w3.org/TR/DOM-Level-3-Events/
 	W3C, DOM Events, UI Events
 	
