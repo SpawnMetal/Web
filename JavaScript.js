@@ -7,6 +7,7 @@
 	#MVC
 	#SASS
 	#React #ReactDeveloperTools
+	#MobX
 	#Material Design (MaterialUI)
 	#ES ES6+
 	#Lodash
@@ -16,6 +17,18 @@
 	#Typescript
 	#БЭМ
 	#REST API
+}
+
+{//#Изучить
+	HTML - семантика
+	CSS - Box Model, анимации
+	JS - prototype, функции массивов, классы
+	Инструменты - Webpach, Parcel (не нужно настраивать конфиг)
+	Node.js - express, Nest, Koa, Loopback
+	DB: MongoDB, Firebase (Serverless От Google, без необходимости в сопровождении сервера для БД, облачная технология)
+	Serverless: Firebase
+	REST API
+	PWA - кеширование, Service Workers
 }
 
 {//#Git
@@ -388,6 +401,11 @@
 {//#JavaScript #JS
 	JavaScript - Мультипарадигменный (расширяемый и использующий другие языки) язык программирования. Поддерживает объектно-ориентированный, императивный и функциональный стили. Является реализацией языка ECMAScript. В него конвертируются: TypeScript, CoffeeScript, Flow, Dart.
 	JavaScript работает в одном потоке, поэтому об асинхронности не может быть речи, event loop и call stack сделали асинхронность возможной (сторонние API).
+
+	{//#js2021
+		Конструкции наподобие a && (a = b) теперь можно записывать как a &&= b, a ||= b, a ??= b
+		Числа можно отделять с помощью _, не влияя на их структуру 1000000000 === 1_000_000_000
+	}
 
 	{//#EventLoop
 		https://developer.mozilla.org/ru/docs/Web/JavaScript/EventLoop
@@ -900,6 +918,8 @@
 	https://youtu.be/uLY9GXGMXaA
 	https://learn.javascript.ru/es-class
 	Классы - это синтаксический сахар для более удобного создания объектов, наследования и прототипирования
+
+	В js 2021 можно сделать приватным поле либо метод с помощью #. #id - будет приватным
 	
 	{//#static
 		static - объявление внутри класса, наследуется, но не появляется у присвоенных значений, например class Cl, обращение будет Cl.fn(), а не const cl = new Cl(), cl.fn()
@@ -1807,6 +1827,13 @@
 
 {//#Prototype #Прототипы
 	Каждый объект имеет прототип от наследуемого __proto__. В ES6 Object.getPrototypeOf()
+	Через свойство prototype можно добавлять параметры к классу
+}
+
+{//#Instance
+	const cat = new Cat()
+	cat - Экземпляр (instance) класса
+	Статические методы и свойства вызываются без инстанцирования (en-US) их класса, и не могут быть вызваны у экземпляров (instance) класса.
 }
 
 {//#HTML
