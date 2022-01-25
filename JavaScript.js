@@ -22,7 +22,6 @@
 {//#Изучить
 	HTML - семантика
 	CSS - Box Model, анимации
-	JS - prototype, функции массивов, классы
 	Инструменты - Webpach, Parcel (не нужно настраивать конфиг)
 	Node.js - express, Nest, Koa, Loopback
 	DB: MongoDB, Firebase (Serverless От Google, без необходимости в сопровождении сервера для БД, облачная технология)
@@ -79,10 +78,10 @@
 		git add . && git commit -m "Updated date" && git push
 		git init && git remote add origin url && git add . && git commit -m "First commit" && git push -u origin master
 		commit 				git commit -m ""
-		pull 				git pull origin develop --no-ff
+		pull 				git pull origin develop
 		push 				git push
-		pull и push			git pull origin develop --no-ff && git push
-		Синхронизация:		git add . && git commit -m "" && git pull origin <branch> --no-ff && git push
+		pull и push			git pull origin develop && git push
+		Синхронизация:		git add . && git commit -m "" && git pull origin <branch> && git push
 		Создание ветки:		git checkout -b <branch> <name_from>
 		Удаление ветки:		git checkout develop && git branch -d <branch> && git push <url_name> <branch> --delete
 	}
@@ -98,7 +97,7 @@
 
 		git add <file> или . - добавляет file или все файлы в отслеживаемые. Несколько перечисляются через пробел. Вызывать каждый раз при внесении изменений с целью добавления в отслеживаемые (commits)
 		git fetch <url_name> <branch> - получить изменения с сервера из текущей ветки, но не делать слияние - git merge. Если указан url_name либо branch, скачает оттуда
-		git merge <branch> --no-ff - совместить скачанные изменения с локальной версией, либо branch, если указана, в таком случае из branch будут получены все изменения. Флаг --no-ff вынуждает Git всегда создавать новый объект коммита при слиянии, даже если слияние может быть осуществлено алгоритмом fast-forward. Это позволяет не терять информацию о том, что ветка существовала, и группирует вместе все внесённые изменения.
+		git merge <branch> - совместить скачанные изменения с локальной версией, либо branch, если указана, в таком случае из branch будут получены все изменения
 		git commit -m <text> - зафиксировать отслеживаемые файлы. -m = -message. После ввода команды будет выведен хэш коммита
 		//git commit -a -m <text> - коммит с add всех файлов, -a не работает в некоторых случаях по неизвестным причинам
 		git show <id> просмотр информации о теге, коммите, ветке
@@ -134,7 +133,7 @@
 		git branch - выводит список веток и ветку в которой я нахожусь. В VSCode слева снизу
 		git branch <branch> - создаст ветку name, копию текущей
 		git branch -d <branch> - удалит ветку name локально. Необходимо сначала переключиться на другую. -D, если необходимо удалить принудительно (--force)
-		git pull origin develop --no-ff - скачать новую ветку с сервера
+		git pull origin develop - скачать новую ветку с сервера
 		git push <url_name> <branch> --delete - удаляет ветку на сервере
 		git branch -m <branch> - переименовать текущую ветку в name, -M, если необходимо переименовать, даже если такая ветка уже сушествует
 		git checkout <branch> - переключиться на ветку name
@@ -205,14 +204,14 @@
 					git checkout -b <branch> develop
 						
 				Первая заливка в свою, Синхронизация:
-					git add . && git commit -m "" && git pull origin develop --no-ff && git push -u origin <branch>
+					git add . && git commit -m "" && git pull origin develop && git push -u origin <branch>
 					
 				Последующая заливка в свою, Синхронизация:
-				git add . && git commit -m "" && git pull origin develop --no-ff && git push
+				git add . && git commit -m "" && git pull origin develop && git push
 					
 				Заливка в develop:
-					Из серверной <branch>: git checkout develop && git pull && git pull origin <branch> --no-ff && git push
-					Из локальной <branch>: git checkout develop && git pull && git merge <branch> --no-ff && git push
+					Из серверной <branch>: git checkout develop && git pull && git pull origin <branch> && git push
+					Из локальной <branch>: git checkout develop && git pull && git merge <branch> && git push
 
 				pull request <branch> в upstream develop:
 					Делаем git push -u upstream develop либо pull request на залив своей ветки в develop upstream:
@@ -227,10 +226,10 @@
 					git checkout -b <branch> develop
 						
 				Синхронизация:
-				git add . && git commit -m "" && git pull origin develop --no-ff
+				git add . && git commit -m "" && git pull origin develop
 					
 				Заливка в develop:
-					git checkout develop && git pull && git merge <branch> --no-ff && git push
+					git checkout develop && git pull && git merge <branch> && git push
 
 				pull request <branch> в upstream develop:
 					Делаем git push -u upstream develop либо pull request на залив своей ветки в develop upstream:
@@ -249,9 +248,9 @@
 			Должны вливаться в: develop и master
 			Соглашение о наименовании: release-*
 
-			Итоговая команда из develop (тянуть его из upstream нельзя), после смены версии: git add . && git commit -m "Bumped version number to v2021.04.16.0" && git pull && git push && git checkout master && git pull upstream develop --no-ff && git merge develop --no-ff && git tag -a v2021.04.16.0 -m "Bumped version number to v2021.04.16.0" && git push
+			Итоговая команда из develop (тянуть его из upstream нельзя), после смены версии: git add . && git commit -m "Bumped version number to v2021.04.16.0" && git pull && git push && git checkout master && git pull upstream develop && git merge develop && git tag -a v2021.04.16.0 -m "Bumped version number to v2021.04.16.0" && git push
 
-			// Итоговая команда, после создания ветки и смены версии: git add . && git commit -m "Bumped version number to v1.0" && git checkout develop && git pull && git merge release-1.0 --no-ff && git push && git checkout master && git pull && git merge release-1.0 --no-ff && git tag -a v1.0 -m "Bumped version number to v1.0" && git push && git checkout master && git branch -d release-1.0
+			// Итоговая команда, после создания ветки и смены версии: git add . && git commit -m "Bumped version number to v1.0" && git checkout develop && git pull && git merge release-1.0 && git push && git checkout master && git pull && git merge release-1.0 && git tag -a v1.0 -m "Bumped version number to v1.0" && git push && git checkout master && git branch -d release-1.0
 
 			Создание:
 				git checkout -b release-1.0 develop
@@ -260,11 +259,11 @@
 				git add . && git commit -m "Bumped version number to v1.0"
 			
 			Заливка в develop:
-				git checkout develop && git pull && git merge release-1.0 --no-ff && git push
+				git checkout develop && git pull && git merge release-1.0 && git push
 				Создать pull request в Web и только после approve перейти к "Заливка в master"
 			
 			Заливка в master:
-				git checkout master && git pull && git merge release-1.0 --no-ff && git tag -a v1.0 -m "Bumped version number to v1.0" && git push
+				git checkout master && git pull && git merge release-1.0 && git tag -a v1.0 -m "Bumped version number to v1.0" && git push
 				Создать pull request в Web
 				
 			Удаление ветки обязательно:
@@ -278,7 +277,7 @@
 			Должны вливаться в: develop и master
 			Соглашение о наименовании: hotfix-*
 
-			Итоговая команда, после фикса (до этого создали ветку и сменили версию): git add . && git commit -m "Fixed severe production problem" && git checkout develop && git pull && git merge hotfix-1.0.1 --no-ff && git push && git checkout master && git pull && git merge hotfix-1.0.1 --no-ff && git tag -a v1.0.1 -m "Bumped version number to v1.0.1" && git push && git checkout develop && git branch -d hotfix-1.0.1
+			Итоговая команда, после фикса (до этого создали ветку и сменили версию): git add . && git commit -m "Fixed severe production problem" && git checkout develop && git pull && git merge hotfix-1.0.1 && git push && git checkout master && git pull && git merge hotfix-1.0.1 && git tag -a v1.0.1 -m "Bumped version number to v1.0.1" && git push && git checkout develop && git branch -d hotfix-1.0.1
 			
 			Создание:
 				git checkout -b hotfix-1.0.1 master
@@ -290,11 +289,11 @@
 				git add . && git commit -m "Fixed severe production problem"
 				
 			Заливка в develop:
-				git checkout develop && git pull && git merge hotfix-1.0.1 --no-ff && git push
+				git checkout develop && git pull && git merge hotfix-1.0.1 && git push
 				Создать pull request в Web и только после approve перейти к "Заливка в master"
 			
 			Заливка в master:
-				git checkout master && git pull && git merge hotfix-1.0.1 --no-ff && git tag -a v1.0.1 -m "Bumped version number to v1.0.1" && git push
+				git checkout master && git pull && git merge hotfix-1.0.1 && git tag -a v1.0.1 -m "Bumped version number to v1.0.1" && git push
 				Создать pull request в Web
 				
 			Удаление ветки обязательно:
@@ -323,7 +322,7 @@
 			Заливка:
 				git checkout develop
 					Switched to branch 'develop'
-				git merge --no-ff myfeature
+				git merge myfeature
 					(Отчёт об изменениях)
 				git branch -d myfeature
 					Deleted branch myfeature (was 05e9557).
@@ -347,12 +346,12 @@
 			Заливка:
 				git checkout master
 					Switched to branch 'master'
-				git merge --no-ff release-1.2
+				git merge release-1.2
 					(Отчёт об изменениях)
 				git tag -a 1.2
 				git checkout develop
 					Switched to branch 'develop'
-				git merge --no-ff release-1.2
+				git merge release-1.2
 					(Отчёт об изменениях)
 				git branch -d release-1.2
 					Deleted branch release-1.2 (was ff452fe).
@@ -376,12 +375,12 @@
 				Заливка:
 				git checkout master
 					Switched to branch 'master'
-				git merge --no-ff hotfix-1.2.1
+				git merge hotfix-1.2.1
 					(Отчёт об изменениях)
 				git tag -a 1.2.1
 				git checkout develop
 					Switched to branch 'develop'
-				git merge --no-ff hotfix-1.2.1
+				git merge hotfix-1.2.1
 				(Отчёт об изменениях)
 				git branch -d hotfix-1.2.1
 					Deleted branch hotfix-1.2.1 (was abbe5d6).
@@ -422,6 +421,10 @@
 
 		#Heap #Куча
 		Объекты размещаются в куче. Куча — это просто имя для обозначения большой неструктурированной области памяти.
+	}
+
+	{//#sort
+		Функция sort преобразует в строку и если условие сортировки возвращает положительное значение, тогда осуществляется перестановка, поэтому возвращаем a - b
 	}
 }
 
@@ -2044,4 +2047,9 @@
 	БЭМ предлагает общую семантическую модель для всех технологий, использующихся во фронтэнд разработке (HTML, CSS, JavaScript, шаблоны и др.)
 
 	Используя понятия «блок», «элемент» и «модификатор» можно описать древовидную структуру документа. Такое описание называется BEM tree и является семантическим представлением интерфейса, абстракцией над DOM tree.
+}
+
+{//#Legacy code
+	https://en.wikipedia.org/wiki/Legacy_system
+	Legacy code - устаревший, но используемый код
 }
