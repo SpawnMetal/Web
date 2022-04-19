@@ -27,6 +27,7 @@
 	DB: MongoDB, Firebase (Serverless От Google, без необходимости в сопровождении сервера для БД, облачная технология)
 	Serverless: Firebase
 	REST API
+	GraphQL https://habr.com/ru/post/326986/
 	PWA - кеширование, Service Workers
 }
 
@@ -87,8 +88,9 @@
 	}
 	
 	{//#Файлы
-		git push - залить в текущую ветку на сервер
-		git push -u <url_name> <branch> - Заливает НОВУЮ!!! branch в url_name. Создаёт pull request при необходимости. -u: upstream. url_name: название ссылки, которое устанавливал с помощью git remote add <url_name> <url>. branch: ветка, которую будем заливать.
+		git push -u <url_name> <branch> - Заливает НОВУЮ!!! branch в url_name. Создаёт pull request при необходимости. -u: upstream. url_name: название ссылки, которое устанавливал с помощью git remote add <url_name> <url>. branch: ветка, которую будем заливать. Выполнив команду git push -u origin master вы устанавливаете связь между той веткой, в которой вы находитесь и веткой master на удалённом сервере. Команду требуется выполнить единожды, чтобы потом можно было отправлять/принимать изменения лишь выполняя git push из ветки без указания всяких алиасов для сервера и удалённых веток. Это сделано для удобства.
+		git push - залить в текущую ветку на сервер, ранее должна быть установлена связь git push -u
+		git push <url_name> <branch> - заливает изменения по <url_name> в <branch>
 		Флаг --force отменяет необходимость в pull и подгоняет ветку удаленного репозитория под вашу локальную ветку, удаляя любые вышестоящие изменения, которые могли быть внесены с момента последнего выполнения вами команды pull.
 		
 		git pull <remote> <branch> - шоткод для команд git fetch и git merge. <remote> и <branch> по умолчанию текущие. Получит с сервера и объединит с локальной.
@@ -697,9 +699,9 @@
 			npm install -g json-server
 			Запуск сервера с db: json-server --watch db.json --port 4200 --delay 450 (сокращённо: json-server -w db.json -p 4200 -d 450)
 
-			Клиентский fetch
+			Серверный fetch
 			https://www.npmjs.com/package/isomorphic-fetch
-			isomorphic-unfetch
+			npm i --save isomorphic-unfetch
 
 			Индикатор загрузки
 			https://www.npmjs.com/package/nextjs-progressbar
@@ -1603,7 +1605,7 @@
 			Import Cost - отображает размер импортируемых файлов https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost
 			Debugger for Chrome - позволяет дебажить https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
 			Live Share - для совместной разработки https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
-			ESLint - контроль синтаксиса https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+			ESLint - #Линтер контроль синтаксиса https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 			{//#Prettier - Code formatter - форматирование https://prettier.io/ https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 				Документация по параметрам: https://prettier.io/docs/en/options.html
 				Стандарты формата: https://netology-university.bitbucket.io/codestyle/javascript/#whitespaces
@@ -2097,4 +2099,15 @@
 {//#Legacy code
 	https://en.wikipedia.org/wiki/Legacy_system
 	Legacy code - устаревший, но используемый код
+}
+
+{//#Миксин
+	https://developer.mozilla.org/ru/docs/Glossary/Mixin
+	Миксин (дословно: "примесь) - класс (class) или интерфейс, в котором некоторые или все его методы (methods) и/или свойства (properties) не реализованы, требуя, чтобы другой класс или интерфейс обеспечивал недостающие реализации. Новый класс или интерфейс затем включает в себя как свойства и методы из миксина, так и те, которые он определяет сам. Все методы и свойства используются совершенно одинаково, независимо от того, реализованы ли они в миксине, интерфейсе или классе, реализующем миксин.
+	Преимущество миксинов заключается в том, что они могут быть использованы для упрощения проектирования API, в которых несколько интерфейсов должны включать одни и те же методы и свойства.
+	Например, миксин WindowOrWorkerGlobalScope используется для предоставления методов и свойств, которые должны быть доступны как в интерфейсах Window, так и в интерфейсах WorkerGlobalScope. Миксин осуществляется с помощью обоих этих интерфейсов.
+}
+
+{//#MVP
+	Минимально жизнеспособный продукт (англ. minimum viable product, MVP) — продукт, обладающий минимальными, но достаточными для удовлетворения первых потребителей функциями. Основная задача — получение обратной связи для формирования гипотез дальнейшего развития продукта.[1] Сбор информации от MVP зачастую дешевле, чем разработка продукта с большим количеством функций. Это позволяет снизить затраты и риски, если продукт не заработает, например, из-за неверных предположений.
 }
