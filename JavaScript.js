@@ -2480,11 +2480,19 @@
 
 {//#Typescript
 	https://youtu.be/nyIpDs2DJ_c
-	
+
+	В конфиге выставить "strict": true https://medium.com/webhint/going-strict-with-typescript-be3f3f7e3295
+	"noImplicitAny": true - выдавать ошибку везде, где тип не указан и используется any https://www.typescriptlang.org/tsconfig#noImplicitAny
+
 	{//#Generics
 		https://www.typescriptlang.org/docs/handbook/2/generics.html
 		const foo: Array<number> = [1, 2, 3] // Array - класс / объект, состоящий из number
 		function f<T>(array: T[]): T[]
 		f([1, 2]) либо f(['a', 'b']) подставит тип переданных значений за место T
 	}
+
+	https://stackoverflow.com/questions/20043265/check-if-checkbox-element-is-checked-in-typescript
+	Утвердить тип: var element = <HTMLInputElement> document.getElementById("is3dCheckBox");
+	Утвердить сильнее: var isChecked = (<HTMLInputElement><any>myString).checked; Строковая переменная расширяется до anyтипа перед утверждением HTMLInputElement.
+	Если вы используете файлы tsx, как я, вы не можете использовать синтаксис угловой скобки, вы должны использовать «как»: let element = document.getElementById("is3dCheckBox") as HTMLInputElement; https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
 }
