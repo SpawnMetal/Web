@@ -562,6 +562,7 @@
 	}
 	
 	{//#Express
+		https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction
 		Используется для роутинга, http-запросов, поднятия сервера и т. п.
 		Express.js, или просто Express, фреймворк web-приложений для Node.js, реализованный как свободное и открытое программное обеспечение под лицензией MIT. Он спроектирован для создания веб-приложений и API.
 		Де-факто является стандартным каркасом для Node.js.
@@ -570,6 +571,7 @@
 		
 		{//#middleware
 			https://expressjs.com/ru/guide/writing-middleware.html#:~:text=%D0%A4%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B8%20%D0%BF%D1%80%D0%BE%D0%BC%D0%B5%D0%B6%D1%83%D1%82%D0%BE%D1%87%D0%BD%D0%BE%D0%B9%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B8%20(middleware)%20%2D,%D0%BA%D0%B0%D0%BA%20%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%BE%2C%20%D0%BE%D0%B1%D0%BE%D0%B7%D0%BD%D0%B0%D1%87%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9%20next%20.
+			https://developer.mozilla.org/en-US/docs/Glossary/Middleware
 			Функции промежуточной обработки (middleware) - это функции, имеющие доступ к объекту запроса (req), объекту ответа (res) и к следующей функции промежуточной обработки в цикле “запрос-ответ” приложения.
 			Следующая функция промежуточной обработки, как правило, обозначается переменной next.
 		}
@@ -714,6 +716,8 @@
 	
 	{//#Node.js
 		Область видимости верхнего уровня в Node не является глобальной областью видимости
+
+		Сервер Node.js без фреймворка https://developer.mozilla.org/ru/docs/Learn/Server-side/Node_server_without_framework
 
 		{//#npm
 			https://www.npmjs.com
@@ -2525,4 +2529,8 @@
 	Утвердить тип: var element = <HTMLInputElement> document.getElementById("is3dCheckBox");
 	Утвердить сильнее: var isChecked = (<HTMLInputElement><any>myString).checked; Строковая переменная расширяется до anyтипа перед утверждением HTMLInputElement.
 	Если вы используете файлы tsx, как я, вы не можете использовать синтаксис угловой скобки, вы должны использовать «как»: let element = document.getElementById("is3dCheckBox") as HTMLInputElement; https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
+}
+
+{//#Веб-безопасность #безопасность
+	https://developer.mozilla.org/ru/docs/Learn/Server-side/First_steps/Website_security
 }
