@@ -1700,7 +1700,7 @@
 				
 				tabWidth - количество пробелов в табуляции - 2. Два пробела. Почему не символ табов? Потому что это разный символ на разных ОС и табуляция поедет, а пробелы - это единый символ. Поэтому useTabs нельзя устанавливать в true. https://google.github.io/styleguide/jsguide.html#formatting-block-indentation
 				
-				trailingComma - запятые вконце, ставить. https://google.github.io/styleguide/jsguide.html#features-arrays-trailing-comma
+				trailingComma - запятые в конце, ставить. https://google.github.io/styleguide/jsguide.html#features-arrays-trailing-comma
 			}
 
 			EditorConfig for VS Code - импорт / экспорт настроек проекта для разных IDE https://editorconfig.org/ https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
@@ -2514,9 +2514,14 @@
 {//#Алгоритмы и #структуры данных
 	Классические алгоритмы и структуры данных на JavaScript https://habr.com/ru/post/359192/
 	Алгоритмы и структуры данных https://github.com/trekhleb/javascript-algorithms/blob/master/README.ru-RU.md
+	Распространенные алгоритмы и структуры данных в JavaScript: основные понятия и работа с массивами https://proglib.io/p/rasprostranennye-algoritmy-i-struktury-dannyh-v-javascript-osnovnye-ponyatiya-i-rabota-s-massivami-2021-10-06
+	Распространенные алгоритмы и структуры данных в JavaScript: стеки, очереди и связные списки https://proglib.io/p/rasprostranennye-algoritmy-i-struktury-dannyh-v-javascript-steki-ocheredi-i-svyaznye-spiski-2021-10-13
 
 	https://developer.mozilla.org/ru/docs/Glossary/Algorithm
 	Алгоритм — это независимая серия инструкций для выполнения функции.
+	Различают устойчивые и неустойчивые алгоритмы. Первые не изменяют порядок элементов, а вторые могут его изменять.
+
+	Структура данных (англ. data structure) — программная единица, позволяющая хранить и обрабатывать множество однотипных и/или логически связанных данных в вычислительной технике. Для добавления, поиска, изменения и удаления данных структура данных предоставляет некоторый набор функций, составляющих её интерфейс.
 
 	Пояснения алгоритмической сложности https://www.bigocheatsheet.com/
 
@@ -2524,7 +2529,8 @@
 		https://www.toptal.com/developers/sorting-algorithms
 		https://www.bigocheatsheet.com/
 
-		Фцнкция sort() использует сортировку вставкой (Insertion). Преобразует в строку и если условие сортировки возвращает положительное значение, тогда осуществляется перестановка, поэтому возвращаем a - b
+		Фцнкция sort() использует сортировку вставкой (Insertion). Преобразует в строку и если условие сортировки возвращает положительное значение, тогда осуществляется перестановка, поэтому возвращаем a - b.
+		Если a и b равны, то вернется 0. В этом случае порядок элементов может сохраниться, а может и поменяться. Глобально это не повлияет на задачу сортировки, но может иметь различные побочные эффекты.
 
 		Самые быстрые:
 		Сортировка по основанию	(Radix sort) https://en.wikipedia.org/wiki/Radix_sort
