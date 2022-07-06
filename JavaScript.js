@@ -9,7 +9,7 @@
 	#React
 	#MobX
 	#Material Design
-	#ES ES6+
+	#ES6+
 	#Lodash
 	#Jest
 	#Node.js
@@ -17,18 +17,6 @@
 	#Typescript
 	#БЭМ
 	#REST API
-}
-
-{//#Изучить
-	HTML - семантика
-	CSS - Box Model, анимации
-	Инструменты - Webpach, Parcel (не нужно настраивать конфиг)
-	Node.js - express, Nest, Koa, Loopback
-	DB: MongoDB, Firebase (Serverless От Google, без необходимости в сопровождении сервера для БД, облачная технология)
-	Serverless: Firebase
-	REST API
-	GraphQL https://habr.com/ru/post/326986/
-	PWA - кеширование, Service Workers
 }
 
 {//#Git
@@ -42,20 +30,20 @@
 	Плагин для Chrome - Octotree - GitHub code tree: https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc?hl=ru
 	
 	{//#Обозначения
-		Repository - репозиторий, в нём находится весь проект
+		Repository - репозиторий, в нём находится весь проект, как правило имеет задаём имя upstream
 		Branch - ветка
 		Fork - ответвление, копия репозитория (в переводе вилка). Запрос на слияние форков и будет pull request
 		HEAD - последний коммит в ветке, можно юзать везде, где указывается id
-		origin - указывается в команде git remote add для работы со своим репозиторием / форкой
-		upstream - указывается в команде git remote add для работы с репой источником, исходником, оригиналом
+		origin - имя текущего репозитория. Указывается в команде git remote add для работы со своим репозиторием / форкой. Создаётся при git clone
+		upstream - имя основной серверной репы. Указывается в команде git remote add для работы с репой источником, исходником, оригиналом
 		master - основная ветка в репе, которая создаётся автоматом вместе с репой
 		. - все, например, файлы
-		&& - для перечисления нескольких команд
+		& - для перечисления нескольких команд git и cmd. В powershell для перечисления нескольких команд используется точка с запятой
 	}
 	
 	{//#Персональные данные
-		git config --global user.name <"name"> - если "name" не указан, выведет текущий UserName, иначе задаст его
-		git config --global user.email <email> - если email не указан, выведет текущий UserEmail, иначе задаст его
+		git config --global user.name <"name"> - если name не указан, выведет текущий UserName, иначе задаст его
+		git config --global user.email <"email"> - если email не указан, выведет текущий UserEmail, иначе задаст его
 		git config --global http.sslverify false - отключить использование сертификата
 	}
 	
@@ -67,50 +55,43 @@
 	}
 	
 	{//#Проект
-		git clone <url> - скопировать содержимое проекта в текущую папку git clone <url> . - с точкой вконце скопирует содержимое в папку, а не саму папку. Создаёт папку .git и делает git add origin
-		git init - инициализация проекта. Создаст папку .git
-		git remote add <url_name> <url> - привязать проект url к названию url_name. Не ветке, просто названию, чтобы не писать длинную ссылку постоянно. Например name = origin
-		git remote show <url_name> - показать информацию об удалённом репозитории, ветки, HEAD и т д
-		git remote -v - покажет все добавленные url и их url_name
-		git remote rm <url_name> - удалить привязку url_name к url из списка
+		#clone: git clone <remote_url> - скопировать содержимое проекта. В текущую папку git clone <remote_url> . - с точкой вконце, скопирует содержимое в корень текущей директории, не создавая папку. Команда создаёт скрытую системную папку ".git" и делает git add origin
+		git init - инициализация проекта. Команда создаёт скрытую системную папку ".git"
+		git remote add <remote_name> <remote_url> - привязать проект remote_url к названию remote_name. Не ветке, просто названию, чтобы не писать длинную ссылку постоянно. Например remote_name = origin
+		git remote show <remote_name> - показать информацию об удалённом репозитории, ветке, HEAD и т д
+		git remote -v - покажет все добавленные remote_url и их remote_name
+		git remote rm <remote_name> - удалить привязку remote_name к remote_url из списка
 	}
 	
-	{//#Файлы, основные && связки:
-		GitHub: git init && git add . && git commit -m "first commit" && git branch -M main && git remote add origin https://github.com/SpawnMetal/lib.git && git push -u origin main
-		git add . && git commit -m "Updated date" && git push
-		git init && git remote add origin url && git add . && git commit -m "First commit" && git push -u origin master
-		commit 				git commit -m ""
-		pull 				git pull origin develop
-		push 				git push
-		pull и push			git pull origin develop && git push
-		Синхронизация:		git add . && git commit -m "" && git pull origin <branch> && git push
-		Создание ветки:		git checkout -b <branch> <name_from>
-		Удаление ветки:		git checkout develop && git branch -d <branch> && git push <url_name> <branch> --delete
+	{//#Комбо
+		#Персональные данные: 	git config --global user.name "name" & git config --global user.email "email" & git config --global http.sslverify false
+		Init & GitHub:			git init & git add . & git commit -m "First commit" & git branch -M main & git remote add origin https://github.com/SpawnMetal/lib.git & git push -u origin main
+		#Файлы Update: 			git add . & git commit -m "Updated date" & git push
+		#Файлы Синхронизация:	git add . & git commit -m "" & git pull origin <branch> & git push
+		#Ветки Удаление ветки:	git checkout develop & git branch -d <branch> & git push <remote_name> <branch> --delete
 	}
 	
 	{//#Файлы
-		git push -u <url_name> <branch> - Заливает НОВУЮ!!! branch в url_name. Создаёт pull request при необходимости. -u: upstream. url_name: название ссылки, которое устанавливал с помощью git remote add <url_name> <url>. branch: ветка, которую будем заливать. Выполнив команду git push -u origin master вы устанавливаете связь между той веткой, в которой вы находитесь и веткой master на удалённом сервере. Команду требуется выполнить единожды, чтобы потом можно было отправлять/принимать изменения лишь выполняя git push из ветки без указания всяких алиасов для сервера и удалённых веток. Это сделано для удобства.
+		git push -u <remote_name> <branch> - Заливает новую branch в remote_name. Создаёт pull request, если ветка уже есть. -u -это upstream, мол сервер. Например выполнив команду git push -u origin master вы устанавливаете связь между той веткой, в которой вы находитесь и веткой master на удалённом сервере. Команду требуется выполнить единожды, чтобы потом можно было отправлять/принимать изменения лишь выполняя git push из ветки без указания всяких алиасов для сервера и удалённых веток. Это сделано для удобства.
 		git push - залить в текущую ветку на сервер, ранее должна быть установлена связь git push -u
-		git push <url_name> <branch> - заливает изменения по <url_name> в <branch>
+		git push <remote_name> <branch> - заливает изменения по <remote_name> в <branch>
 		Флаг --force отменяет необходимость в pull и подгоняет ветку удаленного репозитория под вашу локальную ветку, удаляя любые вышестоящие изменения, которые могли быть внесены с момента последнего выполнения вами команды pull.
 		
-		git pull <remote> <branch> - шоткод для команд git fetch и git merge. <remote> и <branch> по умолчанию текущие. Получит с сервера и объединит с локальной.
-		При работе с fork не забывать пуллить свою форку на сервере перед пуллом в локал (не забывать обновлять форку из репы).
+		git pull <remote_name> <branch> - шоткод для команд git fetch и git merge. <remote_name> и <branch> по умолчанию текущие. Получит с сервера и объединит с локальной.
+		При работе с fork не забывать пуллить свою форку с remote.
 		--rebase либо git rebase - Перебазирует ветку на текущий и дальнейшие коммиты, которые будут попадать в историю коммитов (например master) на момент её слияния с перебазированной веткой (develop), а не на момент создания коммита в прошлом.
 		Т.е. коммит сделанный 3 года назад в develop, при слиянии попадёт в самый верх коммитов master. См. Commits on Jun 22, 2022 https://github.com/SpawnMetal/examples/commits/master
 		Использовать при пулле из upstream в origin https://www.atlassian.com/ru/git/tutorials/syncing/git-pull
-		Попробовать дописать ещё --skip, чтобы не писать в дальнейшем отдельно git rebase --skip.
+		git rebase --skip позволит пропустить конфликт при git rebase, для каждого конфликта команда вводится отдельно
 
-		git add <file> или . - добавляет file или все файлы в отслеживаемые. Несколько перечисляются через пробел. Вызывать каждый раз при внесении изменений с целью добавления в отслеживаемые (commits)
-		git fetch <url_name> <branch> - получить изменения с сервера из текущей ветки, но не делать слияние - git merge. Если указан url_name либо branch, скачает оттуда
-		git merge <branch> - совместить скачанные изменения с локальной версией, либо branch, если указана, в таком случае из branch будут получены все изменения
-		git commit -m <text> - зафиксировать отслеживаемые файлы. -m = -message. После ввода команды будет выведен хэш коммита
-		//git commit -a -m <text> - коммит с add всех файлов, -a не работает в некоторых случаях по неизвестным причинам
+		git add <file> или . - добавляет file или все файлы в отслеживаемые для добавления в коммит. Несколько перечисляются через пробел.
+		git fetch <remote_name> <branch> - получить изменения, но не делать слияние - git merge.
+		git merge <branch> - объединить скачанные изменения с текущей веткой, либо branch, если указана, в таком случае из branch будут получены все изменения
+		git commit -m <text> - зафиксировать отслеживаемые файлы, создав коммит. -m = -message. text указывается в двойных кавычках. После ввода команды будет выведен хэш коммита
 		git show <id> просмотр информации о теге, коммите, ветке
-		git rebase -i <url_name>/<branch> - Жёсткий пулл без вопросов, попробовать дописать ещё --skip, чтобы не писать в дальнейшем отдельно git rebase --skip. То же, что и merge, только твои коммиты будут самыми последними в истории, будто сделаны после pull
 
-		git status - показать статус проекта. Покажет в какой ветке я нахожусь, например, master (On branch master). Так же команда показывает, за какими файлами git следит и выводит команды для добавления / удаления файлов в отслеживаемые
-		git clone <url> - скопировать содержимое проекта в текущую папку git clone <url> . - с точкой вконце скопирует содержимое в папку, а не саму папку. Создаёт папку .git и делает git add origin
+		git status - показать текущую ветку и изменённые файлы
+		git clone см #clone
 		git checkout <id>, <file> либо <tag> - переключиться на id коммита, tag либо откатить файл до индекса. Работает с тремя различными объектами: файлами, коммитами и ветками. Команда открепляет HEAD, что не позволит сохранить изменения при неизбежном переключении обратно в ветку.
 		
 		Удалить индексы, не файлы, код не бэкапнется. Несколько файлов перечисляются через пробел:
@@ -118,13 +99,13 @@
 		git rm --cached <file>
 		git rm -r .
 		
+		git reset --hard id либо origin/master - откатит код до коммита id либо ветки origin/master, стерев историю
 		git restore <file> - откатит до коммита (бэкапнет код) не проиндексированные файлы, проиндексированные сначала отменить: git reset <file>
-		git reset --hard id - откатит код до коммита id стерев историю
 		git restore --source <id_коммита> <file> - откатит код до коммита id сохранив историю, создав новый коммит
 		
 		git show <commit_id> - покажет информацию о коммите и его полный id
 		git commit --amend -m "" - переименовать либо отредактировать текст последнего коммита
-		git log -кол-во --pretty=oneline - покажет информацию по кол-ву последних коммитов, тегиб сообщения коммитов, HEAD. Напротив последней залитой будет красным это написано origin/branch
+		git log -кол-во --pretty=oneline - покажет информацию по кол-ву последних коммитов, теги, сообщения коммитов, HEAD. Напротив последней залитой будет красным написано origin/branch
 
 		get tag -a - аннотированный тег, некое название коммита https://www.atlassian.com/ru/git/tutorials/inspecting-a-repository/git-tag https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-метками
 		git tag -a v1.0.1 -m "" - создать тег
@@ -140,260 +121,60 @@
 		git branch <branch> - создаст ветку name, копию текущей
 		git branch -d <branch> - удалит ветку name локально. Необходимо сначала переключиться на другую. -D, если необходимо удалить принудительно (--force)
 		git pull origin develop - скачать новую ветку с сервера
-		git push <url_name> <branch> --delete - удаляет ветку на сервере
+		git push <remote_name> <branch> --delete - удаляет ветку на сервере
 		git branch -m <branch> - переименовать текущую ветку в name, -M, если необходимо переименовать, даже если такая ветка уже сушествует
 		git checkout <branch> - переключиться на ветку name
 		git checkout -b <branch> - создать и переключиться на ветку name, копию текущей
-		git checkout -b <branch> <url_name> - создать и переключиться на ветку branch, ответвление от name_from
-		git checkout -b <branch> <url_name_from>/<branch> - скопировать удалённую ветку и переключиться в неё
-		git push -u <url_name> <branch> - Заливает НОВУЮ!!! branch в url_name. Создаёт pull request при необходимости. -u: upstream. url_name: название ссылки, которое устанавливал с помощью git remote add <url_name> <url>. branch: ветка, которую будем заливать.
+		git checkout -b <branch> <remote_name> - создать и переключиться на ветку branch, ответвление от name_from
+		git checkout -b <branch> <repository_name_from>/<branch> - скопировать удалённую ветку и переключиться в неё
+		git push -u <remote_name> <branch> - Заливает НОВУЮ!!! branch в remote_name. Создаёт pull request при необходимости. -u: upstream. remote_name: название ссылки, которое устанавливал с помощью git remote add <remote_name> <remote_url>. branch: ветка, которую будем заливать.
 		git show <branch> просмотр информации о теге, коммите, ветке
+
+		{//#Release branches
+			Ветви релизов (release branches) используются для подготовки к выпуску новых версий продукта.
+			Могут порождаться от: develop
+			Должны вливаться в: develop и master
+			Соглашение о наименовании: release-*
+		}
+
+		{//#Hotfix branches
+			Они порождаются необходимостью немедленно исправить нежелательное поведение производственной версии продукта.
+			Могут порождаться от: master
+			Должны вливаться в: develop и master
+			Соглашение о наименовании: hotfix-*
+		}
+
+		{//#Feature branches
+			Ветви функциональностей (feature branches) обычно существуют в репозиториях разработчиков (origin), но не в главном репозитории (upstream).
+			Соглашение о наименовании: всё, за исключением master, develop, release-* или hotfix-*
+			Могут пораждаться от develop
+			Должны вливаться в develop
+		}
 	}
 
 	{//#Откат изменений
 		https://www.atlassian.com/ru/git/tutorials/undoing-changes
 		
 		Локально:
+		Отменить индексирование (add): git reset <file>. Код не бэкапнется. Ещё можно git rm --cached <file> или -r . - удалить file или файлы рекурсивно из отслеживаемых. Несколько перечисляются через пробел
+		Откатить до индекса: git checkout <file>
+		Откатить до коммита: git restore
+		Удалить из индексирования и откатить до коммита всё и без вопросов: git reset . --quiet & git restore .
+		При pull, если необходимо отменить всё: git clean -f, ээфект такой же, как при git checkout другая_ветка --force, затем переключаемся обратно
+		Откат изменений к ветке, например master (полностью скачивает и заменяет коммиты, можно из upstream и т. д.): git reset --hard origin/master
+		
 		Название коммита: Как изменить название последнего локального коммита либо внести в него изменения? git commit --amend -m ""
-		Индексирование: Как отменить индексирование add? git reset <file>. Код не бэкапнется. Ещё можно git rm --cached <file> или -r . - удалить file или файлы рекурсивно из отслеживаемых. Несколько перечисляются через пробел
-		Файлы: Как откатить до индекса? git checkout <file>
-		Файлы: Как откатить изменения локально до коммита? git restore <file>. Если есть уже проиндексированные, удалить их сначала из add: git reset <file>
-		Ветка: Как удалить ветку локально? git branch -d <branch>
-		Удалить из индексирования до коммита всё и без вопросов: git reset . --quiet && git restore .
-		Откат изменений к ветке, например master: git reset --hard origin/master
+		Удалить ветку: git branch -d <branch>
 		
-		Серверно:
-		Ветка: Как удалить ветку с сервера? git push <url_name> <branch> --delete
+		Remote:
+		Удалить ветку: git push <remote_name> <branch> --delete
 		
-		Локально и серверно:
-		Коммит с удалением истории: Как откатиться к коммиту, стерев локальный и серверный коммиты с историей (использовать в своей репе и ветке, для публичного не подходит) git reset --hard id && git push --force
+		Локально и remote:
+		Откатить до коммита с удалением истории. Использовать в своей репе и ветке. В upstream убедиться, что удалённые коммиты уже не скачаны остальными:  git reset --hard id & git push --force
 		Удалить все коммиты, включая самый первый: git update-ref -d HEAD, затем всё коммитим и git push --force
-		Откат файлов к коммиту, как если бы скачали коммит и этими файлами заменили свои: git restore --source <id_коммита> <file> && git push
-		Инфо: Как узнать отличия локальной версии от коммитов и от серверной версии? git log -n --pretty=oneline, где n - кол-во отображаемых коммитов. Напротив последней залитой будет красным это написано origin/branch
+		Откатить файлы к коммиту, сохранив историю, как если бы скачали коммит и этими файлами заменили свои: git restore --source <id_коммита> <file> & git push
 	}
 
-	{//#Актуальный метод
-		origin - ссылка на основной репозиторий
-		master, создаётся при инициализации репы. Мы считаем ветку origin/master главной. То есть, исходный код в ней должен находиться в состоянии production-ready в любой произвольный момент времени.
-		develop, создаём параллельно master. Ветвь origin/develop мы считаем главной ветвью для разработки. Хранящийся в ней код в любой момент времени должен содержать самые последние изданные изменения, необходимые для следующего релиза.
-
-		11736 / 11737 - origin.develop
-		600 / 666 - тестовая, личная, после тестов заливается на 12000
-		12000 - upstream.develop, после тестов личная ветка сливается с upstream.master (pull), затем выпускается релиз. Если нужно, копируется в 11000.
-		11000 - демка с протестированным кодом
-		10000 - upstream.master - релиз, протестированный код во всех тестовых
-		upstream.transit - ветка для обмена своими доработками
-		
-		Repository (upstream)
-			master
-			develop
-		Fork (origin)
-			master - Repository (develop)
-				hotfix-* - develop
-			develop - Repository (develop)
-				release-* - master
-				test - develop
-		
-		Форкаем upstream в вебе
-		Клонируем свою форку в текущую папку: git clone <url>
-		Делаем git remote add upstream и origin
-		Работа с версиями только в upstream!!! В форках нет необходимости.
-		
-		{//#Feature branches. Fork (origin)
-			Ветви функциональностей (feature branches) обычно существуют в репозиториях разработчиков, но не в главном репозитории (upstream).
-			
-			Собственные ветки для разработки с любым названием, за исключением master, develop, release-* или hotfix-*
-			Могут пораждаться от develop
-			Должны вливаться в develop
-			
-			{//#Постоянная. Серверная
-				Создание:
-					git checkout -b <branch> develop
-						
-				Первая заливка в свою, Синхронизация:
-					git add . && git commit -m "" && git pull origin develop && git push -u origin <branch>
-					
-				Последующая заливка в свою, Синхронизация:
-				git add . && git commit -m "" && git pull origin develop && git push
-					
-				Заливка в develop:
-					Из серверной <branch>: git checkout develop && git pull && git pull origin <branch> && git push
-					Из локальной <branch>: git checkout develop && git pull && git merge <branch> && git push
-
-				pull request <branch> в upstream develop:
-					Делаем git push -u upstream develop либо pull request на залив своей ветки в develop upstream:
-					git checkout <branch> && git pull && git push -u upstream develop
-					
-				Удаление:
-					git checkout develop && git branch -d <branch> && git push origin <branch> --delete
-			}
-			
-			{//#Временная. Локальная
-				Создание:
-					git checkout -b <branch> develop
-						
-				Синхронизация:
-				git add . && git commit -m "" && git pull origin develop
-					
-				Заливка в develop:
-					git checkout develop && git pull && git merge <branch> && git push
-
-				pull request <branch> в upstream develop:
-					Делаем git push -u upstream develop либо pull request на залив своей ветки в develop upstream:
-					git checkout <branch> && git pull && git push -u upstream develop
-					
-				Удаление:
-					git checkout develop && git branch -d <branch>
-			}
-		}
-		
-		{//#Release branches
-			Ветви релизов (release branches) используются для подготовки к выпуску новых версий продукта.
-			//Когда вся эта работа выносится в ветвь релизов, главная ветвь разработки (develop) очищается для добавления последующих фич (которые войдут в следующий большой релиз).
-			
-			Могут порождаться от: develop
-			Должны вливаться в: develop и master
-			Соглашение о наименовании: release-*
-
-			Итоговая команда из develop (тянуть его из upstream нельзя), после смены версии: git add . && git commit -m "Bumped version number to v2021.04.16.0" && git pull && git push && git checkout master && git pull upstream develop && git merge develop && git tag -a v2021.04.16.0 -m "Bumped version number to v2021.04.16.0" && git push
-
-			// Итоговая команда, после создания ветки и смены версии: git add . && git commit -m "Bumped version number to v1.0" && git checkout develop && git pull && git merge release-1.0 && git push && git checkout master && git pull && git merge release-1.0 && git tag -a v1.0 -m "Bumped version number to v1.0" && git push && git checkout master && git branch -d release-1.0
-
-			Создание:
-				git checkout -b release-1.0 develop
-					
-			Затем смена версии в коде и коммит:
-				git add . && git commit -m "Bumped version number to v1.0"
-			
-			Заливка в develop:
-				git checkout develop && git pull && git merge release-1.0 && git push
-				Создать pull request в Web и только после approve перейти к "Заливка в master"
-			
-			Заливка в master:
-				git checkout master && git pull && git merge release-1.0 && git tag -a v1.0 -m "Bumped version number to v1.0" && git push
-				Создать pull request в Web
-				
-			Удаление ветки обязательно:
-				git checkout master && git branch -d release-1.0
-		}
-		
-		{//#Hotfix branches
-			Они порождаются необходимостью немедленно исправить нежелательное поведение производственной версии продукта.
-			
-			Могут порождаться от: master
-			Должны вливаться в: develop и master
-			Соглашение о наименовании: hotfix-*
-
-			Итоговая команда, после фикса (до этого создали ветку и сменили версию): git add . && git commit -m "Fixed severe production problem" && git checkout develop && git pull && git merge hotfix-1.0.1 && git push && git checkout master && git pull && git merge hotfix-1.0.1 && git tag -a v1.0.1 -m "Bumped version number to v1.0.1" && git push && git checkout develop && git branch -d hotfix-1.0.1
-			
-			Создание:
-				git checkout -b hotfix-1.0.1 master
-				
-			Затем смена версии в коде и коммит:
-				git add . && git commit -m "Bumped version number to v1.0.1"
-				
-			Исправление бага и снова коммит:
-				git add . && git commit -m "Fixed severe production problem"
-				
-			Заливка в develop:
-				git checkout develop && git pull && git merge hotfix-1.0.1 && git push
-				Создать pull request в Web и только после approve перейти к "Заливка в master"
-			
-			Заливка в master:
-				git checkout master && git pull && git merge hotfix-1.0.1 && git tag -a v1.0.1 -m "Bumped version number to v1.0.1" && git push
-				Создать pull request в Web
-				
-			Удаление ветки обязательно:
-				git checkout develop && git branch -d hotfix-1.0.1
-		}
-	}
-	
-	{//#Анализ статьи на хабре
-		origin - ссылка на основной репозиторий
-		
-		Главные ветви:
-		master, создаётся при инициализации репы. Мы считаем ветку origin/master главной. То есть, исходный код в ней должен находиться в состоянии production-ready в любой произвольный момент времени.
-		develop, создаём параллельно master. Ветвь origin/develop мы считаем главной ветвью для разработки. Хранящийся в ней код в любой момент времени должен содержать самые последние изданные изменения, необходимые для следующего релиза.
-		
-		{//#Feature branches
-			Ветви функциональностей (feature branches) обычно существуют в репозиториях разработчиков, но не в главном репозитории (origin).
-			
-			Могут пораждаться от develop
-			Должны вливаться в develop
-			Соглашение о наименовании: всё, за исключением master, develop, release-* или hotfix-*
-			
-			Создание:
-				git checkout -b myfeature develop
-					Switched to a new branch "myfeature"
-					
-			Заливка:
-				git checkout develop
-					Switched to branch 'develop'
-				git merge myfeature
-					(Отчёт об изменениях)
-				git branch -d myfeature
-					Deleted branch myfeature (was 05e9557).
-				git push origin develop
-		}
-		
-		{//#Release branches
-			Ветви релизов (release branches) используются для подготовки к выпуску новых версий продукта.
-			Когда вся эта работа выносится в ветвь релизов, главная ветвь разработки (develop) очищается для добавления последующих фич (которые войдут в следующий большой релиз).
-			
-			Могут порождаться от: develop
-			Должны вливаться в: develop и master
-			Соглашение о наименовании: release-*
-			
-			Создание:
-				git checkout -b release-1.2 develop
-					Switched to a new branch "release-1.2"
-					Затем смена версии в коде
-				git add . && git commit -m "Bumped version number to 1.2"
-					
-			Заливка:
-				git checkout master
-					Switched to branch 'master'
-				git merge release-1.2
-					(Отчёт об изменениях)
-				git tag -a 1.2
-				git checkout develop
-					Switched to branch 'develop'
-				git merge release-1.2
-					(Отчёт об изменениях)
-				git branch -d release-1.2
-					Deleted branch release-1.2 (was ff452fe).
-		}
-		
-		{//#Hotfix branches
-			Они порождаются необходимостью немедленно исправить нежелательное поведение производственной версии продукта.
-			
-			Могут порождаться от: master
-			Должны вливаться в: develop и master
-			Соглашение о наименовании: hotfix-*
-			
-			Создание:
-				git checkout -b hotfix-1.2.1 master
-					Switched to a new branch "hotfix-1.2.1"
-					Затем смена версии в коде
-				git add . && git commit -m "Bumped version number to 1.2.1"
-					Исправление бага
-				git commit -m "Fixed severe production problem"
-
-				Заливка:
-				git checkout master
-					Switched to branch 'master'
-				git merge hotfix-1.2.1
-					(Отчёт об изменениях)
-				git tag -a 1.2.1
-				git checkout develop
-					Switched to branch 'develop'
-				git merge hotfix-1.2.1
-				(Отчёт об изменениях)
-				git branch -d hotfix-1.2.1
-					Deleted branch hotfix-1.2.1 (was abbe5d6).
-		}
-	}
-	
 	{//#Vim #Vi
 		Вирусный редактор текста, работать в английской раскладке
 		https://youtu.be/6H0GDM8ExB8
