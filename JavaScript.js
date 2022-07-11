@@ -198,7 +198,7 @@
 	{//#EventLoop
 		https://developer.mozilla.org/ru/docs/Web/JavaScript/EventLoop
 		https://youtu.be/8aGhZQkoFbQ?t=773
-		Параллелизм/Многопоточность в JavaScript работает за счёт цикла событий (event loop), который отвечает за выполнение кода, сбора и обработки событий и выполнения под-задач из очереди (queued sub-tasks).
+		Параллелизм/Многопоточность в JavaScript работает за счёт цикла событий (event loop), который отвечает за выполнение кода, сбора и обработки событий и выполнения подзадач из очереди (queued sub-tasks).
 
 		#Stack #Стек
 		Вызов любой функции создаёт контекст выполнения (Execution Context). При вызове вложенной функции создаётся новый контекст, а старый сохраняется в специальной структуре данных - стеке вызовов (Call Stack).
@@ -1346,7 +1346,10 @@
 	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 	https://learn.javascript.ru/promise
 	Git https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md
-	Пример es/es-6-8/11_promises.js es/es-2020/2_promises.js
+	Примеры
+	es/es-6-8/11_promises.js
+	es/es-2020/2_promises.js
+	examples/microAndMacrotasks.js
 
 	Promise (промис) - это объект, представляющий результат успешного или неудачного завершения асинхронной операции. Так как большинство людей пользуются уже созданными промисами, это руководство начнём с объяснения использования вернувшихся промисов до объяснения принципов создания. 
 	В сущности, промис - это возвращаемый объект, в который вы записываете два колбэка вместо того, чтобы передать их функции.
@@ -1364,19 +1367,6 @@
 			// resolve(результат) при успешном выполнении
 			// reject(ошибка) при ошибке
 		})
-		
-		const delay = ms => new Promise
-		(
-			(resolve, reject) =>
-			{
-				setTimeout(() => resolve(`Done! ${ms}`), ms)
-			}
-		)
-		delay(1000) //Через 1000 мс
-		.then(data => delay(500)) //Затем ещё через 500 мс.
-		.then(data => console.log(data)) //Done! 500
-		.catch(err => console.log(err))
-		.finally(() => console.log('Finally')) //Запускается всегда при завершении, даже если произошла ошибка
 		
 		class Ajax
 		{
@@ -2375,4 +2365,9 @@
 		Рекурсивный обход дерева
 		C:\program files\open server\ospanel\domains\localhost\examples\treerec.js
 	}
+}
+
+{//#Nx
+	https://nx.dev/getting-started/intro
+	Nx — это интеллектуальная, быстрая и расширяемая система сборки с первоклассной поддержкой монорепозиториев и мощными интеграциями.
 }
