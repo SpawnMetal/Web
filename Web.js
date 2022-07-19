@@ -1742,10 +1742,11 @@
 }
 
 {//#Prototype #Прототипы
-	Каждый объект имеет прототип от наследуемого __proto__. В ES6 Object.getPrototypeOf()
-	Через свойство prototype можно добавлять параметры к классу
+	Каждый объект имеет прототип от наследуемого __proto__. В ES5 Object.getPrototypeOf()
+	Через свойство prototype можно добавлять и изменять параметры
 	prototype - прототип текущего класса, а __proto__ - родительского
-	Например, Array.prototype существует, а const arr = Array(), arr.prototype не существует, создать можно Object.create(instanceObj, obj), arr.__proto__ === Array.prototype. Пример: "1 patterns\creational\3_prototype.js"
+	Например, Object.prototype существует, а obj = {}, obj.prototype не существует. Object.prototype === obj.__proto__
+	Создать прототип у newObj = Object.create(proto, {{a: 'text'}}). Пример: "patterns\1 creational\3_prototype.js"
 }
 
 {//#HTML
