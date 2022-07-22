@@ -238,6 +238,17 @@
 			Поэтому queueMicrotask можно использовать для асинхронного выполнения функции в том же состоянии окружения.
 		}
 	}
+
+	{//#Преобразование #Примитивы #Хинт #Hint
+		Преобразование объектов в примитивы https://learn.javascript.ru/object-toprimitive
+		В отсутствие Symbol.toPrimitive и valueOf, toString обработает все примитивные преобразования.
+		Сначала вызывается метод obj[Symbol.toPrimitive](hint), если он существует,
+		В случае, если хинт равен "string"
+		происходит попытка вызвать obj.toString() и obj.valueOf(), смотря что есть.
+		В случае, если хинт равен "number" или "default"
+		происходит попытка вызвать obj.valueOf() и obj.toString(), смотря что есть.
+		Все эти методы должны возвращать примитив (если определены).
+	}
 }
 
 {//#ECMAScript #ES
@@ -839,9 +850,9 @@
 		}
 	}
 	
-	call - вызов функции с передачей контекста и аргументов через запятую https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/call
-	apply - то же, что и call, только аргументы передаются в массиве (обрабатываются через ...args) https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
-	bind - создание новой функции с переданным контекстом, аргументы передаются через запятую, bind присваивается переменной, затем она вызывается как функция. bind позволяет закрепить контекст, чтобы не произошла потеря контекста. bind нельзя применить повторно к забинденной функции https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+	#call - вызов функции с передачей контекста и аргументов через запятую https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/call
+	#apply - то же, что и call, только аргументы передаются в массиве (обрабатываются через ...args) https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
+	#bind - создание новой функции с переданным контекстом, аргументы передаются через запятую, bind присваивается переменной, затем она вызывается как функция. bind позволяет закрепить контекст, чтобы не произошла потеря контекста. bind нельзя применить повторно к забинденной функции https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
 	#Стрелочные функции не создают свой контекст, поэтому this внутри них будет относиться к более верхнеуровнему объекту
 	
 	Потеря контекста: https://learn.javascript.ru/bind
