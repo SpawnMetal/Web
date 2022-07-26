@@ -801,7 +801,7 @@
 {//#Контекст (Контекст выполнения) #Context (execution context))
 	http://old.code.mu/books/javascript/context/prodvinutaya-rabota-s-kontekstom-v-javascript.html
 	https://habr.com/ru/post/468943/
-	Пример в localhost\examples\context.js
+	Пример: examples\context.js region ContextNewExample
 	Контекст выполнения (execution context) — это, если говорить упрощённо, концепция, описывающая окружение, в котором производится выполнение кода на JavaScript. Код всегда выполняется внутри некоего контекста.
 
 	{//#this
@@ -853,7 +853,7 @@
 	#call - вызов функции с передачей контекста и аргументов через запятую https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/call
 	#apply - то же, что и call, только аргументы передаются в массиве (обрабатываются через ...args) https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
 	#bind - создание новой функции с переданным контекстом, аргументы передаются через запятую, bind присваивается переменной, затем она вызывается как функция. bind позволяет закрепить контекст, чтобы не произошла потеря контекста. bind нельзя применить повторно к забинденной функции https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
-	#Стрелочные функции не создают свой контекст, поэтому this внутри них будет относиться к более верхнеуровнему объекту
+	#Стрелочные функции не создают свой контекст, поэтому this внутри них будет относиться к более верхнеуровнему контексту, если он был замкнут, а не контекст просто объекта родителя, например obj1.obj2.arrow() в arrow не будет ссылкаться на obj1.this. см пример
 	
 	Потеря контекста: https://learn.javascript.ru/bind
 	Когда мы привязываем аргументы, такая функция называется «частично применённой» или «частичной».
@@ -1469,24 +1469,28 @@
 				Гугл стандарты по формату: https://google.github.io/styleguide/jsguide.html
 
 				Для активации Prettier необходимо в параметрах VSCode выставить Default Formatter и Format On Save
+
+				.prettierrc - конфиг
+				{
+					"semi": false,
+					"singleQuote": true,
+					"bracketSpacing": false,
+					"arrowParens": "avoid",
+					"printWidth": 200,
+					"tabWidth": 2,
+					"trailingComma": "all"
+				}
+
+				.prettierignore указываются файлы для игнора
 				
+				Конфиг VSCode %AppData%\Code\User\settings.json
 				"[javascript]": {
 					"editor.defaultFormatter": "esbenp.prettier-vscode"
 				},
 				"[typescriptreact]": {
 						"editor.defaultFormatter": "esbenp.prettier-vscode"
 				},
-				"editor.formatOnSave": true,
-				"prettier.semi": false,
-				"prettier.singleQuote": true,
-				"prettier.bracketSpacing": false,
-				"prettier.arrowParens": "avoid",
-				"prettier.printWidth": 200,
-				"prettier.tabWidth": 2,
-				"prettier.trailingComma": "all",
-
-				.prettierrc - конфиг
-				.prettierignore указываются файлы для игнора
+				"editor.formatOnSave": true
 				
 				semi - точка с запятой, не нужна, устаревшая практика! Есть исключительные ситуации, например перед IIFE (Immediately Invoked Functional Expression, немедленно вызываемое функциональное выражение), где Prettier знает о них и ставит, иначе возникнет ошибка в коде. Гугл с этим не согласны, хотя примеров и аргументов нет https://google.github.io/styleguide/jsguide.html#formatting-semicolons-are-required
 				На своей практике реализовал проект на next.js, скрипт в других проектах использую без точек с запятой, ошибок нет.
@@ -1568,7 +1572,7 @@
 	}
 
 	#Замыкания #Closures examples/closure.js
-	#Контекст #Context examples/context.js
+	#Контекст #Context examples/context.js region ContextNewExample
 	#Примеры examples/example.js
 	#MVC examples/mvc.js
 	#Импорты #Imports es/es-2020/1_imports.js
@@ -1758,6 +1762,7 @@
 	prototype - прототип текущего класса, а __proto__ - родительского
 	Например, Object.prototype существует, а obj = {}, obj.prototype не существует. Object.prototype === obj.__proto__
 	Создать прототип у newObj = Object.create(proto, {{a: 'text'}}). Пример: "patterns\1 creational\3_prototype.js"
+	Либо Object.setPrototypeOf(obj, constructor.prototype) Пример: "examples\example.js"
 }
 
 {//#HTML
@@ -2012,6 +2017,7 @@
 
 {//#Типы данных
 	https://developer.mozilla.org/ru/docs/Web/JavaScript/Data_structures
+	Пример приведения типов examples\examples.js
 
 	В js 8 типов данных: null, undefined, boolean, number, string, bigint, object, symbol, среди них все примитивные, кроме object
 
