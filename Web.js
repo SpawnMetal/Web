@@ -1105,6 +1105,9 @@
 		replace(newItems) заменяет все существующие записи в массиве новыми.
 		remove(value) удаляет один элемент по значению из массива. Возвращает true, если элемент был найден и удален.
 
+		reaction похож на autorun, но дает более точный контроль над тем, какие наблюдаемые объекты будут отслеживаться. https://mobx.js.org/reactions.html#reaction
+		when наблюдает и выполняет данную функцию предиката , пока она не вернет true. Как только это происходит, данная функция эффекта выполняется, и автозапуск уничтожается. https://mobx.js.org/reactions.html#when
+
 		Правила computed https://mobx.js.org/computeds.html#rules
 		Они не должны иметь побочных эффектов или обновлять другие наблюдаемые.
 		Избегайте создания и возврата новых наблюдаемых.
@@ -1130,8 +1133,13 @@
 		Отключение обязательных actions. Например во время тестирования https://mobx.js.org/actions.html#disabling-mandatory-actions-
 
 		Очистка памяти https://mobx.js.org/reactions.html#always-dispose-of-reactions
+		Обратите внимание, что мы возвращаем средство удаления, созданное autorunиз нашей функции эффекта. Это важно, так как гарантирует autorunочистку после размонтирования компонента! См Совет: useEffect и наблюдаемые объекты https://mobx.js.org/react-integration.html#tips
 
-		Подкомпоненты observer компонента, тоже должны быть обёрнуты в observer https://mobx.js.org/react-integration.html#always-read-observables-inside-observer-components
+		Подкомпоненты observer компонента, тоже должны быть обёрнуты в observer https://mobx.js.org/react-integration.html#always-read-observables-inside-observer-components https://mobx.js.org/react-integration.html#dont-pass-observables-into-components-that-arent-observer
+
+		Если observer используется в контексте рендеринга на стороне сервера; обязательно вызовите enableStaticRendering(true), чтобы observer он не подписывался на какие-либо используемые наблюдаемые, и не возникало проблем с GC.
+
+		Используйте такие утилиты, как isObservable, isObservableProp если необходимо проверить Observable во время выполнения.
 	}
 }
 
