@@ -339,6 +339,8 @@
 		prop drilling - множественная передача пропсов, используется контекст, чтобы это избежать либо MobX.
 		Для валидации пропсов используется библиотека prop-types - динамическая типизация. Flow - для статической, аналог - Typescript
 		eject нужен, чтобы получить доступ к конфигурации приложения, если оно уже было настроено с помощью WebPack и настроить его отдельно.
+
+		PUBLIC_URL ведёт в папку public, Например <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
 		
 		{//#Примеры
 			create-react-app в localhost\my-app
@@ -453,6 +455,9 @@
 		Область видимости верхнего уровня в Node не является глобальной областью видимости
 
 		Сервер Node.js без фреймворка https://developer.mozilla.org/ru/docs/Learn/Server-side/Node_server_without_framework
+
+		SyntaxError: Cannot use import statement outside a module
+		Решение: Добавить в package.sjon "type": "module", чтобы заработал import
 
 		{//#npm
 			https://www.npmjs.com
@@ -1077,6 +1082,8 @@
 		Для реализации архитектуры flux используется библиотека MobX.
 		Флюс - архитектурное решение, описывающее подход однонаправленных потоков данных.
 		MobX - javascript библиотека, реализующая архитектуру flux.
+		Пример с React: localhost\mobx
+		Пример из документации: localhost\mobx_node
 
 		https://mobx.js.org/observable-state.html
 		makeObservable для явного указания свойств. Подкласс или суперкласс должен содержать его.
@@ -1113,7 +1120,7 @@
 		Избегайте создания и возврата новых наблюдаемых.
 		Они не должны зависеть от ненаблюдаемых значений.
 
-		MobX не может сделать примитивные значения наблюдаемыми, поскольку они неизменяемы в JavaScript (но их можно упаковать ). Хотя обычно этот механизм не используется вне библиотек. https://mobx.js.org/observable-state.html
+		MobX не может сделать примитивные значения наблюдаемыми, поскольку они неизменяемы в JavaScript (но их можно упаковать). Хотя обычно этот механизм не используется вне библиотек. https://mobx.js.org/observable-state.html
 
 		Экземпляры класса никогда не станут наблюдаемыми автоматически путем передачи их свойству observableили их присвоения . observableСоздание наблюдаемых членов класса считается обязанностью конструктора класса. https://mobx.js.org/observable-state.html
 
@@ -1239,11 +1246,6 @@
 	Функция connect возвращает функцию, тот же самый компонент, но уже с дополнительным функционалом
 }
 
-{//#TypeScript
-	TypeScript - Средство разработки веб-приложений, расширяющее возможности JavaScript. Компилятор TypeScript называется tsc. Код компилируется в JavaScript. От разраба C#.
-	Концентрируется на добавлении «строгой типизации» для упрощения разработки и поддержки больших и сложных систем. Разработан Microsoft.
-}
-
 {//#JScript
 	JScript — сценарный язык программирования компании Microsoft, являющийся реализацией стандарта ECMAScript. Синтаксис JScript во многом аналогичен языку JavaScript. Язык JScript получил дальнейшее развитие в виде языка JScript.NET, который ориентирован на работу в рамках платформы Microsoft .NET. Несмотря на сходный синтаксис, это принципиально другой язык. Он более строго типизирован и компилируется, а не интерпретируется.
 }
@@ -1330,12 +1332,9 @@
 	Основным методом генератора является next(). При вызове он возобновляет выполнение кода до ближайшего ключевого слова yield. По достижении yield выполнение приостанавливается, а значение – возвращается во внешний код
 	«Открутить назад» завершившийся генератор нельзя, но можно создать новый ещё одним вызовом generateSequence() и выполнить его.
 	let generator = generateSequence();
-	let one = generator.next();
-	alert(JSON.stringify(one)); // {value: 1, done: false}
-	let two = generator.next();
-	alert(JSON.stringify(two)); // {value: 2, done: false}
-	let three = generator.next();
-	alert(JSON.stringify(three)); // {value: 3, done: true}
+	let one = generator.next(); // {value: 1, done: false}
+	let two = generator.next(); // {value: 2, done: false}
+	let three = generator.next(); // {value: 3, done: true}
 }
 
 {//#Шаблонные литералы
@@ -2335,6 +2334,8 @@
 
 {//#Typescript
 	https://youtu.be/nyIpDs2DJ_c
+	TypeScript - Средство разработки веб-приложений, расширяющее возможности JavaScript. Компилятор TypeScript называется tsc. Код компилируется в JavaScript. От разраба C#.
+	Концентрируется на добавлении «строгой типизации» для упрощения разработки и поддержки больших и сложных систем. Разработан Microsoft.
 
 	В конфиге выставить "strict": true https://medium.com/webhint/going-strict-with-typescript-be3f3f7e3295
 	"noImplicitAny": true - выдавать ошибку везде, где тип не указан и используется any https://www.typescriptlang.org/tsconfig#noImplicitAny
