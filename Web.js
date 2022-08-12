@@ -341,6 +341,8 @@
 		eject нужен, чтобы получить доступ к конфигурации приложения, если оно уже было настроено с помощью WebPack и настроить его отдельно.
 
 		PUBLIC_URL ведёт в папку public, Например <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+
+		Если вы ищете полноценное решение, которое может валидировать ввод, запомнить посещённые поля формы и обработать её отправку, присмотритесь к Formik. Эта библиотека построена на принципах управляемых компонентов и управления состоянием, так что не пренебрегайте их изучением. https://ru.reactjs.org/docs/forms.html https://jaredpalmer.com/formik
 		
 		{//#Примеры
 			create-react-app в localhost\my-app
@@ -352,6 +354,8 @@
 		
 		{//#Хук #Hook
 			https://ru.reactjs.org/docs/hooks-intro.html
+			https://ru.reactjs.org/docs/hooks-reference.html
+			https://youtu.be/9KJxaFHotqI
 			Хуки — нововведение в React 16.8, которое позволяет использовать состояние и другие возможности React без написания классов.
 			По конвенции при создании своего хука функция должна начинаться с use
 		}
@@ -360,6 +364,9 @@
 		Для этого используется npm i prop-types
 
 		{//#useState
+			https://ru.reactjs.org/docs/hooks-reference.html#usestate
+			https://youtu.be/9KJxaFHotqI?t=71
+
 			Пример в localhost\react2
 			const [state, setState] = useState(initialState)
 			Возвращает текущее значение в первом параметре деструктуризации и задаёт с помощью хука (второй параметр) начальное состояние значений.
@@ -368,15 +375,28 @@
 		}
 
 		{//#useEffect
-			useEffect(() => {}, props.source)
+			https://ru.reactjs.org/docs/hooks-reference.html#useeffect
+			https://youtu.be/9KJxaFHotqI?t=1400
+
+			componentDidMount. Чтобы функция отработала один раз, передаётся пустой массив вторым параметром. useEffect(() => {}, [])
+			componentDidMount + componentDidUpdate. Не передавать второй параметр. useEffect(() => {})
+			Для обновления, только при изменении значения useEffect(() => {}, state)
+			componentWillUnmount. Вернуть функцию. useEffect(() => {return () => {}})
+
 			Запускается после рендера и обновления.
 			При асинхронном получении данных не отображает для SEO
 			Передаётся два параметра, в первом коллбэк, во втором массив со списком зависимостей, чтобы отрабатывал коллбэк, переданный в первый параметр
-			Чтобы функция отработала один раз, передаётся пустой массив
+			Он выполняет ту же роль, что и componentDidMount, componentDidUpdate и componentWillUnmount в React-классах, объединив их в единый API.
+		}
+
+		{//#useContext
+			https://ru.reactjs.org/docs/hooks-reference.html#usecontext
+			Вы можете подписаться на контекст React без использования каких-либо вложений.
 		}
 
 		{//#useCallback
 			https://www.youtube.com/watch?v=9KJxaFHotqI&t=3579s
+			Позволяет реализовать зависимость, при которой будет вызываться функция, наподобие второго аргумента в useEffect.
 			При setState происходит рендер компонента и при переданном useEffect callback'е он будет срабатывать из-за пересоздания функций в компоненте.
 			Таким образом будет вызываться callback лишний раз при вызове одного из setState в компоненте.
 			Чтобы этого избежать, мы оборачиваем callback в useCallback, тем самым как бы кэшируем функцию и при рендере компонента callback лишний раз вызываться не будет.
