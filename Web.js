@@ -1547,6 +1547,7 @@
 			Debugger for Chrome - позволяет дебажить https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
 			Live Share - для совместной разработки https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
 			ESLint - #Линтер контроль синтаксиса https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+			Thunder Client — для Rest API https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
 
 			{//#Prettier - Code formatter - форматирование https://prettier.io/ https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 				Документация по параметрам: https://prettier.io/docs/en/options.html
