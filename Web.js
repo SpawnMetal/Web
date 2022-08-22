@@ -319,6 +319,8 @@
 		В качестве библиотеки для разработки пользовательских интерфейсов React часто используется с другими библиотеками, такими как Redux либо Mobx.
 		Топ-10 библиотек для React на GitHub https://habr.com/ru/company/ruvds/blog/345060/
 		Material UI, React-Bootstrap https://react-bootstrap.github.io , Ant-Design, StoryBook, Gatsby, Enzyme, Blueprint, Spectacle, Elemental UI, Grommet, Mozaik
+
+		Пример localhost\test_with_questions
 		
 		https://ru.reactjs.org/docs/create-a-new-react-app.html
 		https://create-react-app.dev
@@ -1102,7 +1104,7 @@
 		Для реализации архитектуры flux используется библиотека MobX.
 		Флюс - архитектурное решение, описывающее подход однонаправленных потоков данных.
 		MobX - javascript библиотека, реализующая архитектуру flux.
-		Пример с React: localhost\mobx
+		Пример с React: localhost\test_with_questions
 		Пример из документации: localhost\mobx_node
 
 		https://mobx.js.org/observable-state.html
