@@ -1550,6 +1550,8 @@
 			Live Share - для совместной разработки https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
 			ESLint - #Линтер контроль синтаксиса https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 			Thunder Client — для Rest API https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
+			Database Client - управление БД https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-database-client2
+			npm-ui - быстрый запуск команд из package.json https://marketplace.visualstudio.com/items?itemName=imbhargav5.npm-ui
 
 			{//#Prettier - Code formatter - форматирование https://prettier.io/ https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 				Документация по параметрам: https://prettier.io/docs/en/options.html
