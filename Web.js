@@ -1455,9 +1455,9 @@
 }
 
 {//#Promise API
-	https://developer.mozilla.org/ru/docs/Web/JavaScript/Guide/Using_promises
 	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise
 	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+	https://developer.mozilla.org/ru/docs/Web/JavaScript/Guide/Using_promises
 	https://learn.javascript.ru/promise
 	Git https://github.com/domenic/promises-unwrapping/blob/master/docs/states-and-fates.md
 	Примеры
@@ -1816,8 +1816,10 @@
 		для элементов (литералов массива)
 		для выражений объектов: в местах, где количество пар "ключ-значение" должно быть равно нулю или больше (для объектных литералов)
 		
-		https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters
+		https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Functions/Rest_parameters
 		Синтаксис параметра rest позволяет функции принимать неопределенное число аргументов в виде массива, обеспечивая способ представления вариадических функций в JavaScript.
+		rest - это Array
+		В ES5 использовался arguments[i], но это не Array https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Functions/arguments
 
 		{//#Копирование #Клонирование объектов и ссылки
 			https://learn.javascript.ru/object-copy
@@ -2083,7 +2085,10 @@
 }
 
 {//#enum
+	https://myrusakov.ru/js-enum-type.html
 	Тип enum или по-другому перечисление - это особый тип данных, который позволяет задавать некий список взаимосвязанных констант. Переменные этого типа могут принимать значения только из заданного в перечислении набора. Это свойство перечислений делает их удобным инструментом для реализации списка связанных значений.
+	В JavaScript на текущий момент нет нативной (родной) реализации перечислений. Typescript его предоставит https://www.typescriptlang.org/docs/handbook/enums.html
+	Значение перечисления изменить нельзя и оно Symbol
 }
 
 {//#Палиндром
@@ -2109,6 +2114,13 @@
 	Пример приведения типов examples\examples.js
 
 	В js 8 типов данных: null, undefined, boolean, number, string, bigint, object, symbol, среди них все примитивные, кроме object
+
+	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/typeof
+	typeof null === 'object' см #null
+	typeof function () {} === 'function'
+	typeof class C {} === 'function'
+	typeof Infinity === 'number'
+	typeof NaN === 'number'
 
 	Стоит отметить два особых случая работы оператора typeof: возврат "object" для значения null и "function" для функций: первое принято считать ошибкой языка, сохраненной ради обратной совместимости, второе является условностью, удобной для проверки на принадлежность значения категории функций, где функция - это особый, "вызываемый", объект.
 
@@ -2158,6 +2170,9 @@
 	}
 
 	{//#Object #Объект #Массив #Array
+		Object Object.prototype.toString.call(obj) === '[object Object]' https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object
+		Array Object.prototype.toString.call(arr) === '[object Array]' https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Array
+
 		Объект JavaScript — это таблица соотношений между ключами и значениями. Ключи — это строки (или Symbol), а значения могут быть любыми. Это делает объекты полностью отвечающими определению хеш-таблицы
 		
 		https://ru.wikipedia.org/wiki/Хеш-таблица
@@ -2168,6 +2183,8 @@
 		Функции — это обычные объекты, имеющие дополнительную возможность быть вызванными для исполнения.
 
 		JavaScript имеет стандартную библиотеку встроенных объектов https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects
+
+		Object.getOwnPropertyDescriptor(obj, prop) позволяет получить параметры свойства: configurable, enumerable, value, writable https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor
 
 		{//#Object
 			Переменная содержит ссылку, а не само значение.
@@ -2374,6 +2391,8 @@
 	TypeScript - Средство разработки веб-приложений, расширяющее возможности JavaScript. Компилятор TypeScript называется tsc. Код компилируется в JavaScript. От разраба C#.
 	Концентрируется на добавлении «строгой типизации» для упрощения разработки и поддержки больших и сложных систем. Разработан Microsoft.
 
+	Utility Types (утилиты для работы с типами) https://www.typescriptlang.org/docs/handbook/utility-types.html
+
 	В конфиге выставить "strict": true https://medium.com/webhint/going-strict-with-typescript-be3f3f7e3295
 	"noImplicitAny": true - выдавать ошибку везде, где тип не указан и используется any https://www.typescriptlang.org/tsconfig#noImplicitAny
 
@@ -2492,8 +2511,19 @@
 	Nx — это интеллектуальная, быстрая и расширяемая система сборки с первоклассной поддержкой монорепозиториев и мощными интеграциями.
 }
 
-{//#of #Перебор #Итерируемость #Итерируемый #Iterator #Iteration
-	Наличие Symbol.iterator определяет итерируемость
-	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Iteration_protocols
-	for...of https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/for...of
+{//#for
+	{//#of #Перебор #Итерируемость #Итерируемый #Iterator #Iteration
+		https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/for...of
+		Оператор for...of выполняет цикл обхода итерируемых объектов (включая Array, Map, Set, объект аргументов и подобных), вызывая на каждом шаге итерации операторы для каждого значения из различных свойств объекта.
+		Наличие Symbol.iterator определяет итерируемость
+		https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Iteration_protocols
+	}
+
+	{//#in #Перечисление
+		https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Statements/for...in
+		Цикл for...in проходит через перечисляемые свойства объекта. Он пройдёт по каждому отдельному элементу.
+		https://developer.mozilla.org/ru/docs/Web/JavaScript/Enumerability_and_ownership_of_properties
+		Свойства, определённые через Object.defineProperty получают по умолчанию значение флага Enumerable равным false
+		Свойство Symbol не перечисляется
+	}
 }
