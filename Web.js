@@ -1214,7 +1214,7 @@
 
 {//#Lodash
 	https://lodash.com/
-	Для решения типовых задач, используется библиотека lodash @ 4.17.
+	Для решения типовых задач, используется библиотека lodash
 	Lodash - библиотека JavaScript, которая предоставляет вспомогательные функции для общих задач разработки с использованием парадигмы функционального программирования.
 }
 
@@ -1454,7 +1454,7 @@
 	}
 }
 
-{//#Promise API
+{//#Promise
 	https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise
 	https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 	https://developer.mozilla.org/ru/docs/Web/JavaScript/Guide/Using_promises
@@ -1471,32 +1471,29 @@
 	Promice - это специальный объект, который содержит своё состояние. Вначале pending («ожидание»), затем – одно из: fulfilled («выполнено успешно») или rejected («выполнено с ошибкой»).
 	Промисы необходимы для организации асинхронного кода.
 
-	{//#Код
-		var promise = new Promise(function(resolve, reject)
-		{
-			// Эта функция будет вызвана автоматически
+	Функции:
+	all - выполняет все промисы, если один выполнится с ошибкой, то вернётся ошибка
+	allSettled - выполняет все промисы
+	race - ждёт только первый выполненный промис
+	any - ждёт только первый успешно выполненный промис
+	resolve - then
+	reject - catch
 
-			// В ней можно делать любые асинхронные операции,
-			// А когда они завершатся — нужно вызвать одно из:
-			// resolve(результат) при успешном выполнении
-			// reject(ошибка) при ошибке
-		})
-		
-		class Ajax
+	const promise = new Promise(function(resolve, reject)
+	{
+		// Эта функция будет вызвана мгновенно
+
+		// В ней можно делать любые асинхронные операции,
+		// А когда они завершатся — нужно вызвать одно из:
+		// resolve(результат) при успешном выполнении. Вызывается 1 раз, второй вызов будет проигнорирован
+		// reject(ошибка) при ошибке. Вызывается 1 раз, второй вызов будет проигнорирован
+
+		setTimeout(() =>
 		{
-			static echo(data)
-			{
-				return new Promise((resolve, reject) =>
-				{
-					setTimeout(() =>
-					{
-						if(data) resolve(data)
-						else reject(new Error('error'))
-					}, 150)
-				})
-			}
-		}
-	}
+			if(data) resolve(data) // promise.then
+			else reject(new Error('error')) // promise.catch
+		})
+	})
 }
 
 {//#Emmet
@@ -2526,4 +2523,20 @@
 		Свойства, определённые через Object.defineProperty получают по умолчанию значение флага Enumerable равным false
 		Свойство Symbol не перечисляется
 	}
+}
+
+{//#Регулярные выражения #Regular
+	https://developer.mozilla.org/ru/docs/Web/JavaScript/Guide/Regular_Expressions
+	https://learn.javascript.ru/regular-expressions
+
+	Регулярные выражения - это шаблоны, используемые для сопоставления последовательностей символов в строках. В JavaScript регулярные выражения также являются объектами. Эти шаблоны используются в методах exec и test объекта RegExp, а также match, replace, search и split объекта String.
+
+	Пример localhost\examples\regular.js
+	regexp = new RegExp("шаблон", "флаги");
+	regexp = /шаблон/gmi; // с флагами gmi
+}
+
+{//#Полифил #Polyfill
+	https://developer.mozilla.org/ru/docs/Glossary/Polyfill
+	Полифил — это фрагмент кода (в сети — обычно JavaScript), который позволяет использовать современную функциональность в более старых браузерах, которые не поддерживают ее по умолчанию.
 }
