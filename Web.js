@@ -2404,6 +2404,17 @@
 	Утвердить тип: var element = <HTMLInputElement> document.getElementById("is3dCheckBox");
 	Утвердить сильнее: var isChecked = (<HTMLInputElement><any>myString).checked; Строковая переменная расширяется до any типа перед утверждением HTMLInputElement.
 	Если вы используете файлы tsx, как я, вы не можете использовать синтаксис угловой скобки, вы должны использовать «как»: let element = document.getElementById("is3dCheckBox") as HTMLInputElement; https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
+
+	Creating Types from Types https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
+		Generics - Types which take parameters
+		Keyof Type Operator - Using the keyof operator to create new types
+		Typeof Type Operator - Using the typeof operator to create new types
+		Indexed Access Types - Using Type['a'] syntax to access a subset of a type
+		Conditional Types - Types which act like if statements in the type system
+		Mapped Types - Creating types by mapping each property in an existing type
+		Template Literal Types - Mapped types which change properties via template literal strings
+	
+	Другие типы, о которых нужно знать: void, object, unknown, never, Function https://www.typescriptlang.org/docs/handbook/2/functions.html#other-types-to-know-about
 }
 
 {//#Веб-безопасность #безопасность
