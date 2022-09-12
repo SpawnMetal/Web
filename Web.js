@@ -558,9 +558,13 @@
 			https://www.npmjs.com/package/@types/react
 			npm install --save-dev typescript @types/react
 
-			Dotenv - это модуль с нулевой зависимостью, который загружает переменные среды из .env файла process.env. Хранение конфигурации в среде отдельно от кода основано на методологии Двенадцатифакторного приложения.
+			Dotenv - загружает переменные среды из .env файла process.env
 			https://www.npmjs.com/package/dotenv
-			npm install dotenv
+			npm install dotenv --save
+			require('dotenv').config()
+			Либо
+			import * as dotenv from 'dotenv'
+			dotenv.config()
 
 			#MaterialUI
 			https://www.npmjs.com/package/@material-ui/core
@@ -2467,6 +2471,7 @@
 
 		Фцнкция sort() использует сортировку вставкой (Insertion). Преобразует в строку и если условие сортировки возвращает положительное значение, тогда осуществляется перестановка, поэтому возвращаем a - b.
 		Если a и b равны, то вернется 0. В этом случае порядок элементов может сохраниться, а может и поменяться. Глобально это не повлияет на задачу сортировки, но может иметь различные побочные эффекты.
+		localeCompare() используется для сортировки строк, воозвращая значение при сравнении
 
 		Самые быстрые:
 		Сортировка по основанию	(Radix sort) https://en.wikipedia.org/wiki/Radix_sort
