@@ -287,7 +287,7 @@
 	
 	"proxy": "http://localhost:5000", прописывается в client/package.json, чтобы запросы с клиента шли по серверной ссылке, на сервер, а не на клиент
 	
-	{//#MongoDB
+	{//#MongoDB #NoSQL
 		MongoDB — документо ориентированная система управления базами данных, не требующая описания схемы таблиц. Считается одним из классических примеров NoSQL-систем, использует JSON-подобные документы и схему базы данных.
 		Применяется в веб-разработке, в частности, в рамках JavaScript-ориентированного стека MEAN.
 		https://www.mongodb.com
@@ -1096,7 +1096,7 @@
 	JSX напоминает другой язык, созданный в компании Фейсбук для расширения PHP, XHP.
 }
 
-{//#Flux-архитектура
+{//#Flux-архитектура #State #Manager #Менеджер #Состояний
 	https://ru.wikipedia.org/wiki/Flux-%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D0%B0
 	Flux-архитектура — архитектурный подход или набор шаблонов программирования для построения пользовательского интерфейса веб-приложений, сочетающийся с реактивным программированием и построенный на однонаправленных потоках данных.
 	Согласно замыслу создателей и несмотря на то, что Facebook предоставил реализацию Flux в дополнение к React, Flux не является ещё одним веб-фреймворком, а является архитектурным решением.
@@ -1174,6 +1174,51 @@
 
 		Используйте такие утилиты, как isObservable, isObservableProp если необходимо проверить Observable во время выполнения.
 	}
+
+	{//#Redux
+		Устаревшая усложнённая технология загрязняющая проект, на смену которой пришёл MobX. Не использовать Redux ни в коем случае!!!
+
+		https://redux.js.org/
+		Predictable State Container for JS Apps (Контейнер предсказуемого состояния для JS-приложений)
+
+		Redux — библиотека для JavaScript с открытым исходным кодом, предназначенная для управления состоянием приложения. Чаще всего используется в связке с React или Angular для разработки клиентской части. Содержит ряд инструментов, позволяющих значительно упростить передачу данных хранилища через контекст.
+		Redux – библиотека с простым API, предсказуемое хранилище состояния приложений.
+
+		Пример 1: localhost\react-redux-course https://youtu.be/G3GGXIhggGs
+		Пример 2: localhost\redux https://youtu.be/YdYyYMFPa44
+
+		Redux не привязан к фреймворку, это технология для разделения данных и способа отображения.
+		Всё состояние приложения - это единый объект в Redux.
+
+		Component -> Action -> Store -> Reducer -> Store -> Component
+		Component / View общается со Store через Action
+		Action - объект с типом действия, который диспатчится в Store
+		Store - содержит само состояние, которое меняется через Reducer
+		Reducer - это чистая функция, которая вычисляет следующее состояние на основании предыдущего.
+		Reducer правила: всегда должна вернуть state, если action.type совпадает с тем, что мы меняем в Reducer, тогда мы должны вернуть новый объект - это иммутабельность (неизменный объект).
+		Затем в Store отрабатывает observer / subscribers, обновляя тем самым Component
+
+		Store
+		https://redux.js.org/api/store
+		getState() // Получить состояние
+		dispatch(action) // Изменить состояние
+		subscribe(listener) // Подписаться на обновления
+		replaceReducer(nextReducer) // Заменить редьюсер
+
+		createStore -> Reducer switch(action.type) case CREATE_POST -> return всте старые state в Store и новый state(Store)
+		В action есть dispatch
+		const dispatch = useDispatch() // Позволяет диспатчить action в store
+		В dispatch передаётся {type: action}
+		dispatch вызывает Reducer из createStore в котором вычисляется новый state(Store)
+		const loading = useSelector(state => state.app.loading) // Получить значение из state
+		connect(f(state) return {key: state...}, {{type: action}, ...})(Component) arg1: Преобразовывает стейты в пропсы. arg2: Сработает диспатч
+
+		Функция connect возвращает функцию, тот же самый компонент, но уже с дополнительным функционалом
+	}
+
+	{//#Effector
+		https://effector.dev/ru/
+	}
 }
 
 {//#Babel
@@ -1229,47 +1274,6 @@
 	позволяющий веб-разработчикам использовать модульный подход для целей разработки своих веб-приложений. Его можно использовать из командной строки или настроить с помощью файла конфигурации с именем webpack.config.js . Этот файл используется для определения правил, плагинов и т. Д. Для проекта. (Веб-пакет легко расширяется с помощью правил, которые позволяют разработчикам писать собственные задачи, которые они хотят выполнять при объединении файлов.)
 	Запаковывает фалы проекта в один общий файл - bundle.js
 	Концепции https://webpack.js.org/concepts
-}
-
-{//#Redux
-	Устаревшая усложнённая технология загрязняющая проект, на смену которой пришёл MobX. Не использовать Redux ни в коем случае!!!
-
-	https://redux.js.org/
-	Predictable State Container for JS Apps (Контейнер предсказуемого состояния для JS-приложений)
-
-	Redux — библиотека для JavaScript с открытым исходным кодом, предназначенная для управления состоянием приложения. Чаще всего используется в связке с React или Angular для разработки клиентской части. Содержит ряд инструментов, позволяющих значительно упростить передачу данных хранилища через контекст.
-	Redux – библиотека с простым API, предсказуемое хранилище состояния приложений.
-
-	Пример 1: localhost\react-redux-course https://youtu.be/G3GGXIhggGs
-	Пример 2: localhost\redux https://youtu.be/YdYyYMFPa44
-
-	Redux не привязан к фреймворку, это технология для разделения данных и способа отображения.
-	Всё состояние приложения - это единый объект в Redux.
-
-	Component -> Action -> Store -> Reducer -> Store -> Component
-	Component / View общается со Store через Action
-	Action - объект с типом действия, который диспатчится в Store
-	Store - содержит само состояние, которое меняется через Reducer
-	Reducer - это чистая функция, которая вычисляет следующее состояние на основании предыдущего.
-	Reducer правила: всегда должна вернуть state, если action.type совпадает с тем, что мы меняем в Reducer, тогда мы должны вернуть новый объект - это иммутабельность (неизменный объект).
-	Затем в Store отрабатывает observer / subscribers, обновляя тем самым Component
-
-	Store
-	https://redux.js.org/api/store
-	getState() // Получить состояние
-	dispatch(action) // Изменить состояние
-	subscribe(listener) // Подписаться на обновления
-	replaceReducer(nextReducer) // Заменить редьюсер
-
-	createStore -> Reducer switch(action.type) case CREATE_POST -> return всте старые state в Store и новый state(Store)
-	В action есть dispatch
-	const dispatch = useDispatch() // Позволяет диспатчить action в store
-	В dispatch передаётся {type: action}
-	dispatch вызывает Reducer из createStore в котором вычисляется новый state(Store)
-	const loading = useSelector(state => state.app.loading) // Получить значение из state
-	connect(f(state) return {key: state...}, {{type: action}, ...})(Component) arg1: Преобразовывает стейты в пропсы. arg2: Сработает диспатч
-
-	Функция connect возвращает функцию, тот же самый компонент, но уже с дополнительным функционалом
 }
 
 {//#JScript
@@ -1553,6 +1557,7 @@
 			Thunder Client — для Rest API https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
 			Database Client - управление БД https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-database-client2
 			npm-ui - быстрый запуск команд из package.json https://marketplace.visualstudio.com/items?itemName=imbhargav5.npm-ui
+			GitHub Copilot - Open AI https://marketplace.visualstudio.com/items?itemName=GitHub.copilot
 
 			{//#Prettier - Code formatter - форматирование https://prettier.io/ https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 				Документация по параметрам: https://prettier.io/docs/en/options.html
@@ -2569,4 +2574,30 @@
 {//#Полифил #Polyfill
 	https://developer.mozilla.org/ru/docs/Glossary/Polyfill
 	Полифил — это фрагмент кода (в сети — обычно JavaScript), который позволяет использовать современную функциональность в более старых браузерах, которые не поддерживают ее по умолчанию.
+}
+
+{//#NoSQL
+	#MongoDB
+	#Redis
+}
+
+{//#Redis #NoSQL
+	https://redis.io
+	https://ru.wikipedia.org/wiki/Redis
+	Redis (от англ. remote dictionary server) — резидентная система управления базами данных класса NoSQL с открытым исходным кодом, работающая со структурами данных типа «ключ — значение». Используется как для баз данных, так и для реализации кэшей, брокеров сообщений.
+	Ориентирована на достижение максимальной производительности на атомарных операциях (заявляется о приблизительно 100 тыс. SET- и GET-запросов в секунду на Linux-сервере начального уровня[5]). Написана на Си, интерфейсы доступа созданы для большинства основных языков программирования.
+}
+
+{//#Сообщения #Брокер
+	{//#RabbitMQ
+		https://www.rabbitmq.com/
+		https://ru.wikipedia.org/wiki/RabbitMQ
+		RabbitMQ — программный брокер сообщений на основе стандарта AMQP — тиражируемое связующее программное обеспечение, ориентированное на обработку сообщений. Создан на основе системы Open Telecom Platform, написан на языке Erlang, в качестве движка базы данных для хранения сообщений использует Mnesia.
+	}
+
+	{//#NATS
+		https://nats.io/
+		https://en.wikipedia.org/wiki/NATS_Messaging
+		NATS — это система обмена сообщениями с открытым исходным кодом (иногда называемая промежуточным программным обеспечением, ориентированным на сообщения ). Сервер NATS написан на языке программирования Go . Клиентские библиотеки для взаимодействия с сервером доступны для десятков основных языков программирования. Основными принципами проектирования NATS являются производительность, масштабируемость и простота использования. [2] Аббревиатура NATS расшифровывается как Neural Autonomic Transport System.
+	}
 }
