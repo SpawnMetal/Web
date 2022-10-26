@@ -1756,6 +1756,16 @@
 	REST - (от англ. Representational State Transfer — «передача состояния представления») — архитектурный стиль взаимодействия компонентов распределённого приложения в сети.
 	Позволяет общаться с удалёным API.
 	https://ru.wikipedia.org/wiki/REST
+
+	Использовать:
+	Get для получения
+	Post для создания
+	Put для обновления
+	Delete для удаления
+	Patch для создания либо обновления
+
+	https://habr.com/ru/post/50147	
+	Каждая ссылка на уникальный ресурс должна отличаться, а не быть в query, например не page=10, а использовать page/10
 }
 
 {//#Динамический ключ
@@ -2360,6 +2370,10 @@
 			201: ответ об успешном выполнении метода POST
 			400: неверный запрос, который сервер не может обработать
 			404: ресурс не найден
+
+			#Методы https://developer.mozilla.org/ru/docs/Web/HTTP/Methods
+			PUT является идемпотентным, т.е. единичный и множественные вызовы этого метода, с идентичным набором данных, будут иметь тот же результат выполнения (без сторонних эффектов), в случае с POST, множественный вызов с идентичным набором данных может повлечь за собой сторонние эффекты.
+			A PATCH не обязательно идемпотент, хотя может быть.
 		}
 
 		URL https://developer.mozilla.org/ru/docs/Glossary/URL
@@ -2632,15 +2646,60 @@
 	docker ps - запущенные контейнеры
 }
 
-{//#TypeORM
+{//#TypeORM #ORM
 	https://typeorm.io/
-	TypeORM — это ORM , который может работать на платформах NodeJS, Browser, Cordova, PhoneGap, Ionic, React Native, NativeScript, Expo и Electron и может использоваться с TypeScript и JavaScript (ES5, ES6, ES7, ES8). Его цель — всегда поддерживать новейшие функции JavaScript и предоставлять дополнительные функции, помогающие разрабатывать любые приложения, использующие базы данных — от небольших приложений с несколькими таблицами до крупномасштабных корпоративных приложений с несколькими базами данных.
+	TypeORM — это ORM, который может работать на платформах NodeJS, Browser, Cordova, PhoneGap, Ionic, React Native, NativeScript, Expo и Electron и может использоваться с TypeScript и JavaScript (ES5, ES6, ES7, ES8). Его цель — всегда поддерживать новейшие функции JavaScript и предоставлять дополнительные функции, помогающие разрабатывать любые приложения, использующие базы данных — от небольших приложений с несколькими таблицами до крупномасштабных корпоративных приложений с несколькими базами данных.
 	TypeORM поддерживает шаблоны Active Record и Data Mapper , в отличие от всех других существующих в настоящее время JavaScript ORM, что означает, что вы можете писать высококачественные, слабосвязанные, масштабируемые, удобные в сопровождении приложения наиболее продуктивным способом.
 	TypeORM находится под сильным влиянием других ORM, таких как Hibernate , Doctrine и Entity Framework.
+
+	ORM (англ. Object-Relational Mapping, рус. объектно-реляционное отображение, или преобразование) — технология программирования, которая связывает базы данных с концепциями объектно-ориентированных языков программирования, создавая «виртуальную объектную базу данных». Существуют как проприетарные, так и свободные реализации этой технологии.
 
 	npm install --save @nestjs/typeorm typeorm pg
 
 	Понятие о миграциях: https://medium.com/nuances-of-programming/%D0%BF%D0%BE%D0%BD%D1%8F%D1%82%D0%B8%D0%B5-%D0%BE-%D0%BC%D0%B8%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D1%8F%D1%85-%D0%B2-typeorm-9a6a40ddd76e
+
+	@OneToOne(() => Entity) https://typeorm.io/decorator-reference#onetoone
+		entityName: Entity
+		A может иметь только один B и наоборот, который указывается в колонке nameId
+		Обязателен @JoinColumn иначе будут ошибки, например при find
+		У таблицы B связь с текущей A не обязательна
+	@ManyToOne(() => Entity) https://typeorm.io/decorator-reference#manytoone
+		entityName: Entity
+		У текущих A (Photo) может быть один и тот же B (User), который указывается в колонке nameId
+		Не нужен @JoinColumn, nameId создаётся автоматом
+		У обеих таблиц можно применить @ManyToOne, но при find будет выводить только одного
+	@OneToMany(() => Entity, entityName => entityName.b) https://typeorm.io/decorator-reference#onetomany
+		entityNames: Entity[]
+		У текущего A (User) может быть много B[] (Photo[])
+		nameId B не создаётся, он их получает из связанной
+		В find получим массив A
+	@ManyToMany(() => Entity) https://typeorm.io/decorator-reference#manytomany https://typeorm.io/many-to-many-relations#many-to-many-relations-with-custom-properties
+		@JoinTable({name: 'b_a'})
+		entityNames: Entity[]
+		У A (Question) может быть много B (Category) и наоборот
+		Соединительная таблица генерируется автоматом, поэтому @JoinTable обязателен, а в текущей таблице формироваться колонка с id не будет
+		Можно задать свои настройки имени таблицы и колонок соединения:
+	@JoinTable https://typeorm.io/decorator-reference#jointable
+		Обязателен для @ManyToMany
+		@JoinTable({
+			name: "question_categories", // table name for the junction table of this relation
+			joinColumn: {
+				name: "question",
+				referencedColumnName: "id"
+			},
+			inverseJoinColumn: {
+				name: "category",
+				referencedColumnName: "id"
+			}
+		})
+	@JoinColumn https://typeorm.io/decorator-reference#joincolumn
+		Создаёт колонку со связанным nameId
+		Обязателен у @OneToOne
+		Не нужен у @ManyToOne
+	@RelationId(b: B, b => b.a) https://typeorm.io/decorator-reference#relationid
+		aId: number[]
+		Не создаёт колонку
+		В find выведет массив со связанными a.id
 }
 
 {//#Процесс #разработки программного обеспечения #Жизненный цикл #MVP
