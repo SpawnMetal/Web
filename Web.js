@@ -1,22 +1,19 @@
 {//#Использовать
 	#Соглашения JavaScript
-	#JSDoc и readme.md
-	#Git
-	#VSCode #VSCodeРасширения
-	#WebStorm?
-	#MVC
-	#SASS
 	#React
 	#MobX
-	#Material Design
-	#ES6+
-	#Lodash
-	#Jest
-	#Node.js
-	#Next.js
+	#NestJS
+	#GraphQL
+	#Swagger
 	#Typescript
+	#Jest
+	#Git
+	#MVC
+	#Material Design
+	#SASS
+	#VSCode #VSCodeРасширения
+	#JSDoc и readme.md
 	#БЭМ
-	#REST API
 }
 
 {//#Git
@@ -1558,6 +1555,8 @@
 			Database Client - управление БД https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-database-client2
 			npm-ui - быстрый запуск команд из package.json https://marketplace.visualstudio.com/items?itemName=imbhargav5.npm-ui
 			GitHub Copilot - Open AI https://marketplace.visualstudio.com/items?itemName=GitHub.copilot
+			vscode-graphiql-explorer https://marketplace.visualstudio.com/items?itemName=GabrielNordeborn.vscode-graphiql-explorer
+			GraphQL for VSCode https://marketplace.visualstudio.com/items?itemName=kumar-harsh.graphql-for-vscode
 
 			{//#Prettier - Code formatter - форматирование https://prettier.io/ https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
 				Документация по параметрам: https://prettier.io/docs/en/options.html
@@ -1752,10 +1751,13 @@
 	}
 }
 
-{//#REST API
+{//#REST #Open #API
 	REST - (от англ. Representational State Transfer — «передача состояния представления») — архитектурный стиль взаимодействия компонентов распределённого приложения в сети.
 	Позволяет общаться с удалёным API.
 	https://ru.wikipedia.org/wiki/REST
+
+	OpenAPI - формализованная спецификация и экосистема множества инструментов, предоставляющая интерфейс между front-end системами, кодом библиотек низкого уровня и коммерческими решениями в виде API. Вместе с тем, cпецификация построена таким образом, что не зависит от языков программирования, и удобна в использовании как человеком, так и машиной[2].
+	https://ru.wikipedia.org/wiki/OpenAPI_(спецификация)
 
 	Использовать:
 	Get для получения
@@ -1766,6 +1768,13 @@
 
 	https://habr.com/ru/post/50147	
 	Каждая ссылка на уникальный ресурс должна отличаться, а не быть в query, например не page=10, а использовать page/10
+
+	{//#Swagger
+		https://en.wikipedia.org/wiki/Swagger_(software)
+		https://swagger.io/
+		https://youtu.be/hPzorok-gI4
+		Swagger — это набор инструментов для разработчиков API от SmartBear Software [1] и бывшая спецификация, на которой основана спецификация OpenAPI
+	}
 }
 
 {//#Динамический ключ
@@ -2635,7 +2644,12 @@
 
 {//#GraphQL
 	https://graphql.org/
+	https://habr.com/ru/post/326986/
+	https://docs.github.com/en/graphql/overview/about-the-graphql-api
+	Все о GraphQL за 30 минут https://youtu.be/7zEaHr_iJjA
+	Full-stack приложение. NestJS TypeORM PostgreSQL GraphQL Docker. Часть 1. Backend https://youtu.be/msVhfCzFWvY
 	GraphQL — язык запросов данных и язык манипулирования данными с открытым исходным кодом для построения веб ориентированных программных интерфейсов. GraphQL был разработан как внутренний проект компании Facebook
+	mutation выполняются последовтельно, а query параллельно
 }
 
 {//#Docker
