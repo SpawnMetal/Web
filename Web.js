@@ -3,6 +3,7 @@
 	#React
 	#MobX
 	#NestJS
+	#Typeorm
 	#GraphQL
 	#Swagger
 	#Typescript
@@ -10,6 +11,8 @@
 	#Git
 	#MVC
 	#Material Design
+	#WebSocket
+	#Docker
 	#SASS
 	#VSCode #VSCodeРасширения
 	#JSDoc и readme.md
@@ -2761,4 +2764,59 @@
 
 	https://docs.nestjs.com/microservices/basics
 	На примере NestJS + Kafka https://youtu.be/7-dgkxLgbBM
+}
+
+{//#WebSocket
+	Веб-сокеты это продвинутая технология, позволяющая открыть постоянное двунаправленное сетевое соединение между браузером пользователя и сервером. С помощью его API вы можете отправить сообщение на сервер и получить ответ без выполнения http запроса, причём этот процесс будет событийно-управляемым.
+
+	Что такое Websocket? Websockets простыми словами https://youtu.be/SxMvxIHBahU
+	Знакомство с WebSocket https://youtu.be/DKOaL94VyFY
+
+	https://learn.javascript.ru/websocket
+
+	https://developer.mozilla.org/ru/docs/Web/API/WebSockets_API
+	https://ru.wikipedia.org/wiki/WebSocket
+
+	#npm
+	npm i ws
+	https://www.npmjs.com/package/ws
+}
+
+{//#Развёртывание #Контейнеры
+	Сравнение Kubernetes и Docker https://www.atlassian.com/ru/microservices/microservices-architecture/kubernetes-vs-docker#:~:text=Docker%20Swarm%20(%D0%B8%D0%BB%D0%B8%20%D1%80%D0%B5%D0%B6%D0%B8%D0%BC%20%D1%80%D0%BE%D1%8F,%D0%B5%D0%B3%D0%BE%20%D0%B4%D0%BE%D0%BB%D0%B6%D0%BD%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B8%D1%82%D1%8C%20%D0%BA%D0%BE%D0%BC%D0%B0%D0%BD%D0%B4%D0%B0%20DevOps.
+
+	{//#Docker
+		https://ru.wikipedia.org/wiki/Docker
+		Docker — программное обеспечение для автоматизации развёртывания и управления приложениями в средах с поддержкой контейнеризации, контейнеризатор приложений. Позволяет «упаковать» приложение со всем его окружением[en] и зависимостями в контейнер, который может быть развёрнут на любой Linux-системе с поддержкой контрольных групп в ядре, а также предоставляет набор команд для управления этими контейнерами.
+
+		https://www.docker.com/
+		Зачем нужен и как работает Docker — ликбез https://youtu.be/KS80Knz-1Z4
+		Почему Docker Swarm, а не Kubernetes? https://youtu.be/mR0Xk_lyC48
+
+		#Swarm
+		Docker Swarm (или режим роя Docker) — это инструмент оркестрации контейнеров, подобный Kubernetes. Он позволяет управлять несколькими контейнерами, развернутыми на нескольких хостах, на которых запущен сервер Docker. По умолчанию режим роя отключен; его должна настроить команда DevOps.
+
+		#Wasm #WebAssembly
+		https://docs.docker.com/desktop/wasm/
+		Wasm (сокращение от WebAssembly) — это более быстрая и легкая альтернатива контейнерам Linux и Windows, которые вы используете в Docker
+	}
+
+	{//#Kubernetes
+		Сложен в использовании, но более гибкий https://youtu.be/mR0Xk_lyC48
+
+		https://kubernetes.io/
+
+		{//#Helm Charts
+			https://helm.sh/
+			Упаковщик для Kubernetes. Множество файлов с настройками упаковывает в один, чтобы можно было задеплоить приложухи с разными настройками разом
+			Helm Charts - Что это такое и зачем нужно - За 5 минут! https://youtu.be/vWZZjoILeos
+		}
+	}
+
+	{//#Оркестрация
+		#portainer - UI https://www.portainer.io/
+
+		Compass и оркестрация контейнеров
+		Независимо от того, какое решение для оркестрации контейнеров вы выберете, важно использовать подходящий инструмент, чтобы управлять сложностью распределенной архитектуры по мере масштабирования. Atlassian Compass — это расширяемая платформа для разработчиков, которая объединяет разрозненные сведения о результатах разработки и совместной работе команд в едином центре с возможностью поиска. Compass не только поддержит вас в борьбе с разрастанием микросервисов с помощью каталога компонентов. Это решение поможет внедрить передовые методы и оценить работоспособность вашего ПО, используя карты оценки, а также снабдит данными и аналитикой по всему пакету инструментов DevOps с помощью расширений на платформе Atlassian Forge.
+	}
 }
