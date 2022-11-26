@@ -120,7 +120,7 @@
 #Swagger
 #Typescript
 #Jest
-[#Git]
+[Git](#Git)
 #MVC
 #Material Design
 #WebSocket
