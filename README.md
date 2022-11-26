@@ -3,8 +3,9 @@
 - [Use](#Use)
 - [Git](#Git)
 - [JavaScript](#JavaScript)
-  - [JavaScript #JS](#JavaScript #JS)
-  - [ECMAScript #ES](#ECMAScript #ES)
+  - [JavaScript](#JavaScript)
+  - [ECMAScript](#ECMAScript)
+  - [Test](#Test Test)
 - [MERN](#MERN)
 - [Принципы, схемы и подходы программирования](#Принципы, схемы и подходы программирования)
 - [IIFE](#IIFE)
@@ -115,4 +116,18 @@
 
 ## JavaScript
 
-### JavaScript #JS
+### JavaScript
+
+`#JavaScript #JS`
+
+Текст
+
+### ECMAScript
+
+`#ECMAScript #ES`
+
+Текст
+
+## Test
+
+Текст
