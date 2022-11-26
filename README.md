@@ -111,24 +111,24 @@
 
 ## Use
 
-#Соглашения JavaScript
-#React
-#MobX
-#NestJS
-#Typeorm
-#GraphQL
-#Swagger
-#Typescript
-#Jest
-[Git](#Git)
-#MVC
-#Material Design
-#WebSocket
-#Docker
-#SASS
-#VSCode #VSCodeРасширения
-#JSDoc и readme.md
-#БЭМ
+- #Соглашения JavaScript
+- #React
+- #MobX
+- #NestJS
+- #Typeorm
+- #GraphQL
+- #Swagger
+- #Typescript
+- #Jest
+- [Git](#Git)
+- #MVC
+- #Material Design
+- #WebSocket
+- #Docker
+- #SASS
+- #VSCode #VSCodeРасширения
+- #JSDoc и readme.md
+- #БЭМ
 
 ## Git
 
