@@ -4,6 +4,13 @@
 - [Git](#Git)
 - [JavaScript](#JavaScript)
   - [ECMAScript](#ECMAScript)
+    - [JS 2021](#js-2021)
+    - [EventLoop](#EventLoop)
+      - [Стек](#Стек)
+      - [Очередь](#Очередь)
+      - [Куча](#Куча)
+    - [Микрозадачи, Макрозадачи](#Микрозадачи-Макрозадачи)
+    - [Hint](#Hint)
   - [IIFE](#IIFE)
   - [Классы](#Классы)
   - [Контекст](#Контекст)
@@ -37,11 +44,23 @@
   - [Регулярные выражения](#Регулярные-выражения)
 - [Technology](#Technology)
   - [React](#React)
+    - [Хук](#Хук)
+      - [useState](#useState)
+      - [useEffect](#useEffect)
+      - [useContext](#useContext)
+      - [useCallback](#useCallback) -[React Router](#React-Router)
     - [JSX](#JSX)
+    - [React DevTools](#React-DevTools)
+    - [React Native](#React-Native)
   - [NestJS](#NestJS)
+  - [Node.js](#Node.js)
+    - [npm](#npm)
+    - [npx](#npx)
+  - [Express](#Express)
   - [GraphQL](#GraphQL)
   - [Docker](#Docker)
   - [TypeORM](#TypeORM)
+  - [Next.js](#Next.js)
   - [Babel](#Babel)
   - [Material Design](#Material-Design)
   - [Axios](#Axios)
@@ -96,6 +115,8 @@
   - [Веб-безопасность](#Веб-безопасность)
   - [Полифил](#Полифил)
   - [Микросервис](#Микросервис)
+  - [SSR](#SSR)
+  - [SEO](#SEO)
 - [HTML](#HTML)
 - [CSS](#CSS)
   - [БЭМ](#БЭМ)
@@ -105,6 +126,7 @@
 - [Браузер](#Браузер)
 - [Алгоритмы и структуры данных](#Алгоритмы-и-структуры-данных)
 - [NoSQL](#NoSQL)
+  - [MongoDB](#MongoDB)
   - [Redis](#Redis)
 - [Брокер](#Брокер)
 - [Процесс разработки программного обеспечения, Жизненный цикл, MVP](#Процесс-разработки-программного-обеспечения-Жизненный-цикл-MVP)
@@ -388,14 +410,611 @@ esc, Shift + ; пишем :q! - выйти без сохранения
 
 ## JavaScript
 
-### JavaScript
-
 `#JavaScript #JS`
 
-Текст
+JavaScript - Мультипарадигменный (расширяемый и использующий другие языки) язык программирования. Поддерживает объектно-ориентированный, императивный и функциональный стили. Является реализацией языка ECMAScript. В него конвертируются: TypeScript, CoffeeScript, Flow, Dart.
+
+JavaScript работает в одном потоке, поэтому об асинхронности не может быть речи, event loop и call stack сделали асинхронность возможной (сторонние API).
+
+JavaScript интерпретируемый язык - выполняется сразу, в отличае от компиляции
+
+### JS 2021
+
+Конструкции наподобие a && (a = b) теперь можно записывать как a &&= b, a ||= b, a ??= b
+Числа можно отделять с помощью \_, не влияя на их структуру 1000000000 === 1_000_000_000
+
+### EventLoop
+
+`#EventLoop`
+
+https://developer.mozilla.org/ru/docs/Web/JavaScript/EventLoop
+
+https://youtu.be/8aGhZQkoFbQ?t=773
+
+Параллелизм/Многопоточность в JavaScript работает за счёт цикла событий (event loop), который отвечает за выполнение кода, сбора и обработки событий и выполнения подзадач из очереди (queued sub-tasks).
+
+#### Стек
+
+`#Stack #Стек`
+
+Вызов любой функции создаёт контекст выполнения (Execution Context). При вызове вложенной функции создаётся новый контекст, а старый сохраняется в специальной структуре данных - стеке вызовов (Call Stack).
+
+#### Очередь
+
+`#Queue #Очередь`
+
+Среда выполнения JavaScript содержит очередь задач. Эта очередь — список задач, подлежащих обработке. Каждая задача ассоциируется с некоторой функцией, которая будет вызвана, чтобы обработать эту задачу.
+Когда стек полностью освобождается, самая первая задача извлекается из очереди и обрабатывается. Обработка задачи состоит в вызове ассоциированной с ней функции с параметрами, записанными в этой задаче. Как обычно, вызов функции создаёт новый контекст выполнения и заносится в стек вызовов.
+Обработка задачи заканчивается, когда стек снова становится пустым. Следующая задача извлекается из очереди и начинается её обработка.
+
+#### Куча
+
+`#Heap #Куча`
+
+Объекты размещаются в куче. Куча — это просто имя для обозначения большой неструктурированной области памяти.
+
+### Микрозадачи, Макрозадачи
+
+`#Микро #Макро #Микрозадачи #Макрозадачи`
+
+https://learn.javascript.ru/event-loop
+
+https://habr.com/ru/post/264993/
+
+https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/#why-this-happens
+
+Порядок, сначала выполняются микрозадачи в рамках макрозадачи, затем очередь микрозадач:
+
+- МАкрозадача
+  - МИкрозадачИ
+    - Очередь мИкрозадач
+    - Очередь мАкрозадач
+
+Может так случиться, что задача поступает, когда движок занят чем-то другим, тогда она ставится в очередь.
+
+Очередь, которую формируют такие задачи, называют «очередью макрозадач» (macrotask queue, термин v8).
+
+Вызов .then(func) у решённого промиса немедленно ставит в очередь микрозадачу. Вот почему promise1 и promise2 выводятся в журнал после script end, ведь текущий исполняемый сценарий должен завершиться до того как начнут обрабатываться микрозадачи. promise1 и promise2 выводятся в журнал до setTimeout ибо микрозадачи всегда развёртываются до следующей большой задачи.
+
+Итого:
+
+Сначала выполняются микрозадачи
+
+setTimeout ставит в очередь большую задачу
+
+promise ставит в очередь микрозадачу
+
+В мире ECMAScript микрозадачи именуют заданиями («jobs»).
+
+Если мы хотим запустить функцию асинхронно (после текущего кода), но до отображения изменений и до новых событий, то можем запланировать это через queueMicrotask.
+
+Поэтому queueMicrotask можно использовать для асинхронного выполнения функции в том же состоянии окружения.
+
+### Hint
+
+`#Преобразование #Примитивы #Хинт #Hint`
+
+Преобразование объектов в примитивы https://learn.javascript.ru/object-toprimitive
+
+В отсутствие Symbol.toPrimitive и valueOf, toString обработает все примитивные преобразования.
+
+Сначала вызывается метод obj[Symbol.toPrimitive](hint), если он существует,
+
+В случае, если хинт равен "string" происходит попытка вызвать obj.toString() и obj.valueOf(), смотря что есть.
+
+В случае, если хинт равен "number" или "default" происходит попытка вызвать obj.valueOf() и obj.toString(), смотря что есть.
+
+Все эти методы должны возвращать примитив (если определены).
 
 ### ECMAScript
 
 `#ECMAScript #ES`
 
-Текст
+ECMAScript (ES, European Computer Manufacturers Association) - это встраиваемый расширяемый не имеющий средств ввода-вывода язык программирования, используемый в качестве основы для построения других скриптовых языков.
+
+Расширения (реализации) языка: JavaScript, JScript, ActionScript, SpiderMonkey, V8.
+
+ES6-8 https://youtu.be/Ti2Q4sQkNdU
+
+ES2020 / JS2020 https://youtu.be/7TpAN4FISeI
+
+## Technology
+
+### React
+
+https://reactjs.org
+
+https://developer.mozilla.org/ru/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started
+
+React (иногда React.js или ReactJS) — JavaScript-библиотека с открытым исходным кодом для разработки пользовательских интерфейсов. Разработчики Facebook.
+
+В качестве библиотеки для разработки пользовательских интерфейсов React часто используется с другими библиотеками, такими как Redux либо Mobx.
+
+Топ-10 библиотек для React на GitHub https://habr.com/ru/company/ruvds/blog/345060/
+
+Material UI, React-Bootstrap https://react-bootstrap.github.io , Ant-Design, StoryBook, Gatsby, Enzyme, Blueprint, Spectacle, Elemental UI, Grommet, Mozaik
+
+Пример GitHub https://github.com/SpawnMetal/test_with_questions
+
+Пример локально localhost\test_with_questions
+
+https://ru.reactjs.org/docs/create-a-new-react-app.html
+
+https://create-react-app.dev
+
+Create React App сразу всё ставит.
+
+Create React App — удобная среда для изучения React и лучший способ начать создание нового одностраничного приложения на React.
+
+Инструмент настраивает среду для использования новейших возможностей JavaScript, оптимизирует приложение для продакшена и обеспечивает комфорт во время разработки. Вам понадобятся Node.js не ниже версии 8.10 и npm не ниже версии 5.6 на вашем компьютере. Для создания проекта выполните команды:
+
+- `npm install react-scripts@latest`: обновление инструментов
+- `npm i react-router-dom`: для роутинга в react
+
+React позволяет использовать synthetic events - обёртка эвентов для кроссбраузерности, накручивает свои механизмы.
+
+Презентационный компоненты выводит данные и работает с props, а контейнер компонент формирует их для презентационного и работает с state.
+
+В render нельзя менять состояние, иначе приложение уйдёт в рекурсию.
+
+Если отнаследоваться от Pure Component, то React автоматически реализует shouldComponentUpdate, оптимизируя работу приложения.
+
+Для оптимизации приложения используются shouldComponentUpdate, Pure component, React.memo() - для функциональных компонентов.
+
+Для отрисовки компонентов используются функциональные компоненты, они более быстрые, но если нужны доступы до жизненных этапов в более сложном компоненте, тогда нужно использовать классовый компонент.
+
+Хуки позволяют в функциональных компонентах взаимодействовать с жизненными этапами и механизмами React.
+prop drilling - множественная передача пропсов, используется контекст, чтобы это избежать либо MobX.
+
+Для валидации пропсов используется библиотека prop-types - динамическая типизация. Flow - для статической, аналог - Typescript
+
+eject нужен, чтобы получить доступ к конфигурации приложения, если оно уже было настроено с помощью WebPack и настроить его отдельно.
+
+PUBLIC_URL ведёт в папку public, Например <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+
+Если вы ищете полноценное решение, которое может валидировать ввод, запомнить посещённые поля формы и обработать её отправку, присмотритесь к Formik. Эта библиотека построена на принципах управляемых компонентов и управления состоянием, так что не пренебрегайте их изучением. https://ru.reactjs.org/docs/forms.html https://jaredpalmer.com/formik
+
+- `npx create-react-app my-app`: установит тесты, git, webpack, babel и др
+
+Примеры:
+
+localhost\my-app пример create-react-app
+
+localhost\react https://github.com/SpawnMetal/react
+
+localhost\react2 https://github.com/SpawnMetal/react2 https://youtu.be/xJZa2_aldDs
+
+#### Хук
+
+`#Хук #Hook`
+
+https://ru.reactjs.org/docs/hooks-intro.html
+
+https://ru.reactjs.org/docs/hooks-reference.html
+
+https://youtu.be/9KJxaFHotqI
+
+Хуки — нововведение в React 16.8, которое позволяет использовать состояние и другие возможности React без написания классов.
+
+По конвенции при создании своего хука функция должна начинаться с use
+
+Хорошей практикой считается описание входящих свойств в нужный компонент, чтобы избегать потенциальных ошибок с передачей типов значений
+
+Для этого раньше использовался `npm i prop-types`
+
+##### useState
+
+`#useState`
+
+https://ru.reactjs.org/docs/hooks-reference.html#usestate
+
+https://youtu.be/9KJxaFHotqI?t=71
+
+Пример в localhost\react2 https://github.com/SpawnMetal/react2
+
+const [state, setState] = useState(initialState)
+
+Возвращает текущее значение в первом параметре деструктуризации и задаёт с помощью хука (второй параметр) начальное состояние значений.
+
+Если в setState передаётся callback, то мы будем иметь доступ к предыдущенму значению: setState(prev => prev + 1)
+
+Функция возвращает всегда два значения в массиве, первое - это дефолтное состояние, заданное сейчас, а второй элемент - коллбэк, с помощью него можно менять значения
+
+##### useEffect
+
+`#useEffect`
+
+https://ru.reactjs.org/docs/hooks-reference.html#useeffect
+
+https://youtu.be/9KJxaFHotqI?t=1400
+
+componentDidMount. Чтобы функция отработала один раз, передаётся пустой массив вторым параметром. useEffect(() => {}, [])
+
+componentDidMount + componentDidUpdate. Не передавать второй параметр. useEffect(() => {})
+
+Для обновления, только при изменении значения useEffect(() => {}, state)
+componentWillUnmount. Вернуть функцию. useEffect(() => {return () => {}})
+
+Запускается после рендера и обновления.
+
+При асинхронном получении данных не отображает для SEO
+
+Передаётся два параметра, в первом коллбэк, во втором массив со списком зависимостей, чтобы отрабатывал коллбэк, переданный в первый параметр
+
+Он выполняет ту же роль, что и componentDidMount, componentDidUpdate и componentWillUnmount в React-классах, объединив их в единый API.
+
+##### useContext
+
+`#useContext`
+
+https://ru.reactjs.org/docs/hooks-reference.html#usecontext
+
+Вы можете подписаться на контекст React без использования каких-либо вложений.
+
+##### useCallback
+
+`#useCallback`
+
+https://www.youtube.com/watch?v=9KJxaFHotqI&t=3579s
+
+Позволяет реализовать зависимость, при которой будет вызываться функция, наподобие второго аргумента в useEffect.
+
+При setState происходит рендер компонента и при переданном useEffect callback'е он будет срабатывать из-за пересоздания функций в компоненте.
+
+Таким образом будет вызываться callback лишний раз при вызове одного из setState в компоненте.
+
+Чтобы этого избежать, мы оборачиваем callback в useCallback, тем самым как бы кэшируем функцию и при рендере компонента callback лишний раз вызываться не будет.
+
+#### React DevTools
+
+`#ReactDeveloperTools #DevTools`
+https://github.com/facebook/react/tree/master/packages/react-devtools
+
+React DevTools доступен как встроенное расширение для браузеров Chrome и Firefox. Этот пакет позволяет вам отлаживать приложение React в другом месте (например, в мобильном браузере, встроенном веб-просмотре, Safari внутри iframe).
+
+Он работает как с React DOM, так и с React Native.
+
+#### React Native
+
+https://facebook.github.io/react-native
+
+Вы можете использовать React Native сегодня в своих существующих проектах для Android и iOS, или вы можете создать совершенно новое приложение с нуля.
+
+#### React Router
+
+`#Router`
+
+- `npm install --save react-router-dom`: DOM bindings for React Router. https://www.npmjs.com/package/react-router-dom
+
+https://reacttraining.com/react-router
+
+Для реализации алгоритмов навигации используется библиотека React Router.
+
+React Router - популярная и полная библиотека маршрутизации для React.js, которая синхронизирует пользовательский интерфейс с URL-адресом. Он поддерживает ленивую загрузку кода, динамическое сопоставление маршрутов и обработку перехода по местоположению и первоначально был вдохновлен маршрутизатором Ember.
+
+#### shouldComponentUpdate
+
+`#shouldComponentUpdate`
+
+Используется для отмены рендера, если его делать не нужно, а состояние поменялось
+
+#### componentDidMount
+
+`#componentDidMount`
+
+Срабатывает, когда компонент готов для работы. После этого можно использовать асинхрон.
+
+#### React Fragment
+
+`#ReactFragment #Fragment`
+
+Используется, чтобы положить несколько элементов в один конейнер, например div, но сам div отображаться не будет, оптимизируя тем самым структуру dom
+
+```html
+<React.Fragment> Элементы </React.Fragment>
+```
+
+Так же можно использовать структуру `<></>`
+
+### Next.js
+
+`#Next.js`
+
+```
+npx create-next-app
+```
+
+Пример 1: localhost/create-next-app https://github.com/SpawnMetal/create-next-app https://youtu.be/_EOrSmjdOZQ
+
+Пример 2: localhost/nextjs https://github.com/SpawnMetal/nextjs
+
+Next.js — бесплатный и открытый JavaScript фреймворк, созданный поверх React.js для создания SSR-приложений.
+
+Помогает создавать пользовательский интерфейс приложений (чаще всего, с помощью React, не придерживаясь его принципа — SPA (Single Page Application)).
+
+SSR — принцип, используемый Next.js. Переводится с английского языка как «Отрисовка на стороне сервера». SSR помогает снизить нагрузку на устройство, ведь большинство операций производимых в приложении, происходит на сервере, а не на устройстве пользователя.
+
+SSR также помогает улучшить SEO, так как в обычном подходе, который использует React (подход SPA), все отрисовывается на стороне клиента (браузера), поэтому код страниц подгружается когда пользователь заходит на страницу, но робот поисковых систем может только просмотреть изначальный код страницы, ещё не обработанный React.
+
+SSR помогает избежать эту проблему изначальной загрузкой контента на всех страницах сайта.
+
+- `<Link href=""><a>Текст</a></Link>`: реализует динамическую загрузку контента без перезагрузки страницы
+  Папка pages - зарезервирована для создания страниц, адрес в строке сайта = названию файла
+  filder/index.js - переход к странице в адресе folder, исполняющим файлом будет index.js
+- `<style jsx global></style>`: для установки глобальных стилей, а не только для компонента. localhost/create-next-app/components/MainLayout.js
+
+Пользовательский "Документ" pages/\_\_document.js для переосмысления и возможности переписать html документ https://nextjs.org/docs/advanced-features/custom-document
+
+pages/\_\_app.js используется при инициализации страниц https://nextjs.org/docs/migrating/from-create-react-app
+
+У error.module.scss после обработки next локализует стили за счёт .module в названии файла
+next-env.d.ts - namespace описаны некоторые параметры для работы с next. `<reference types="next/types/global" />` означает, что ненужно импортировать React в те файлы, где используется jsx
+
+getServerSideProps серверная функция. export default отрабатывает на сервере при открытии страницы в адресной строке для предварительной отрисовки - getServerSideProps + export default на клиенте и сервере. Переход на страницу из другой - getServerSideProps + export default только на клиенте
+
+### Express
+
+`#Express`
+
+- `npm install express-validator`: An express.js middleware for validator. Для проверки полей на валидацию https://www.npmjs.com/package/express-validator
+
+```
+npm i express
+```
+
+https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/Introduction
+
+Используется для роутинга, http-запросов, поднятия сервера и т. п.
+
+Express.js, или просто Express, фреймворк web-приложений для Node.js, реализованный как свободное и открытое программное обеспечение под лицензией MIT. Он спроектирован для создания веб-приложений и API.
+
+Де-факто является стандартным каркасом для Node.js.
+
+### Node.js
+
+`#Node.js`
+
+https://Node.js.org/ru/
+
+Node.js - программная платформа, основанная на движке V8 (транслирующем JavaScript в машинный код runtime), превращающая JavaScript из узкоспециализированного языка в язык общего назначения.
+
+runtime - Значит, что если процесс в оперативке запущен, то он откликается на команды, иначе нет.
+Документация по зависимостям https://Node.js.org/ru/docs/meta/topics/dependencies/
+
+Пример проекта localhost/nodejs https://github.com/SpawnMetal/nodejs
+
+- `node --version`: версия Node.js
+- `node файл`: выполнение скрипта
+
+Область видимости верхнего уровня в Node не является глобальной областью видимости
+
+Сервер Node.js без фреймворка https://developer.mozilla.org/ru/docs/Learn/Server-side/Node_server_without_framework
+
+SyntaxError: Cannot use import statement outside a module
+
+Решение: Добавить в package.sjon "type": "module", чтобы заработал import
+
+#### npm
+
+`#npm`
+
+https://www.npmjs.com
+
+npm - node пакетный менеджер
+
+https://habr.com/ru/post/133363/
+
+- `npm init`: инициализировать проект, -y параметр для инициализации без вопросов. Затем npm i - установит все модули и зависимости из package.json, поэтому node_modules качать отдельно никому и никуда не нужно
+- `npm run command`: команду получает из package.json параметр "scripts" текущей папки
+
+Если npm run command "npm run start --prefix client", command находится в другой папке, то в команду добавляется --prefix с путём к папке client
+
+Для запуска нескольких приложений, например клиента и сервера, в json используется параметр пакета concurrently: "dev": "concurrently \"npm run server\" \"npm run client\""
+
+- `npm -v`: версия npm
+- `npm install package_name`: установка пакета package_name локально. За место install можно просто i. Несколько пакетов перечисляются через пробел
+- `npm install http-server -g`: установка пакета package_name глобально
+- `npm show package_name version`: установленная версия пакета
+- `npm view package_name version`: доступная версия пакета на сервере
+- `npm view package_name`: информация о пакете
+- `--save, --save-dev либо -D`: пакет установленный с помощью данного параметра, будет доступен только для разработки, добавлен в devDependencies
+
+dependencies - зависимости, которые идут в package.json dependencies, затем если зайти в папку с данным названием внутри node_modules и открыть там package.json, то будут отображены другие установленные пакеты в dependencies и так далее по дереву.
+
+- `npm uninstall package_name -g`:
+- `npm i nodemon`: динамическое обновление сайта при внесении изменения в код, используется для разработки и запускается с помощью команды nodemon script.js
+
+Предшествующее сообщение в консоли сервера: [nodemon] app crashed - waiting for file changes before starting...
+
+Ошибка: Proxy error: Could not proxy request /api/auth/register from localhost:3000 to http://localhost:5000/
+
+Решение: Не смог приконнектиться к БД, исправить доступ к БД и перезапустить сервер
+
+- `npm i concurrently`: для одновременного запуска скриптов, например backend и frontend
+- `npm i config`: пакет для работы с конфигурационным файлом. Создаётся папка config в которой default.json и production.json https://www.npmjs.com/package/config
+- `npm i request-ip`: Получени ip клиента на сервере https://www.npmjs.com/package/request-ip
+- `npm i ai-switcher-translit`: Смена раскладки и транслит https://github.com/alexanderkx/ai-switcher-translit
+- `npm i bcryptjs`: Библиотека для шифрования / хеширования https://www.npmjs.com/package/bcryptjs
+- `npm i jsonwebtoken`: #Токен jsonwebtoken библиотека для генерации веб-токенов JSON https://www.npmjs.com/package/jsonwebtoken
+- `npm install materialize-css@next`: Materialize, Material Design https://materializecss.com/
+- `npm i shortid`: Сокращение ссылок https://www.npmjs.com/package/shortid
+- `npm install --save-dev cross-env`: Добавление кросс-операционных переменных для запуска скрипта, настройки прописываются у команд в package.json - scripts https://www.npmjs.com/package/cross-env
+- `npm install -g json-server`: Поддельный REST API. Запуск сервера с db: json-server --watch db.json --port 4200 --delay 450 (сокращённо: json-server -w db.json -p 4200 -d 450) https://www.npmjs.com/package/json-server
+- `npm i --save isomorphic-unfetch`: Серверный fetch https://www.npmjs.com/package/isomorphic-fetch
+- `npm i nextjs-progressbar`: Индикатор загрузки https://www.npmjs.com/package/nextjs-progressbar
+
+typescript typescriptreact
+https://www.npmjs.com/package/typescript
+https://www.npmjs.com/package/@types/react
+npm install --save-dev typescript @types/react
+
+- `npm install dotenv --save`: Dotenv - загружает переменные среды из .env файла process.env. `require('dotenv').config()` л ибо `import \* as dotenv from 'dotenv'`, затем `dotenv.config()`. https://www.npmjs.com/package/dotenv
+- `npm i @material-ui/core`: #MaterialUI https://www.npmjs.com/package/@material-ui/core
+- `npm i redux`: #Redux https://www.npmjs.com/package/redux
+- `npm install react-redux`: Официальные привязки React для #Redux https://www.npmjs.com/package/react-redux
+- `npm i redux-thunk`: #Redux #middleware для работы с асинхроном https://www.npmjs.com/package/redux-thunk
+- `npm i redux-logger`: #Регистратор для #Redux https://www.npmjs.com/package/redux-logger
+- `npm install redux-devtools-extension`: Расширение Redux DevTools. Например applyMiddleware, который позволяет диспатчить асинхроны. store = createStore(rootReducer, applyMiddleware(thunk, logger)) https://www.npmjs.com/package/redux-devtools-extension
+- `npm i mobx mobx-react-lite`: MobX. Хранилище состояний, lite пакет для функциональных компонентов
+  clipboard-copy
+  `npm install clipboard-copy`: Копирование в буфер, подключать через require https://www.npmjs.com/package/clipboard-copy
+
+##### Ошибки при установке пакета
+
+###### 1
+
+N:\web\htdocs_php5\php_site\files\11736>npm i --save-dev @babel/core @babel/cli
+
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@~2.3.1 (node_modules\chokidar\node_modules\fsevents):
+
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+npm WARN interactive_instructions@1.0.0 No repository field.
+
+npm ERR! Maximum call stack size exceeded
+
+npm ERR! A complete log of this run can be found in:
+
+npm ERR! C:\Users\kushkov-pa.ALPHA\AppData\Roaming\npm-cache_logs\2021-03-25T04_21_28_748Z-debug.log
+
+Решение, обновить файл с зависимостями: npm i --package-lock-only
+
+Если не поможет, удалить node_modules и заново установить все пакеты
+
+###### 2
+
+npm ERR! code ENOSELF
+
+npm ERR! Refusing to install package with name "mobx" under a package
+
+npm ERR! also called "mobx". Did you name your project the same
+
+npm ERR! as the dependency you're installing?
+
+Переименовать name в package.json, имя проекта не должно называться так же, как зависимость
+
+#### npx
+
+`#npx`
+
+npx помогает нам избежать версий, проблем с зависимостями и установки ненужных пакетов, которые мы просто хотим попробовать.
+
+Он также предоставляет простой и понятный способ выполнения пакетов, команд, модулей и даже списков и репозиториев GitHub.
+
+- `npx package_name`: установка пакета с именем name локально
+- `npm v create-react-app`: Вывод инфы о пакете и тегах dist-tags, например в списке будет next:
+- `npx create-react-app@next sandbox`
+
+npx временно установит следующую версию create-react-app, а затем запустит приложение и установит его зависимости.
+
+После установки мы можем перейти к приложению следующим образом:
+
+cd sandbox
+
+и затем запустите его с помощью этой команды: `npm start`
+
+Зачастую асинхронные методы из установленных пакетов пишутся без приписки Sync
+
+В callback первый параметр всегда является содержанием информации об ошибке
+
+## Stacks
+
+### MERN
+
+`MERN`
+
+Стек MERN - это JavaScript-стек, разработанный для упрощения процесса разработки. MERN включает в себя четыре компонента с открытым исходным кодом: [MongoDB](#MongoDB), [Express](#Express), [React](#React) и [Node.js](#Node.js).
+
+Пример localhost\mern-course https://github.com/SpawnMetal/mern-course
+
+https://youtu.be/ivDjWYcKDZI
+
+Локально находится в папке mern-course
+
+Запуск клиента и сервера для разработки: npm run dev
+
+**Публикация на хостинге:**
+
+Домен взят на https://2domains.ru
+
+Хостинг, прост в настройках и поддерживает node, взят на https://vscale.io
+
+Рекомендованная ОС - Ubuntu
+
+512 МБ ОЗУ - мало, нужно больше
+
+Через SSH Putty ходим, обновляем всё ПО sudo apt update, ставим Git, клонируем, гуглим установку Node.js
+
+npm run client:install - установит node_modules для клиента
+
+Билдим клиент npm run client:build
+
+Настроить config/production.json на хостинге
+
+Настроить в админке мерна ip сервера для доступа к БД
+
+Чтобы при закрытии консоли сервер не вырубался ставим глобально npm install pm2 -g
+
+Запускаем находясь в папке с проектом: pm2 start npm -- start
+
+Material Design ставится соответственно в папку client
+"proxy": "http://localhost:5000", прописывается в client/package.json, чтобы запросы с клиента шли по серверной ссылке, на сервер, а не на клиент
+
+## NoSQL
+
+### MongoDB
+
+`#MongoDB`
+
+```
+npm i mongoose
+```
+
+https://www.mongodb.com
+
+MongoDB — документо ориентированная система управления базами данных, не требующая описания схемы таблиц. Считается одним из классических примеров NoSQL-систем, использует JSON-подобные документы и схему базы данных.
+
+Применяется в веб-разработке, в частности, в рамках JavaScript-ориентированного стека MEAN.
+
+Пример кода: C:\program files\open server\ospanel\domains\localhost\mern-course
+
+### Redis
+
+`#Redis`
+
+## Определения
+
+`#Определения`
+
+### SSR
+
+`#SSR`
+
+https://blog.vverh.digital/2020/what-is-it-ssr-chto-takoe/
+
+SSR – (анг. аббревиатура от Server Side Rendering) это технология, которая позволяет, с помощью Node.js, запускать JavaScript код на сервере (а не в браузере как обычно) и готовый результат отправлять пользователю, избегая лишней нагрузки на его браузер и компьютер.
+
+Зачем нужен SSR:
+
+В первую очередь, для оптимизации скорости работы сайта и SEO продвижения.
+
+### SEO
+
+`#SEO`
+
+https://ru.wikipedia.org/wiki/Поисковая_оптимизация
+
+Поисковая оптимизация (англ. search engine optimization, SEO) — комплекс мероприятий по внутренней и внешней оптимизации для поднятия позиций сайта в результатах выдачи поисковых систем по определённым запросам пользователей, с целью увеличения сетевого трафика (для информационных ресурсов) и потенциальных клиентов (для коммерческих ресурсов) и последующей монетизации (получение дохода) этого трафика. SEO может быть ориентировано на различные виды поиска, включая поиск информации, товаров, услуг, изображений, видеороликов, новостей и специфические отраслевые поисковые системы.
+
+### middleware
+
+`#middleware`
+
+[Middleware][middleware]
+
+[Написание кода промежуточных обработчиков для использования в приложениях Express][express-middleware]
+Функции промежуточной обработки (middleware) - это функции, имеющие доступ к объекту запроса (req), объекту ответа (res) и к следующей функции промежуточной обработки в цикле “запрос-ответ” приложения.
+Следующая функция промежуточной обработки, как правило, обозначается переменной next.
+
+[middleware]: https://developer.mozilla.org/en-US/docs/Glossary/Middleware
+[express-middleware]: https://expressjs.com/ru/guide/writing-middleware.html#:~:text=%D0%A4%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B8%20%D0%BF%D1%80%D0%BE%D0%BC%D0%B5%D0%B6%D1%83%D1%82%D0%BE%D1%87%D0%BD%D0%BE%D0%B9%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B8%20(middleware)%20%2D,%D0%BA%D0%B0%D0%BA%20%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%BE%2C%20%D0%BE%D0%B1%D0%BE%D0%B7%D0%BD%D0%B0%D1%87%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9%20next%20.
