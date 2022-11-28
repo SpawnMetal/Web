@@ -654,11 +654,12 @@ this — это связь сущности с контекстом исполн
 - Если функцию вызывают в виде конструктора, с использованием ключевого слова new, то в this будет новый объект, прототип которого установлен в качестве свойства prototype функции-конструктора.
 - Если функция создана с использованием метода bind, то ключевое слово this функции будет жёстко привязано к значению, переданному bind в качестве первого аргумента. Это — единственное исключение из правила, в соответствии с которым функции не имеют жёстко заданного значения this. Функции, созданные с использованием bind, имеют иммутабельное значение this.
 
+```
 ObjectOver / FunctionOver
 {
-Object / Function
-{ Scope // Свойство функции, а не контекста. В Scope записывается вся иерархия LexicalEnvironment
-const a = 'text';
+  Object / Function
+  { Scope // Свойство функции, а не контекста. В Scope записывается вся иерархия LexicalEnvironment
+    const a = 'text';
 
     { Scope2
       const b = 'text';
@@ -685,9 +686,9 @@ const a = 'text';
         LEglobal
       ]
     }
-
+  }
 }
-}
+```
 
 - `#call` - вызов функции с передачей контекста и аргументов через запятую https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/call
 - `#apply` - то же, что и call, только аргументы передаются в массиве (обрабатываются через ...args) https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
