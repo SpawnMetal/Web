@@ -1088,7 +1088,9 @@ prototype - прототип текущего класса, а **proto** - ро�
 Эта глава описывает все операторы, выражения и ключевые слова языка JavaScript. https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators
 
 ++ #инкремент
+
 -- #декремент
+
 a + b (operand1 operator operand2)
 
 ### Чистая функция
@@ -1834,6 +1836,7 @@ https://www.youtube.com/watch?v=9KJxaFHotqI&t=3579s
 #### React DevTools
 
 `#ReactDeveloperTools #DevTools`
+
 https://github.com/facebook/react/tree/master/packages/react-devtools
 
 React DevTools доступен как встроенное расширение для браузеров Chrome и Firefox. Этот пакет позволяет вам отлаживать приложение React в другом месте (например, в мобильном браузере, встроенном веб-просмотре, Safari внутри iframe).
@@ -3564,6 +3567,7 @@ Utility Types (утилиты для работы с типами) https://www.t
 ### Generics
 
 `#Generics #Генерики`
+
 https://www.typescriptlang.org/docs/handbook/2/generics.html
 
 ```ts
