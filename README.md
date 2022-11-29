@@ -184,7 +184,7 @@
   - [Микросервис](#Микросервис)
   - [SSR](#SSR)
   - [SEO](#SEO)
-  - [Developer vs Engineer vs Architect][developer-vs-engineer-vs-architect]
+  - [Developer vs Engineer vs Architect][#developer-vs-engineer-vs-architect]
 - [HTML](#HTML)
 - [CSS](#CSS)
   - [Селекторы](#Селекторы)
