@@ -184,6 +184,7 @@
   - [Микросервис](#Микросервис)
   - [SSR](#SSR)
   - [SEO](#SEO)
+  - [Developer vs Engineer vs Architect][developer-vs-engineer-vs-architect]
 - [HTML](#HTML)
 - [CSS](#CSS)
   - [Селекторы](#Селекторы)
@@ -4157,6 +4158,4 @@ https://docs.nestjs.com/microservices/basics
 
 ### Developer vs Engineer vs Architect
 
-```
 https://habr.com/ru/post/135865
-```
