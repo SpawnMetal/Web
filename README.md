@@ -312,6 +312,8 @@ git remote -v - покажет все добавленные remote_url и их 
 
 git remote rm <remote_name> - удалить привязку remote_name к remote_url из списка
 
+git remote set-url <remote_name> <remote_url> - изменить remote_url
+
 ### Комбо
 
 #Персональные данные: git config --global user.name "name" & git config --global user.email "email" & git config --global http.sslverify false
