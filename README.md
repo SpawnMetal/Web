@@ -2385,6 +2385,12 @@ Nest (NestJS, фреймворк) — это платформа для созд�
 
 Под капотом Nest использует надежные платформы HTTP-серверов, такие как Express (по умолчанию), и при желании также может быть настроен для использования Fastify!
 
+- `CRUD-генератор` https://docs.nestjs.com/recipes/crud-generator#crud-generator
+- `nest g resource Name` - Команда не только генерирует все строительные блоки NestJS (модуль, служба, классы контроллера), но также класс сущности, классы DTO, а также .spec файлы тестирования
+- `nest g mo Name` - Создаёт модель
+- `nest g co Name` - Создаёт контроллер
+- `nest g s Name` - Создаёт сервис
+
 @nestjs/config - для работы с .env
 
 ConfigModule необходимо импортировать в модуле
@@ -3417,7 +3423,6 @@ Word wrap - настройка переноса строк, Word Wrap Column п�
 - `Live Server`: автообновление в браузере https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
 - `CSS Peek`: создаёт ссылки в html на css https://marketplace.visualstudio.com/items?itemName=pranaygp.vscode-css-peek
 - `Import Cost`: отображает размер импортируемых файлов https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost
-- `Debugger for Chrome`: позволяет дебажить https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome
 - `Live Share`: для совместной разработки https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
 - `ESLint`: #Линтер контроль синтаксиса https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 - `Thunder Client`: для Rest API https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client
@@ -3489,6 +3494,8 @@ Code formatter - форматирование https://prettier.io/ https://marke
 - `Emmet`: позволяет писать конструкции в стиле ul>li\*5 либо fs5 - font-size: 5px; При вводе ищет по введённым буквам, ! - создаёт базовый текст в html
 
 - `npm`: пакетный менеджер, если не установлен https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script
+
+- `JavaScript Debugger`: встроенный дебаггер https://marketplace.visualstudio.com/items?itemName=ms-vscode.js-debug
 
 ### WebStorm
 
