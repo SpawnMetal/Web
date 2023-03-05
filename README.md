@@ -82,6 +82,7 @@
   - [NestJS](#NestJS)
     - [Injectable](#Injectable)
     - [Injection scopes](#Injection-scopes)
+    - [AdminJS](#AdminJS)
   - [Node.js](#Node.js)
     - [npm](#npm)
     - [npx](#npx)
@@ -2434,6 +2435,14 @@ https://docs.nestjs.com/fundamentals/injection-scopes
 - `DEFAULT` - Один экземпляр поставщика является общим для всего приложения. Время жизни экземпляра напрямую связано с жизненным циклом приложения. После начальной загрузки приложения создаются экземпляры всех одноэлементных провайдеров. Область Singleton используется по умолчанию.
 - `REQUEST` - Новый экземпляр провайдера создается исключительно для каждого входящего запроса . Экземпляр удаляется сборщиком мусора после завершения обработки запроса.
 - `TRANSIENT` - Временные поставщики не распределяются между потребителями. Каждый потребитель, внедряющий временного поставщика, получит новый выделенный экземпляр.
+
+#### AdminJS
+
+`#AdminJS`
+
+Админка БД https://www.npmjs.com/package/@adminjs/nestjs
+
+AdminJS & Express: NodeJS admin panel setup in 4 minutes https://youtu.be/R613IRVDLJ0
 
 ### GraphQL
 
