@@ -74,6 +74,7 @@
       - [useState](#useState)
       - [useEffect](#useEffect)
       - [useContext](#useContext)
+      - [useMemo](#useMemo)
       - [useCallback](#useCallback)
     - [JSX](#JSX)
     - [React Router](#React-Router)
@@ -657,7 +658,7 @@ https://metanit.com/web/typescript/3.13.php
 
 static - объявление внутри класса, наследуется, но не появляется у присвоенных значений, например class Cl, обращение будет Cl.fn(), а не const cl = new Cl(), cl.fn()
 
-Также статические поля и методы могут наследоваться, что позволяет обращаться к ним через имя производного класса:
+Также статические поля и методы могут наследоваться, что позволяет обращаться к ним через имя производного класса: Class1 extends Class2, Class1.methodClass2()
 
 #### super
 
@@ -666,6 +667,34 @@ static - объявление внутри класса, наследуется,
 https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/super
 
 Ключевое слово super используется для вызова конструктора родителя
+
+#### implements
+
+`#implements`
+
+https://www.typescriptlang.org/docs/handbook/2/classes.html
+
+implements необходим, чтобы проверить, удовлетворяет ли класс определенному interface. Будет выдано сообщение об ошибке, если класс не сможет правильно его реализовать:
+
+```ts
+interface Pingable {
+  ping(): void;
+}
+
+class Sonar implements Pingable {
+  ping() {
+    console.log("ping!");
+  }
+}
+
+class Ball implements Pingable {
+Class 'Ball' incorrectly implements interface 'Pingable'.
+  Property 'ping' is missing in type 'Ball' but required in type 'Pingable'.
+  pong() {
+    console.log("pong!");
+  }
+}
+```
 
 ### Контекст
 
@@ -890,7 +919,7 @@ https://ru.wikipedia.org/wiki/%D0%A1%D0%B2%D1%8F%D0%B7%D0%BD%D1%8B%D0%B9_%D1%81%
 
 `#Стек`
 
-Если речь в контексте структуры данных, то это последовательный список элементов в информатике, например массив. Обслуживание самых новых событий, старые дальше висят.
+Если речь в контексте структуры данных, то это последовательный список элементов в информатике, например массив. Обслуживание самых новых событий, старые дольше висят.
 
 `#Очередь`
 
@@ -1130,8 +1159,9 @@ a + b (operand1 operator operand2)
 
 https://habr.com/ru/post/437512/
 Функция должна удовлетворять двум условиям, чтобы считаться «чистой»:
-— Каждый раз функция возвращает одинаковый результат, когда она вызывается с тем же набором аргументов
-— Нет побочных эффектов
+
+- Каждый раз функция возвращает одинаковый результат, когда она вызывается с тем же набором аргументов
+- Нет побочных эффектов
 
 Логика происходит внутри без взаимодействия с глобальными переменными.
 Такие функции можно переиспользовать.
@@ -1878,6 +1908,16 @@ https://www.youtube.com/watch?v=9KJxaFHotqI&t=3579s
 Таким образом будет вызываться callback лишний раз при вызове одного из setState в компоненте.
 
 Чтобы этого избежать, мы оборачиваем callback в useCallback, тем самым как бы кэшируем функцию и при рендере компонента callback лишний раз вызываться не будет.
+
+##### useMemo
+
+`#useMemo`
+
+https://youtu.be/9KJxaFHotqI?t=2887
+
+Возвращает мемоизированное значение.
+
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
 
 #### React DevTools
 
