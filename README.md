@@ -32,6 +32,7 @@
   - [Классы](#Классы)
     - [static](#static)
     - [super](#super)
+    - [implements](#implements)
   - [Декларативное, Императивное программирование](#Декларативное-Императивное-программирование)
   - [Declaration, Expression Function](#Declaration-Expression-Function)
   - [Анонимная функция](#Анонимная-функция)
