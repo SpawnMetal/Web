@@ -208,6 +208,7 @@
 - [CSS](#CSS)
   - [Селекторы](#Селекторы)
   - [Веса CSS](#Веса-CSS)
+  - [Flex](#flex)
   - [margin](#margin)
   - [SASS, SCSS](#SASS-SCSS)
   - [LESS](#LESS)
@@ -1858,13 +1859,31 @@ https://youtu.be/9KJxaFHotqI?t=71
 
 Пример в localhost\react2 https://github.com/SpawnMetal/react2
 
+```jsx
 const [state, setState] = useState(initialState)
+```
 
 Возвращает текущее значение в первом параметре деструктуризации и задаёт с помощью хука (второй параметр) начальное состояние значений.
 
-Если в setState передаётся callback, то мы будем иметь доступ к предыдущенму значению: setState(prev => prev + 1)
+Если в setState передаётся callback, то мы будем иметь доступ к предыдущенму значению:
+
+```jsx
+setState(prev => prev + 1)
+```
 
 Функция возвращает всегда два значения в массиве, первое - это дефолтное состояние, заданное сейчас, а второй элемент - коллбэк, с помощью него можно менять значения
+
+После вызова setState, значение state останется прежним и обновится только после рендера
+
+Если в useState передаётся callback, то произойдёт ленивая инициализация состояния, можно использовать при дорогостоящих вычислениях https://ru.legacy.reactjs.org/docs/hooks-reference.html#lazy-initial-state
+
+```jsx
+// Ленивая инициализация состояния
+const [state, setState] = useState(() => {
+  const initialState = someExpensiveComputation(props)
+  return initialState
+})
+```
 
 ##### useEffect
 
@@ -1874,23 +1893,41 @@ https://ru.reactjs.org/docs/hooks-reference.html#useeffect
 
 https://youtu.be/9KJxaFHotqI?t=1400
 
-- `componentDidMount`: Чтобы функция отработала один раз, передаётся пустой массив вторым параметром. useEffect(() => {}, [])
-
-- `componentDidMount + componentDidUpdate`: Не передавать второй параметр. useEffect(() => {})
-
-Для обновления, только при изменении значения useEffect(() => {}, state)
-
-- `componentWillUnmount`: Вернуть функцию. useEffect(() => {return () => {}})
-
-Запускается после рендера и обновления.
-
-StrictMode выполняет рендеринг компонентов дважды в development режиме, но не в production. По мнению разработчиков React - это позволяет обнаружить некоторые проблемы в вашем коде, если таковые будут и предупредить Вас об этом. https://ru.reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
-
-При асинхронном получении данных не отображает для SEO
+Запускается после каждого завершённого рендера: разметки (Layout) и отрисовки (Paint).
 
 Передаётся два параметра, в первом коллбэк, во втором массив со списком зависимостей, чтобы отрабатывал коллбэк, переданный в первый параметр
 
 Он выполняет ту же роль, что и componentDidMount, componentDidUpdate и componentWillUnmount в React-классах, объединив их в единый API.
+
+StrictMode выполняет рендеринг компонентов дважды в `development` режиме, но не в `production`. По мнению разработчиков React - это позволяет обнаружить некоторые проблемы в вашем коде, если таковые будут и предупредить Вас об этом. https://ru.reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
+
+При асинхронном получении данных не отображает для SEO
+
+1. `Каждый раз (componentDidMount + componentDidUpdate)`: Не передавать второй параметр. https://ru.legacy.reactjs.org/docs/hooks-reference.html#timing-of-effects
+
+```jsx
+useEffect(() => {})
+```
+
+2. ```Один раз (componentDidMount)`: Передаётся пустой массив вторым параметром. https://ru.legacy.reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
+
+```jsx
+useEffect(() => {}, [])
+```
+
+3. `Условное срабатывание эффекта` https://ru.legacy.reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
+
+```jsx
+useEffect(() => {}, state)
+```
+
+4. `Очистка эффекта (componentWillUnmount)`: Вернуть функцию. https://ru.legacy.reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect
+
+```jsx
+useEffect(() => {
+  return () => {}
+}, [могут быть зависимости или полностью отсутствовать второй параметр])
+```
 
 ##### useContext
 
@@ -1898,13 +1935,21 @@ StrictMode выполняет рендеринг компонентов дваж
 
 https://ru.reactjs.org/docs/hooks-reference.html#usecontext
 
-Вы можете подписаться на контекст React без использования каких-либо вложений.
+Может быть удобно, чтобы не тянуть всё через пропсы.
 
 ##### useCallback
 
 `#useCallback`
 
+https://ru.legacy.reactjs.org/docs/hooks-reference.html#usecallback
+
 https://www.youtube.com/watch?v=9KJxaFHotqI&t=3579s
+
+```jsx
+const memoizedCallback = useCallback(() => {
+  doSomething(a, b)
+}, [a, b])
+```
 
 Позволяет реализовать зависимость, при которой будет вызываться функция, наподобие второго аргумента в useEffect.
 
@@ -1918,11 +1963,15 @@ https://www.youtube.com/watch?v=9KJxaFHotqI&t=3579s
 
 `#useMemo`
 
+https://ru.legacy.reactjs.org/docs/hooks-reference.html#usememo
+
 https://youtu.be/9KJxaFHotqI?t=2887
 
-Возвращает мемоизированное значение.
+```jsx
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b])
+```
 
-const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+Возвращает мемоизированное значение.
 
 #### React DevTools
 
@@ -3747,6 +3796,53 @@ https://developer.mozilla.org/ru/docs/Web/CSS/Specificity
 Когда при объявлении стиля используется модификатор `!important`, это объявление получает наивысший приоритет среди всех прочих объявлений. Хотя технически модификатор `!important` не имеет со специфичностью ничего общего, он непосредственно на неё влияет.
 
 Поскольку `!important` усложняет отладку, нарушая естественное каскадирование ваших стилей, он не приветствуется и следует избегать его использования. Если к элементу применимы два взаимоисключающих стиля с модификатором `!important`, то применён будет стиль с большей специфичностью.
+
+### Flex
+
+`#flex`
+
+Игра для изучения flexbox https://flexboxfroggy.com/#ru
+
+1. `justify-content` - горизонтальное выравнивание https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
+
+- `start, flex-start:` элементы выравниваются по левой стороне контейнера.
+- `end, flex-end:` элементы выравниваются по правой стороне контейнера.
+- `center:` элементы выравниваются по центру контейнера.
+- `space-between:` элементы отображаются с одинаковыми отступами между ними.
+- `space-around:` элементы отображаются с одинаковыми отступами вокруг них.
+
+2. `align-items` - вертикальное выравнивание https://developer.mozilla.org/en-US/docs/Web/CSS/align-items
+
+- `start, flex-start:` элементы выравниваются по верхнему краю контейнера.
+- `end, flex-end:` элементы выравниваются по нижнему краю контейнера.
+- `center:` элементы выравниваются вертикально по центру контейнера.
+- `baseline:` элементы отображаются на базовой линии контейнера. Эта воображаемая линия проходит по нижней части букв.
+- `stretch:` элементы растягиваются, чтобы заполнить контейнер.
+
+3. `flex-direction` - направление, в котором будут расположены элементы в контейнере https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction
+
+- `row:` элементы размещаются по направлению текста.
+- `row-reverse:` элементы отображаются в обратном порядке к направлению текста.
+- `column:` элементы располагаются сверху вниз.
+- `column-reverse:` элементы располагаются снизу вверх.
+
+4. `order` - порядок элементов, мо умолчанию 0, может быть отрицательным https://developer.mozilla.org/en-US/docs/Web/CSS/order
+5. `align-self` - то же, что и align-items, применяется для дочерних элементов, чтобы установить расположение конкретного элемента https://developer.mozilla.org/en-US/docs/Web/CSS/align-self
+6. `flex-wrap` - установка по рядам https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap
+
+- `nowrap:` размеры элементов устанавливаются автоматически, чтобы они поместились в один ряд.
+- `wrap:` элементы автоматически переносятся на новую строку.
+- `wrap-reverse:` элементы автоматически переносятся на новую строку, но строки расположены в обратном порядке.
+
+7. `flex-flow `- принимает значение через пробел `flex-direction flex-wrap` https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow
+8. `align-content` - отвечает за расстояние между рядами, в то время как `align-items` отвечает за то, как элементы в целом будут выровнены в контейнере. Когда только один ряд, `align-content` ни на что не влияет. https://developer.mozilla.org/en-US/docs/Web/CSS/align-content
+
+- `start, flex-start`: ряды группируются в верхней части контейнера.
+- `end, flex-end`: ряды группируются в нижней части контейнера.
+- `center`: ряды группируются вертикально по центру контейнера.
+- `space-between`: ряды отображаются с одинаковыми расстояниями между ними.
+- `space-around`: ряды отображаются с одинаковыми расстояниями вокруг них.
+- `stretch`: ряды растягиваются, чтобы заполнить контейнер равномерно.
 
 ### margin
 
