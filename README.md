@@ -1920,7 +1920,7 @@ useEffect(() => {}, [])
 3. `Условное срабатывание эффекта` https://ru.legacy.reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
 
 ```jsx
-useEffect(() => {}, state)
+useEffect(() => {}, [state1, state2, ..., stateN])
 ```
 
 4. `Очистка эффекта (componentWillUnmount)`: Вернуть функцию. https://ru.legacy.reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect
