@@ -310,19 +310,19 @@ gitk --all& - графический интерфейс гита
 
 ### Проект
 
-#clone: git clone <remote_url> - скопировать содержимое проекта. В текущую папку git clone <remote_url> . - с точкой вконце, скопирует содержимое в корень текущей директории, не создавая папку. Команда создаёт скрытую системную папку ".git" и делает git add origin
+#clone: git clone \<remote_url\> - скопировать содержимое проекта. В текущую папку git clone \<remote_url\> . - с точкой вконце, скопирует содержимое в корень текущей директории, не создавая папку. Команда создаёт скрытую системную папку ".git" и делает git add origin
 
 git init - инициализация проекта. Команда создаёт скрытую системную папку ".git"
 
-git remote add <remote_name> <remote_url> - привязать проект remote_url к названию remote_name. Не ветке, просто названию, чтобы не писать длинную ссылку постоянно. Например remote_name = origin
+git remote add \<remote_name\> \<remote_url\> - привязать проект remote_url к названию remote_name. Не ветке, просто названию, чтобы не писать длинную ссылку постоянно. Например remote_name = origin
 
-git remote show <remote_name> - показать информацию об удалённом репозитории, ветке, HEAD и т д
+git remote show \<remote_name\> - показать информацию об удалённом репозитории, ветке, HEAD и т д
 
 git remote -v - покажет все добавленные remote_url и их remote_name
 
-git remote rm <remote_name> - удалить привязку remote_name к remote_url из списка
+git remote rm \<remote_name\> - удалить привязку remote_name к remote_url из списка
 
-git remote set-url <remote_name> <remote_url> - изменить remote_url
+git remote set-url \<remote_name\> \<remote_url\> - изменить remote_url
 
 ### Комбо
 
@@ -332,21 +332,21 @@ Init & GitHub: git init & git add . & git commit -m "First commit" & git branch 
 
 #Файлы Update: git add . & git commit -m "Updated date" & git push
 
-#Файлы Синхронизация: git add . & git commit -m "" & git pull origin <branch> & git push
+#Файлы Синхронизация: git add . & git commit -m "" & git pull origin \<branch\> & git push
 
-#Ветки Удаление ветки: git checkout develop & git branch -d <branch> & git push <remote_name> <branch> --delete
+#Ветки Удаление ветки: git checkout develop & git branch -d \<branch\> & git push \<remote_name\> \<branch\> --delete
 
 ### Файлы
 
-git push -u <remote_name> <branch> - Заливает новую branch в remote_name. Создаёт pull request, если ветка уже есть. -u -это upstream, мол сервер. Например выполнив команду git push -u origin master вы устанавливаете связь между той веткой, в которой вы находитесь и веткой master на удалённом сервере. Команду требуется выполнить единожды, чтобы потом можно было отправлять/принимать изменения лишь выполняя git push из ветки без указания всяких алиасов для сервера и удалённых веток. Это сделано для удобства.
+git push -u \<remote_name\> \<branch\> - Заливает новую branch в remote_name. Создаёт pull request, если ветка уже есть. -u -это upstream, мол сервер. Например выполнив команду git push -u origin master вы устанавливаете связь между той веткой, в которой вы находитесь и веткой master на удалённом сервере. Команду требуется выполнить единожды, чтобы потом можно было отправлять/принимать изменения лишь выполняя git push из ветки без указания всяких алиасов для сервера и удалённых веток. Это сделано для удобства.
 
 git push - залить в текущую ветку на сервер, ранее должна быть установлена связь git push -u
 
-git push <remote_name> <branch> - заливает изменения по <remote_name> в <branch>
+git push \<remote_name\> \<branch\> - заливает изменения по \<remote_name\> в \<branch\>
 
 Флаг --force отменяет необходимость в pull и подгоняет ветку удаленного репозитория под вашу локальную ветку, удаляя любые вышестоящие изменения, которые могли быть внесены с момента последнего выполнения вами команды pull.
 
-git pull <remote_name> <branch> - шоткод для команд git fetch и git merge. <remote_name> и <branch> по умолчанию текущие. Получит с сервера и объединит с локальной.
+git pull \<remote_name\> \<branch\> - шоткод для команд git fetch и git merge. \<remote_name\> и \<branch\> по умолчанию текущие. Получит с сервера и объединит с локальной.
 При работе с fork не забывать пуллить свою форку с remote.
 
 --rebase либо git rebase - Перебазирует ветку на текущий и дальнейшие коммиты, которые будут попадать в историю коммитов (например master) на момент её слияния с перебазированной веткой (develop), а не на момент создания коммита в прошлом.
@@ -355,36 +355,36 @@ git pull <remote_name> <branch> - шоткод для команд git fetch и 
 
 git rebase --skip позволит пропустить конфликт при git rebase, для каждого конфликта команда вводится отдельно
 
-git add <file> или . - добавляет file или все файлы в отслеживаемые для добавления в коммит. Несколько перечисляются через пробел.
+git add \<file\> или . - добавляет file или все файлы в отслеживаемые для добавления в коммит. Несколько перечисляются через пробел.
 
-git fetch <remote_name> <branch> - получить изменения, но не делать слияние - git merge.
+git fetch \<remote_name\> \<branch\> - получить изменения, но не делать слияние - git merge.
 
-git merge <branch> - объединить скачанные изменения с текущей веткой, либо branch, если указана, в таком случае из branch будут получены все изменения
+git merge \<branch\> - объединить скачанные изменения с текущей веткой, либо branch, если указана, в таком случае из branch будут получены все изменения
 
-git commit -m <text> - зафиксировать отслеживаемые файлы, создав коммит. -m = -message. text указывается в двойных кавычках. После ввода команды будет выведен хэш коммита
+git commit -m \<text\> - зафиксировать отслеживаемые файлы, создав коммит. -m = -message. text указывается в двойных кавычках. После ввода команды будет выведен хэш коммита
 
-git show <id> просмотр информации о теге, коммите, ветке
+git show \<id\> просмотр информации о теге, коммите, ветке
 
 git status - показать текущую ветку и изменённые файлы
 
 git clone см #clone
 
-git checkout <id>, <file> либо <tag> - переключиться на id коммита, tag либо откатить файл до индекса. Работает с тремя различными объектами: файлами, коммитами и ветками. Команда открепляет HEAD, что не позволит сохранить изменения при неизбежном переключении обратно в ветку.
+git checkout \<id\>, \<file\> либо \<tag\> - переключиться на id коммита, tag либо откатить файл до индекса. Работает с тремя различными объектами: файлами, коммитами и ветками. Команда открепляет HEAD, что не позволит сохранить изменения при неизбежном переключении обратно в ветку.
 
 Удалить индексы, не файлы, код не бэкапнется. Несколько файлов перечисляются через пробел:
-git reset <file>
+git reset \<file\>
 
-git rm --cached <file>
+git rm --cached \<file\>
 
 git rm -r .
 
 git reset --hard id либо origin/master - откатит код до коммита id либо ветки origin/master, стерев историю
 
-git restore <file> - откатит до коммита (бэкапнет код) не проиндексированные файлы, проиндексированные сначала отменить: git reset <file>
+git restore \<file\> - откатит до коммита (бэкапнет код) не проиндексированные файлы, проиндексированные сначала отменить: git reset \<file\>
 
-git restore --source <id_коммита> <file> - откатит код до коммита id сохранив историю, создав новый коммит
+git restore --source \<id_коммита\> \<file\> - откатит код до коммита id сохранив историю, создав новый коммит
 
-git show <commit_id> - покажет информацию о коммите и его полный id
+git show \<commit_id\> - покажет информацию о коммите и его полный id
 
 git commit --amend -m "" - переименовать либо отредактировать текст последнего коммита
 
@@ -394,41 +394,41 @@ get tag -a - аннотированный тег, некое название к
 
 git tag -a v1.0.1 -m "" - создать тег
 
-git tag -a -f <tag> -m "" <id> - переименовать тег у коммита id
+git tag -a -f \<tag\> -m "" \<id\> - переименовать тег у коммита id
 
-git tag -a <tag> <id> - задать тег любому коммиту id
+git tag -a \<tag\> \<id\> - задать тег любому коммиту id
 
 git tag - просмотр списка тегов
 
-git show <tag> просмотр информации о теге, коммите, ветке
+git show \<tag\> просмотр информации о теге, коммите, ветке
 
-git tag -d <tag> - удалить тег
+git tag -d \<tag\> - удалить тег
 
 ### Ветки
 
 git branch - выводит список веток и ветку в которой я нахожусь. В VSCode слева снизу
 
-git branch <branch> - создаст ветку name, копию текущей
+git branch \<branch\> - создаст ветку name, копию текущей
 
-git branch -d <branch> - удалит ветку name локально. Необходимо сначала переключиться на другую. -D, если необходимо удалить принудительно (--force)
+git branch -d \<branch\> - удалит ветку name локально. Необходимо сначала переключиться на другую. -D, если необходимо удалить принудительно (--force)
 
 git pull origin develop - скачать новую ветку с сервера
 
-git push <remote_name> <branch> --delete - удаляет ветку на сервере
+git push \<remote_name\> \<branch\> --delete - удаляет ветку на сервере
 
-git branch -m <branch> - переименовать текущую ветку в name, -M, если необходимо переименовать, даже если такая ветка уже сушествует
+git branch -m \<branch\> - переименовать текущую ветку в name, -M, если необходимо переименовать, даже если такая ветка уже сушествует
 
-git checkout <branch> - переключиться на ветку name
+git checkout \<branch\> - переключиться на ветку name
 
-git checkout -b <branch> - создать и переключиться на ветку name, копию текущей
+git checkout -b \<branch\> - создать и переключиться на ветку name, копию текущей
 
-git checkout -b <branch> <remote_name> - создать и переключиться на ветку branch, ответвление от name_from
+git checkout -b \<branch\> \<remote_name\> - создать и переключиться на ветку branch, ответвление от name_from
 
-git checkout -b <branch> <repository_name_from>/<branch> - скопировать удалённую ветку и переключиться в неё
+git checkout -b \<branch\> \<repository_name_from\>/\<branch\> - скопировать удалённую ветку и переключиться в неё
 
-git push -u <remote_name> <branch> - Заливает НОВУЮ!!! branch в remote_name. Создаёт pull request при необходимости. -u: upstream. remote_name: название ссылки, которое устанавливал с помощью git remote add <remote_name> <remote_url>. branch: ветка, которую будем заливать.
+git push -u \<remote_name\> \<branch\> - Заливает НОВУЮ!!! branch в remote_name. Создаёт pull request при необходимости. -u: upstream. remote_name: название ссылки, которое устанавливал с помощью git remote add \<remote_name\> \<remote_url\>. branch: ветка, которую будем заливать.
 
-git show <branch> просмотр информации о теге, коммите, ветке
+git show \<branch\> просмотр информации о теге, коммите, ветке
 
 #### Release branches
 
@@ -466,9 +466,9 @@ https://www.atlassian.com/ru/git/tutorials/undoing-changes
 
 Локально:
 
-Отменить индексирование (add): git reset <file>. Код не бэкапнется. Ещё можно git rm --cached <file> или -r . - удалить file или файлы рекурсивно из отслеживаемых. Несколько перечисляются через пробел
+Отменить индексирование (add): git reset \<file\>. Код не бэкапнется. Ещё можно git rm --cached \<file\> или -r . - удалить file или файлы рекурсивно из отслеживаемых. Несколько перечисляются через пробел
 
-Откатить до индекса: git checkout <file>
+Откатить до индекса: git checkout \<file\>
 
 Откатить до коммита: git restore
 
@@ -480,11 +480,11 @@ https://www.atlassian.com/ru/git/tutorials/undoing-changes
 
 Название коммита: Как изменить название последнего локального коммита либо внести в него изменения? git commit --amend -m ""
 
-Удалить ветку: git branch -d <branch>
+Удалить ветку: git branch -d \<branch\>
 
 Remote:
 
-Удалить ветку: git push <remote_name> <branch> --delete
+Удалить ветку: git push \<remote_name\> \<branch\> --delete
 
 Локально и remote:
 
@@ -492,7 +492,7 @@ Remote:
 
 Удалить все коммиты, включая самый первый: git update-ref -d HEAD, затем всё коммитим и git push --force
 
-Откатить файлы к коммиту, сохранив историю, как если бы скачали коммит и этими файлами заменили свои: git restore --source <id_коммита> <file> & git push
+Откатить файлы к коммиту, сохранив историю, как если бы скачали коммит и этими файлами заменили свои: git restore --source \<id_коммита\> \<file\> & git push
 
 ### Vim, Vi
 
