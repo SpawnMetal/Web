@@ -405,6 +405,12 @@ git show \<tag\> просмотр информации о теге, коммит
 
 git tag -d \<tag\> - удалить тег
 
+git stash - сохраняет данные, чтобы можно было переключиться на другую ветку не делая пока коммит https://www.atlassian.com/ru/git/tutorials/saving-changes/git-stash
+
+git stash list - просмотр всех stash
+
+git stash apply n - откатить к последнему, где n временный коммит, не обязательный параметр. git add . - застешать несколько
+
 ### Ветки
 
 git branch - выводит список веток и ветку в которой я нахожусь. В VSCode слева снизу
@@ -477,11 +483,13 @@ https://www.atlassian.com/ru/git/tutorials/undoing-changes
 
 При pull, если необходимо отменить всё: git clean -f, ээфект такой же, как при git checkout другая_ветка --force, затем переключаемся обратно
 
-Откат изменений до коммита либо к ветке, например master (полностью скачивает и заменяет коммиты, стерев историю, можно из upstream и т. д.): git reset --hard id либо origin/master
+Откат изменений до коммита либо к ветке, например master (полностью скачивает и заменяет коммиты, стерев историю, можно из upstream и т. д.): git reset --hard id либо origin/\<branch\>
 
 Название коммита: Как изменить название последнего локального коммита либо внести в него изменения? git commit --amend -m ""
 
 Удалить ветку: git branch -d \<branch\>
+
+По новой скачать всё из ветки: git fetch origin \<branch\> & git reset --hard origin/\<branch\> - сначала скачает всё (fetch), затем откатит всё к скаченным данным (reset)
 
 Remote:
 
