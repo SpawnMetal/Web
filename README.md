@@ -71,9 +71,11 @@
 - [Git](#Git)
 - [Technology](#Technology)
   - [React](#React)
+    - [Жизненный цикл](#Жизненный-цикл)
     - [Хук](#Хук)
       - [useState](#useState)
       - [useEffect](#useEffect)
+      - [useLayoutEffect](#useLayoutEffect)
       - [useContext](#useContext)
       - [useMemo](#useMemo)
       - [useCallback](#useCallback)
@@ -1180,7 +1182,7 @@ https://habr.com/ru/post/437512/
 Логика происходит внутри без взаимодействия с глобальными переменными.
 Такие функции можно переиспользовать.
 Функция чистая, если не имеет побочных эффектов и каждый раз возвращает одинаковый результат, когда она вызывается с тем же набором аргументов.
-Побочные эффекты включают: меняющийся вход, HTTP-вызовы, запись на диск, вывод на экран.
+Побочные эффекты включают: меняющийся вход, HTTP-вызовы, запись на диск, вывод на экран (если функция предназначениа для другого).
 Вы можете безопасно клонировать, а затем менять входные параметры. Просто оставьте оригинал без изменений.
 ...spread — это самый простой способ клонирования объектов и массивов.
 
@@ -1833,6 +1835,90 @@ localhost\react https://github.com/SpawnMetal/react
 
 localhost\react2 https://github.com/SpawnMetal/react2 https://youtu.be/xJZa2_aldDs
 
+#### Жизненный цикл
+
+https://disk.yandex.ru/i/4N5roTR26xwcsw
+
+```txt
+Mounting                              Updating                             Unmounting
+    |                                     |                                   |
+constructor               New props / setState() / forceUpdate()              |
+            \           /                                                     |
+                render                                                        |
+      React updates DOM and refs                                              |
+    /                            \                                            |
+componentDidMount                 componentDidUpdate                 componentWillUnmount
+```
+
+```jsx
+export const Child = ({num}) => {
+  console.log('child: render')
+
+  useLayoutEffect(() => {
+    console.log('child: layout effect')
+
+    return () => {
+      console.log('child: cleanup layout effect')
+    }
+  }, [num])
+
+  useEffect(() => {
+    console.log('child: effect')
+    return () => {
+      console.log('child: cleanup effect')
+    }
+  }, [num])
+
+  return null
+}
+
+export const App = () => {
+  const [num, setNum] = useState(0)
+
+  console.log('parent: render')
+
+  function clickHandler() {
+    setNum(prev => prev + 1)
+  }
+
+  useLayoutEffect(() => {
+    console.log('parent: layout effect')
+
+    return () => {
+      console.log('parent: cleanup layout effect')
+    }
+  }, [num])
+
+  useEffect(() => {
+    console.log('parent: effect')
+    return () => {
+      console.log('parent: cleanup effect')
+    }
+  }, [num])
+
+  return (
+    <>
+      <Child num={num} />
+      <button onClick={clickHandler}>render</button>
+      <div style={{fontSize: '45px', textAlign: 'center'}}>{num}</div>
+    </>
+  )
+}
+
+// parent: render
+// develop // parent: render
+// child: render
+// develop // child: render
+// child: cleanup layout effect
+// parent: cleanup layout effect
+// child: layout effect
+// parent: layout effect
+// child: cleanup effect
+// parent: cleanup effect
+// child: effect
+// parent: effect
+```
+
 #### Хук
 
 `#Хук #Hook`
@@ -1940,6 +2026,14 @@ useEffect(() => {
   return () => {}
 }, [могут быть зависимости или полностью отсутствовать второй параметр])
 ```
+
+##### useLayoutEffect
+
+`#useLayoutEffect`
+
+https://ru.legacy.reactjs.org/docs/hooks-reference.html#timing-of-effects
+
+Необходим для вызова перед компоновкой (Layout), чтобы не выводить то, что будет снова перерисовано, а сразу скомпоновать как нужно. Происходит перед useEffect
 
 ##### useContext
 
