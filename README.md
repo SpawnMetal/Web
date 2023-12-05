@@ -79,6 +79,7 @@
       - [useContext](#useContext)
       - [useMemo](#useMemo)
       - [useCallback](#useCallback)
+      - [useRef](#useRef)
     - [JSX](#JSX)
     - [React Router](#React-Router)
     - [React DevTools](#React-DevTools)
@@ -208,6 +209,7 @@
   - [UX UI](#UX-UI)
   - [Артефакт, билд](#Артефакт-билд)
   - [Деплой](#Деплой)
+  - [Tree shaking](#Tree-shaking)
 - [HTML](#HTML)
 - [CSS](#CSS)
   - [Селекторы](#Селекторы)
@@ -1092,6 +1094,10 @@ const promise = new Promise(function (resolve, reject) {
 })
 ```
 
+Промисификация – создание асинхронной обёртки для синхронной функции, возвращающую промис работы синхронной.
+
+Чейнинг – последовательный вызов promise.then(...).then(...).then(...).catch(...).catch(...)
+
 ### Код
 
 `#Код`
@@ -1759,7 +1765,11 @@ https://learn.javascript.ru/object-copy
 
 Объекты хранят ссылку в памяти на значение, а не само значение.
 
-Для «простого клонирования» объекта можно использовать `{...spread}` либо `Object.assign` - работает аналогично. Необходимо помнить, что данные методы не делают глубокое клонирование объекта. Если внутри копируемого объекта есть свойство, значение которого не является примитивом, оно будет передано по ссылке. Для создания «настоящей копии» (полного клона объекта) можно воспользоваться методом из сторонней JavaScript-библиотеки `lodash` - `_.cloneDeep(obj)`.
+Для глубокого копирования необходимо использовать функцию `const clone = structuredClone(original, options?)` https://developer.mozilla.org/en-US/docs/Web/API/structuredClone
+
+Алгоритм структурированного клонирования https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm
+
+Для «простого клонирования» объекта можно использовать `{...spread}` либо `Object.assign` - работает аналогично. Необходимо помнить, что данные методы не делают глубокое клонирование объекта. Если внутри копируемого объекта есть свойство, значение которого не является примитивом, оно будет передано по ссылке. Для создания !== клона объекта можно воспользоваться методом из сторонней JavaScript-библиотеки `lodash` - `_.cloneDeep(obj)`, но рекурсивная вложенность не поддерживается, а так же сложные типы, как например дата, будут преобразованы в строку, таких изъян нет у `structuredClone`, поэтому лучше пользоваться именно `structuredClone`.
 
 Встроенным в JS способом можно скопировать использовав `JSON.stringify` и `JSON.parse`.
 
@@ -2033,6 +2043,8 @@ useEffect(() => {
 
 https://ru.legacy.reactjs.org/docs/hooks-reference.html#timing-of-effects
 
+https://codesandbox.io/p/sandbox/uselayouteffect-dg3ph5
+
 Необходим для вызова перед компоновкой (Layout), чтобы не выводить то, что будет снова перерисовано, а сразу скомпоновать как нужно. Происходит перед useEffect
 
 ##### useContext
@@ -2078,6 +2090,17 @@ const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b])
 ```
 
 Возвращает мемоизированное значение.
+
+##### useRef
+
+`#useRef`
+
+https://ru.legacy.reactjs.org/docs/hooks-reference.html#useref
+
+https://youtu.be/Zn54xUCkh9s?si=_bxz7JRF4lNp4Lbh
+
+1. Используется для сохранения переменной, которая не будет вызывать рендер https://codesandbox.io/p/sandbox/useref-previous-r2524w
+2. Используется для создания ссылки на элемент https://codesandbox.io/p/sandbox/useref-element-5nk2kp
 
 #### React DevTools
 
@@ -4067,6 +4090,8 @@ Utility Types (утилиты для работы с типами) https://www.t
 В конфиге выставить "strict": true https://medium.com/webhint/going-strict-with-typescript-be3f3f7e3295
 "noImplicitAny": true - выдавать ошибку везде, где тип не указан и используется any https://www.typescriptlang.org/tsconfig#noImplicitAny
 
+Type Guards - это очевидное обычное написание кода, при использовании которого метода может не быть, так как тип может быть number | string. Линтер подсветит такое место, а данные понятия как type guards уже слишком банальны. https://www.dev-notes.ru/articles/typescript/how-to-use-type-guards-typescript/#:~:text=%D0%97%D0%B0%D1%89%D0%B8%D1%82%D0%B0%20%D1%82%D0%B8%D0%BF%D0%B0%20%E2%80%94%20%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20TypeScript%2C%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%B0%D1%8F,%D0%B4%D0%BE%20%D1%87%D0%B5%D0%B3%D0%BE%2D%D1%82%D0%BE%20%D0%B1%D0%BE%D0%BB%D0%B5%D0%B5%20%D0%BA%D0%BE%D0%BD%D0%BA%D1%80%D0%B5%D1%82%D0%BD%D0%BE%D0%B3%D0%BE.
+
 ### Generics
 
 `#Generics #Генерики`
@@ -4723,3 +4748,13 @@ UX/UI дизайн — это проектирование любых польз
 [middleware]: https://developer.mozilla.org/en-US/docs/Glossary/Middleware
 [express-middleware]: https://expressjs.com/ru/guide/writing-middleware.html#:~:text=%D0%A4%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%B8%20%D0%BF%D1%80%D0%BE%D0%BC%D0%B5%D0%B6%D1%83%D1%82%D0%BE%D1%87%D0%BD%D0%BE%D0%B9%20%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B8%20(middleware)%20%2D,%D0%BA%D0%B0%D0%BA%20%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%BE%2C%20%D0%BE%D0%B1%D0%BE%D0%B7%D0%BD%D0%B0%D1%87%D0%B0%D0%B5%D1%82%D1%81%D1%8F%20%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9%20next%20
 [linked-list]: https://itchef.ru/articles/125551/#:~:text=%D0%A1%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9%20%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA%20%E2%80%94%20%D1%8D%D1%82%D0%BE%20%D1%82%D0%B8%D0%BF%20%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D1%8B,%D0%B5%D1%81%D1%82%D1%8C%20%D1%83%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%20%D0%BD%D0%B0%20%D0%BF%D1%80%D0%B5%D0%B4%D1%8B%D0%B4%D1%83%D1%89%D0%B8%D0%B9%20%D1%83%D0%B7%D0%B5%D0%BB
+
+### Tree shaking
+
+`#TreeShaking #Тришейкинг`
+
+Это удаление лишнего кода и импортов, осуществляется бандлерами (сборщиками).
+
+В esbuild `treeShaking : true` https://esbuild.github.io/api/#tree-shaking
+
+В Webpack `mode: "production"` https://webpack.js.org/guides/tree-shaking/
