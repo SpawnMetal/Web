@@ -80,6 +80,7 @@
       - [useMemo](#useMemo)
       - [useCallback](#useCallback)
       - [useRef](#useRef)
+    - [Throttle и Debounce][Throttle-и-Debounce]
     - [JSX](#JSX)
     - [React Router](#React-Router)
     - [React DevTools](#React-DevTools)
@@ -2101,6 +2102,20 @@ https://youtu.be/Zn54xUCkh9s?si=_bxz7JRF4lNp4Lbh
 
 1. Используется для сохранения переменной, которая не будет вызывать рендер https://codesandbox.io/p/sandbox/useref-previous-r2524w
 2. Используется для создания ссылки на элемент https://codesandbox.io/p/sandbox/useref-element-5nk2kp
+
+#### Throttle и Debounce
+
+`#Throttle #Debounce`
+
+https://dev.to/andreysm/ispolzuiem-throttle-i-debounce-v-react-3cn9
+
+Throttle и Debounce решают задачи оптимизации.
+
+Throttle - пропускает вызовы функции с определённой периодичностью.
+
+Debounce - откладывает вызов функции до того момента, когда с последнего вызова пройдёт определённое количество времени.
+
+Например с использованием метода Throttle событие будет срабатывать каждые n секунд, а с Debounce будет откладываться. Вместе получится, что событие может происходить не каждые 1 секунду, а через 5, когда пользователь прекратит действие и можно будет провести конечное вычисление.
 
 #### React DevTools
 
