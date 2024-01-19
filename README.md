@@ -30,7 +30,11 @@
     - [Замыкание](#Замыкание)
       - [Свободная переменная](#Свободная-переменная)
   - [Классы](#Классы)
+    - [public](#public)
     - [static](#static)
+    - [protected](#protected)
+    - [private](#private)
+    - [#abstract](#abstract)
     - [super](#super)
     - [implements](#implements)
   - [Декларативное, Императивное программирование](#Декларативное-Императивное-программирование)
@@ -669,17 +673,61 @@ https://learn.javascript.ru/es-class
 
 В js 2021 можно сделать приватным поле либо метод с помощью #. #id - будет приватным
 
+Порядок инициализации https://www.typescriptlang.org/docs/handbook/2/classes.html#initialization-order
+
+#### public
+
+`#public`
+
+https://www.typescriptlang.org/docs/handbook/2/classes.html#public
+
+Обращаемся к методам из инсты
+
+```ts
+class Greeter {
+  public greet() {
+    console.log('hi!')
+  }
+}
+const g = new Greeter()
+g.greet()
+```
+
 #### static
 
 `#static`
 
 https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Classes/static
 
-https://metanit.com/web/typescript/3.13.php
+https://www.typescriptlang.org/docs/handbook/2/classes.html#static-members
 
-static - объявление внутри класса, наследуется, но не появляется у присвоенных значений, например class Cl, обращение будет Cl.fn(), а не const cl = new Cl(), cl.fn()
+static - объявление внутри класса, наследуется, но не появляется у присвоенных значений, например class Cl, обращение будет Cl.fn(), а не const cl = new Cl(), cl.fn(), в public наоборот только у инсты обращаемся
 
 Также статические поля и методы могут наследоваться, что позволяет обращаться к ним через имя производного класса: Class1 extends Class2, Class1.methodClass2()
+
+#### protected
+
+`#protected`
+
+https://www.typescriptlang.org/docs/handbook/2/classes.html#protected
+
+Обращение возможно только из собственного и дочерних классов, изнутри, не из инсты
+
+#### private
+
+`#private`
+
+https://www.typescriptlang.org/docs/handbook/2/classes.html#private
+
+Доступ возможен только из самого класса, из подклассов и инсты нельзя, но ошибку выдаст только ts, сам js выполнится
+
+#### abstract
+
+`#abstract`
+
+https://www.typescriptlang.org/docs/handbook/2/classes.html#abstract-classes-and-members
+
+Означает, что в родительском abstract классе есть только объявления свойств и методов, а наполнение происходит в подклассах
 
 #### super
 
@@ -687,7 +735,7 @@ static - объявление внутри класса, наследуется,
 
 https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/super
 
-Ключевое слово super используется для вызова конструктора родителя
+Ключевое слово super используется для вызова конструктора родителя, также может быть использовано для вызова функций родительского объекта.
 
 #### implements
 
@@ -710,7 +758,7 @@ class Sonar implements Pingable {
 
 class Ball implements Pingable {
 Class 'Ball' incorrectly implements interface 'Pingable'.
-  Property 'ping' is missing in type 'Ball' but required in type 'Pingable'.
+  // Property 'ping' is missing in type 'Ball' but required in type 'Pingable'.
   pong() {
     console.log("pong!");
   }
@@ -4148,7 +4196,7 @@ https://habr.com/ru/company/ruvds/blog/347194/
 
 ## Typescript
 
-`#Typescript`
+`#Typescript #TS`
 
 https://youtu.be/nyIpDs2DJ_c
 
@@ -4156,53 +4204,122 @@ TypeScript — это строго типизированный язык про�
 
 Концентрируется на добавлении «строгой типизации» для упрощения разработки и поддержки больших и сложных систем. Разработан Microsoft.
 
+`tsconfig` https://www.typescriptlang.org/tsconfig
+
+TS Playground https://www.typescriptlang.org/play
+
 Utility Types (утилиты для работы с типами) https://www.typescriptlang.org/docs/handbook/utility-types.html
 
 В конфиге выставить "strict": true https://medium.com/webhint/going-strict-with-typescript-be3f3f7e3295
 "noImplicitAny": true - выдавать ошибку везде, где тип не указан и используется any https://www.typescriptlang.org/tsconfig#noImplicitAny
+"strictNullChecks": true - для проверки null и undefined https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#null-and-undefined https://www.typescriptlang.org/tsconfig#strictNullChecks
 
 Type Guards - это очевидное обычное написание кода, при использовании которого метода может не быть, так как тип может быть number | string. Линтер подсветит такое место, а данные понятия как type guards уже слишком банальны. https://www.dev-notes.ru/articles/typescript/how-to-use-type-guards-typescript/#:~:text=%D0%97%D0%B0%D1%89%D0%B8%D1%82%D0%B0%20%D1%82%D0%B8%D0%BF%D0%B0%20%E2%80%94%20%D1%82%D0%B5%D1%85%D0%BD%D0%B8%D0%BA%D0%B0%20TypeScript%2C%20%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D1%83%D0%B5%D0%BC%D0%B0%D1%8F,%D0%B4%D0%BE%20%D1%87%D0%B5%D0%B3%D0%BE%2D%D1%82%D0%BE%20%D0%B1%D0%BE%D0%BB%D0%B5%D0%B5%20%D0%BA%D0%BE%D0%BD%D0%BA%D1%80%D0%B5%D1%82%D0%BD%D0%BE%D0%B3%D0%BE.
 
-### Generics
+Перегрузки функций https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads
 
-`#Generics #Генерики`
-
-https://www.typescriptlang.org/docs/handbook/2/generics.html
+Можно указать, что у массива всегда только два значения https://www.typescriptlang.org/docs/handbook/2/functions.html#rest-parameters
 
 ```ts
-const foo: Array<number> = [1, 2, 3] // Array - класс / объект, состоящий из number
-function f<T>(array: T[]): T[]
-f([1, 2]) либо f(['a', 'b']) // Подставит тип переданных значений за место T
+const args = [8, 5] as const
 ```
 
-https://stackoverflow.com/questions/20043265/check-if-checkbox-element-is-checked-in-typescript
-Утвердить тип:
+Неизменный массив с помощью `ReadonlyArray<Type>` - то же, что и Type[]. В принципе можно использовать readonly https://www.typescriptlang.org/docs/handbook/utility-types.html
+
+`readonly` - используется для свойств объектов, в классе присвоение может производиться только в конструторе https://www.typescriptlang.org/docs/handbook/2/objects.html#readonly-properties
+
+Сигнатуры индекса https://www.typescriptlang.org/docs/handbook/2/objects.html#index-signatures
+
+Тип кортежа (Tuple Types) — это еще один тип Arrayтипа, который точно знает, сколько элементов он содержит и какие именно типы он содержит в определенных позициях https://www.typescriptlang.org/docs/handbook/2/objects.html#tuple-types
 
 ```ts
-var element = <HTMLInputElement>document.getElementById('is3dCheckBox')
+type StringNumberPair = [string, number]
 ```
 
-Утвердить сильнее:
+- Различия между псевдонимами типов и интерфейсами https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces
+- Расширение типов происходит посредством &, а интерфейсов посредством extends
+- Изменение типов невозможно в отличает от интерфейсов
+- extends от примитивов у интерфейсов невозможен
+- Имена интерфейсов всегда будут отображаться в сообщениях об ошибках в исходной форме, но только тогда, когда они используются по имени
+
+`.!` - Оператор ненулевого утверждения (Postfix !). Необходим для утверждения, что значение не nullable, например x!.toFixed() https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-
+
+`|` - объединения. Например number | string, оба типа будут допускаться, но при использовании метода относящегося к конкретному типу сначала необходимо сделать проверку на тип https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#working-with-union-types
+
+`&` - расширение типа. Пример:
 
 ```ts
-var isChecked = (<HTMLInputElement>(<any>myString)).checked //Строковая переменная расширяется до any типа перед утверждением HTMLInputElement.
+type Animal = {
+  name: string
+}
+
+type Bear = Animal & {
+  honey: boolean
+}
+
+const bear = getBear()
+bear.name
+bear.honey
 ```
 
-Если вы используете файлы tsx, вы не можете использовать синтаксис угловой скобки, вы должны использовать «as», который так же позволяет не заполнять объект пустыми значениями при создании:
+Тип утверждения https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
+
+Если тип не известен и getElementById вернёт какой-то HTMLElement, можно уточнить, что это будет именно HTMLCanvasElement, в tsx за место <> использовать as
 
 ```ts
-let element = document.getElementById('is3dCheckBox') as HTMLInputElement // https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
+const myCanvas = document.getElementById('main_canvas') as HTMLCanvasElement
+const myCanvas = <HTMLCanvasElement>document.getElementById('main_canvas')
 ```
 
-Creating Types from Types https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
+Сигнатура вызова https://www.typescriptlang.org/docs/handbook/2/functions.html#call-signatures
 
-- `Generics`: Types which take parameters
-- `Keyof Type Operator`: Using the keyof operator to create new types
-- `Typeof Type Operator`: Using the typeof operator to create new types
-- `Indexed Access Types`: Using Type['a'] syntax to access a subset of a type
-- `Conditional Types`: Types which act like if statements in the type system
-- `Mapped Types`: Creating types by mapping each property in an existing type
-- `Template Literal Types`: Mapped types which change properties via template literal strings
+```ts
+type DescribableFunction = {
+  description: string // Свойство
+  fn: () => void // Свойство
+  (someArg: number): boolean // Текущая функция
+  new (s: string): Date // Можно комбинировать и вызвать текущую функцию с помощью new
+}
+```
+
+Индексированные типы доступа https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html
+
+```ts
+const MyArray = [
+  {name: 'Alice', age: 15},
+  {name: 'Bob', age: 23},
+  {name: 'Eve', age: 38},
+]
+
+type Person = (typeof MyArray)[number]
+// type Person = {
+//   name: string
+//   age: number
+// }
+
+type Age = (typeof MyArray)[number]['age']
+// type Age = number
+
+// Or
+type Age2 = Person['age']
+// type Age2 = number
+```
+
+Условные типы https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
+
+```ts
+SomeType extends OtherType ? TrueType : FalseType;
+```
+
+`infer` - создание переменной универсального типа https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#inferring-within-conditional-types
+
+```ts
+type Flatten<Type> = Type extends Array<infer Item> ? Item : Type
+```
+
+Сопоставленные типы и модификаторы https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
+
+Типы шаблонных литералов https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
 
 Другие типы, о которых нужно знать: `void, object, unknown, never, Function` https://www.typescriptlang.org/docs/handbook/2/functions.html#other-types-to-know-about
 
@@ -4211,6 +4328,37 @@ Creating Types from Types https://www.typescriptlang.org/docs/handbook/2/types-f
 - `unknown` - например middleware, не ясно, вернёт объект с результатом или ошибку
 - `never` - например, когда функция завершится за счёт вызова throw
 - `Function` - функция
+
+- `Uppercase<StringType>` - Перевести в верхний регистр https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uppercasestringtype
+- `Lowercase<StringType>` - Перевести в нижний регистр https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#lowercasestringtype
+- `Capitalize<StringType>` - сделать первый символ заглавным https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#capitalizestringtype
+- `Uncapitalize<StringType>` - сделать первый символ маленьким https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uncapitalizestringtype
+
+Модули `import, export` https://www.typescriptlang.org/docs/handbook/2/modules.html
+
+Пространства имён `namespaces` https://www.typescriptlang.org/docs/handbook/namespaces.html
+
+Декларации `declare` https://www.typescriptlang.org/docs/handbook/declaration-files/by-example.html#objects-with-properties
+
+Декораторы (Decorators) https://www.typescriptlang.org/docs/handbook/decorators.html
+
+Миксины - используются для расширения класса (extends) https://www.typescriptlang.org/docs/handbook/mixins.html
+
+Директивы с тройной косой чертой `///` https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html
+
+### Generics
+
+`#Generics #Генерики`
+
+`!:` - утверждает, что присвоение значения будет осуществлено позже https://www.typescriptlang.org/docs/handbook/2/generics.html
+
+```ts
+const foo: Array<number> = [1, 2, 3] // Array - класс / объект, состоящий из number
+function f<T>(array: T[]): T[]
+f([1, 2]) либо f(['a', 'b']) // Подставит тип переданных значений за место T
+```
+
+Можно ограничить Type по наличию свойства https://www.typescriptlang.org/docs/handbook/2/functions.html#constraints
 
 ### enum
 
