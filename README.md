@@ -84,6 +84,7 @@
       - [useMemo](#useMemo)
       - [useCallback](#useCallback)
       - [useRef](#useRef)
+      - [Router](#Router)
     - [Throttle и Debounce][Throttle-и-Debounce]
     - [JSX](#JSX)
     - [React Router](#React-Router)
@@ -2154,6 +2155,55 @@ https://youtu.be/Zn54xUCkh9s?si=_bxz7JRF4lNp4Lbh
 
 1. Используется для сохранения переменной, которая не будет вызывать рендер https://codesandbox.io/p/sandbox/useref-previous-r2524w
 2. Используется для создания ссылки на элемент https://codesandbox.io/p/sandbox/useref-element-5nk2kp
+
+##### Router
+
+`#router`
+
+https://reactrouter.com/en/main
+
+BrowserRouter https://reactrouter.com/en/main/router-components/browser-router
+
+Router https://reactrouter.com/en/main/route/route#route
+
+Link https://reactrouter.com/en/main/components/link
+
+/ нужен иначе будет в консоль выводить No routes matched location "/"
+
+Использовать Link роутера (не Mui), так же navigate. Например не вызовет useEffect и рендер при переходе обратно из /example например в /
+
+```tsx
+// App.tsx
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {Example} from './Example'
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/example" element={<Example />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+```
+
+```tsx
+// Example.tsx
+import React from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+
+export function Example() {
+  const navigate = useNavigate()
+  return (
+    <>
+      <Link to="/">Home</Link>
+      <p onClick={() => navigate(`/`)}>Home</p>
+    </>
+  )
+}
+```
 
 #### Throttle и Debounce
 
