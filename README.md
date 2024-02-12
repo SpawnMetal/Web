@@ -84,9 +84,8 @@
       - [useMemo](#useMemo)
       - [useCallback](#useCallback)
       - [useRef](#useRef)
-      - [Router](#Router)
-    - [Throttle и Debounce][Throttle-и-Debounce]
     - [JSX](#JSX)
+    - [Throttle и Debounce](#Throttle-и-Debounce)
     - [React Router](#React-Router)
     - [React DevTools](#React-DevTools)
     - [React Native](#React-Native)
@@ -2020,16 +2019,6 @@ https://youtu.be/9KJxaFHotqI
 
 Для этого раньше использовался `npm i prop-types`
 
-#### JSX
-
-https://ru.reactjs.org/docs/introducing-jsx.html
-
-https://facebook.github.io/jsx
-
-`JavaScript XML (JSX)` — это расширение синтаксиса JavaScript, которое позволяет использовать похожий на HTML синтаксис для описания структуры интерфейса. Как правило, компоненты написаны с использованием JSX, но также есть возможность использования обычного JavaScript.
-
-JSX напоминает другой язык, созданный в компании Фейсбук для расширения PHP, XHP.
-
 ##### useState
 
 `#useState`
@@ -2175,11 +2164,55 @@ https://youtu.be/Zn54xUCkh9s?si=_bxz7JRF4lNp4Lbh
 1. Используется для сохранения переменной, которая не будет вызывать рендер https://codesandbox.io/p/sandbox/useref-previous-r2524w
 2. Используется для создания ссылки на элемент https://codesandbox.io/p/sandbox/useref-element-5nk2kp
 
-##### Router
+#### JSX
 
-`#router`
+https://ru.reactjs.org/docs/introducing-jsx.html
+
+https://facebook.github.io/jsx
+
+`JavaScript XML (JSX)` — это расширение синтаксиса JavaScript, которое позволяет использовать похожий на HTML синтаксис для описания структуры интерфейса. Как правило, компоненты написаны с использованием JSX, но также есть возможность использования обычного JavaScript.
+
+JSX напоминает другой язык, созданный в компании Фейсбук для расширения PHP, XHP.
+
+#### Throttle и Debounce
+
+`#Throttle #Debounce`
+
+https://dev.to/andreysm/ispolzuiem-throttle-i-debounce-v-react-3cn9
+
+Throttle и Debounce решают задачи оптимизации.
+
+Throttle - пропускает вызовы функции с определённой периодичностью.
+
+Debounce - откладывает вызов функции до того момента, когда с последнего вызова пройдёт определённое количество времени.
+
+Например с использованием метода Throttle событие будет срабатывать каждые n секунд, а с Debounce будет откладываться. Вместе получится, что событие может происходить не каждые 1 секунду, а через 5, когда пользователь прекратит действие и можно будет провести конечное вычисление.
+
+#### React DevTools
+
+`#ReactDeveloperTools #DevTools`
+
+https://github.com/facebook/react/tree/master/packages/react-devtools
+
+React DevTools доступен как встроенное расширение для браузеров Chrome и Firefox. Этот пакет позволяет вам отлаживать приложение React в другом месте (например, в мобильном браузере, встроенном веб-просмотре, Safari внутри iframe).
+
+Он работает как с React DOM, так и с React Native.
+
+#### React Native
+
+https://facebook.github.io/react-native
+
+Вы можете использовать React Native сегодня в своих существующих проектах для Android и iOS, или вы можете создать совершенно новое приложение с нуля.
+
+#### React Router
+
+`#Router`
+
+- `npm install --save react-router-dom`: DOM bindings for React Router. https://www.npmjs.com/package/react-router-dom
 
 https://reactrouter.com/en/main
+
+React Router - популярная и полная библиотека маршрутизации для React.js, которая синхронизирует пользовательский интерфейс с URL-адресом. Он поддерживает ленивую загрузку кода, динамическое сопоставление маршрутов и обработку перехода по местоположению и первоначально был вдохновлен маршрутизатором Ember.
 
 BrowserRouter https://reactrouter.com/en/main/router-components/browser-router
 
@@ -2223,48 +2256,6 @@ export function Example() {
   )
 }
 ```
-
-#### Throttle и Debounce
-
-`#Throttle #Debounce`
-
-https://dev.to/andreysm/ispolzuiem-throttle-i-debounce-v-react-3cn9
-
-Throttle и Debounce решают задачи оптимизации.
-
-Throttle - пропускает вызовы функции с определённой периодичностью.
-
-Debounce - откладывает вызов функции до того момента, когда с последнего вызова пройдёт определённое количество времени.
-
-Например с использованием метода Throttle событие будет срабатывать каждые n секунд, а с Debounce будет откладываться. Вместе получится, что событие может происходить не каждые 1 секунду, а через 5, когда пользователь прекратит действие и можно будет провести конечное вычисление.
-
-#### React DevTools
-
-`#ReactDeveloperTools #DevTools`
-
-https://github.com/facebook/react/tree/master/packages/react-devtools
-
-React DevTools доступен как встроенное расширение для браузеров Chrome и Firefox. Этот пакет позволяет вам отлаживать приложение React в другом месте (например, в мобильном браузере, встроенном веб-просмотре, Safari внутри iframe).
-
-Он работает как с React DOM, так и с React Native.
-
-#### React Native
-
-https://facebook.github.io/react-native
-
-Вы можете использовать React Native сегодня в своих существующих проектах для Android и iOS, или вы можете создать совершенно новое приложение с нуля.
-
-#### React Router
-
-`#Router`
-
-- `npm install --save react-router-dom`: DOM bindings for React Router. https://www.npmjs.com/package/react-router-dom
-
-https://reacttraining.com/react-router
-
-Для реализации алгоритмов навигации используется библиотека React Router.
-
-React Router - популярная и полная библиотека маршрутизации для React.js, которая синхронизирует пользовательский интерфейс с URL-адресом. Он поддерживает ленивую загрузку кода, динамическое сопоставление маршрутов и обработку перехода по местоположению и первоначально был вдохновлен маршрутизатором Ember.
 
 #### shouldComponentUpdate
 
