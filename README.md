@@ -182,6 +182,7 @@
       - [Этапы рендера](#Этапы-рендера)
     - [Lazy loading](#Lazy-loading)
   - [Сеть](#Сеть)
+    - [MTLS](#MTLS)
     - [HTTP](#HTTP)
 - [Автотесты](#Автотесты)
   - [Виды тестирования](#Виды-тестирования)
@@ -672,7 +673,7 @@ https://learn.javascript.ru/es-class
 
 Классы - это синтаксический сахар для более удобного создания объектов, наследования и прототипирования
 
-В js 2021 можно сделать приватным поле либо метод с помощью #. #id - будет приватным
+В js 2021 можно сделать приватным поле либо метод с помощью #. #id - будет приватным. `#Решётка #Приватность`
 
 Порядок инициализации https://www.typescriptlang.org/docs/handbook/2/classes.html#initialization-order
 
@@ -2995,6 +2996,8 @@ TypeORM находится под сильным влиянием других O
 
 Понятие о миграциях: https://medium.com/nuances-of-programming/%D0%BF%D0%BE%D0%BD%D1%8F%D1%82%D0%B8%D0%B5-%D0%BE-%D0%BC%D0%B8%D0%B3%D1%80%D0%B0%D1%86%D0%B8%D1%8F%D1%85-%D0%B2-typeorm-9a6a40ddd76e
 
+Relation options, cascades https://typeorm.io/relations#relation-options
+
 - `@OneToOne(() => Entity)` https://typeorm.io/decorator-reference#onetoone
 
 `entityName: Entity`
@@ -4302,19 +4305,37 @@ TypeScript — это строго типизированный язык про�
 
 `tsconfig` https://www.typescriptlang.org/tsconfig
 
+---
+
 TS Playground https://www.typescriptlang.org/play
+
+---
 
 Utility Types (утилиты для работы с типами) https://www.typescriptlang.org/docs/handbook/utility-types.html
 
+`Record<Keys, Type>` - Создает тип объекта, ключи свойств которого — Keysи значения свойств — Type. Эту утилиту можно использовать для сопоставления свойств одного типа с другим типом. https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type
+
+`Record` — более предпочтителен при описании объектных типов в TypeScript. Это позволяет гибко и лаконично описывать динамические структуры и использовать Record совместно с другими типами данных.
+
+---
+
 SyntheticEvent - тип event у некоторых событий, описанных тут https://legacy.reactjs.org/docs/events.html#event-pooling
+
+---
 
 В конфиге выставить "strict": true https://medium.com/webhint/going-strict-with-typescript-be3f3f7e3295
 "noImplicitAny": true - выдавать ошибку везде, где тип не указан и используется any https://www.typescriptlang.org/tsconfig#noImplicitAny
 "strictNullChecks": true - для проверки null и undefined https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#null-and-undefined https://www.typescriptlang.org/tsconfig#strictNullChecks
 
+---
+
 Type Guards - это очевидное обычное написание кода, при использовании которого, метода может не быть, так как тип может быть number | string. Линтер подсветит такое место, а данные понятия как type guards уже слишком банальны. К ним же относятся очевидный typeof и instanceof https://www.dev-notes.ru/articles/typescript/how-to-use-type-guards-typescript/#:~:text=Защита%20типа%20—%20техника%20TypeScript%2C%20используемая,до%20чего-то%20более%20конкретного
 
+---
+
 Перегрузки функций https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads
+
+---
 
 Можно указать, что у массива всегда только два значения https://www.typescriptlang.org/docs/handbook/2/functions.html#rest-parameters
 
@@ -4322,9 +4343,13 @@ Type Guards - это очевидное обычное написание код
 const args = [8, 5] as const
 ```
 
+---
+
 Неизменный массив с помощью `ReadonlyArray<Type>` - то же, что и Type[]. В принципе можно использовать readonly - const todo: Readonly<Todo> либо type Foo = {readonly bas: number} https://www.typescriptlang.org/docs/handbook/utility-types.html
 
 `readonly` - используется для свойств объектов, в классе присвоение может производиться только в конструторе https://www.typescriptlang.org/docs/handbook/2/objects.html#readonly-properties
+
+---
 
 Сигнатуры индекса https://www.typescriptlang.org/docs/handbook/2/objects.html#index-signatures
 
@@ -4334,11 +4359,15 @@ const args = [8, 5] as const
 type StringNumberPair = [string, number]
 ```
 
+---
+
 - Различия между псевдонимами типов и интерфейсами https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces
 - Расширение типов происходит посредством &, а интерфейсов посредством extends
 - Изменение типов невозможно в отличае от интерфейсов
 - extends от примитивов у интерфейсов невозможен
 - Имена интерфейсов всегда будут отображаться в сообщениях об ошибках в исходной форме, но только тогда, когда они используются по имени
+
+---
 
 `.!` - Оператор ненулевого утверждения (Postfix !). Необходим для утверждения, что значение не nullable, например x!.toFixed() https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-
 
@@ -4360,6 +4389,8 @@ bear.name
 bear.honey
 ```
 
+---
+
 Тип утверждения https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions
 
 Если тип не известен и getElementById вернёт какой-то HTMLElement, можно уточнить, что это будет именно HTMLCanvasElement, в tsx за место <> использовать as
@@ -4368,6 +4399,8 @@ bear.honey
 const myCanvas = document.getElementById('main_canvas') as HTMLCanvasElement
 const myCanvas = <HTMLCanvasElement>document.getElementById('main_canvas')
 ```
+
+---
 
 Сигнатура вызова https://www.typescriptlang.org/docs/handbook/2/functions.html#call-signatures
 
@@ -4379,6 +4412,8 @@ type DescribableFunction = {
   new (s: string): Date // Можно комбинировать и вызвать текущую функцию с помощью new
 }
 ```
+
+---
 
 Индексированные типы доступа https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html
 
@@ -4403,11 +4438,15 @@ type Age2 = Person['age']
 // type Age2 = number
 ```
 
+---
+
 Условные типы https://www.typescriptlang.org/docs/handbook/2/conditional-types.html
 
 ```ts
 SomeType extends OtherType ? TrueType : FalseType;
 ```
+
+---
 
 `infer` - создание переменной универсального типа https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#inferring-within-conditional-types
 
@@ -4415,9 +4454,15 @@ SomeType extends OtherType ? TrueType : FalseType;
 type Flatten<Type> = Type extends Array<infer Item> ? Item : Type
 ```
 
+---
+
 Сопоставленные типы и модификаторы https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
 
+---
+
 Типы шаблонных литералов https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
+
+---
 
 Другие типы, о которых нужно знать: `void, object, unknown, never, Function` https://www.typescriptlang.org/docs/handbook/2/functions.html#other-types-to-know-about
 
@@ -4432,15 +4477,27 @@ type Flatten<Type> = Type extends Array<infer Item> ? Item : Type
 - `Capitalize<StringType>` - сделать первый символ заглавным https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#capitalizestringtype
 - `Uncapitalize<StringType>` - сделать первый символ маленьким https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html#uncapitalizestringtype
 
+---
+
 Модули `import, export` https://www.typescriptlang.org/docs/handbook/2/modules.html
+
+---
 
 Пространства имён `namespaces` https://www.typescriptlang.org/docs/handbook/namespaces.html
 
+---
+
 Декларации `declare` https://www.typescriptlang.org/docs/handbook/declaration-files/by-example.html#objects-with-properties
+
+---
 
 Декораторы (Decorators) https://www.typescriptlang.org/docs/handbook/decorators.html
 
+---
+
 Миксины - используются для расширения класса (extends) https://www.typescriptlang.org/docs/handbook/mixins.html
+
+---
 
 Директивы с тройной косой чертой `///` https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html
 
@@ -4562,6 +4619,10 @@ CSSOM дерево включает в себя стили пользовате�
   Time to Interactive (TTI, время до интерактивности) - это показатель того, как много времени проходит между самым первым сетевым запросом и моментом, когда страница становится интерактивной. В хронологии этот этап следует сразу за First Contentful Paint.
   Интерактивностью называется показатель того, что страница отреагировала на действие пользователя за время в 50мс.
 
+---
+
+`window.requestAnimationFrame(callback)` - предоставляет разработчикам доступ к жизненному циклу фрейма, позволяя выполнять операции перед вычислением стилей и формированием макета (layout) документа браузером. Вот почему данный метод отлично подходит для реализации анимации. Собственно, для этого он и предназначен. https://habr.com/ru/companies/timeweb/articles/587908/ https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame#examples
+
 ### Сеть
 
 `#Сеть`
@@ -4590,6 +4651,26 @@ URL https://developer.mozilla.org/ru/docs/Glossary/URL
 Единый указатель ресурса (Uniform Resource Locator, URL) — строка, однозначно определяющая, где в интернете находится ресурс.
 
 В контексте HTTP, URL называют "адрес" (web address)" или "ссылку" (link).
+
+#### MTLS
+
+`#MTLS`
+
+https://investim.guru/news/chem-otlichayutsya-tls-i-mtls-v-chem-zaklyuchaetsya-raznitsa
+
+Mutual TLS (MTLS)
+
+- Взаимная аутентификация
+
+Одно из главных отличий между TLS и MTLS заключается в том, что MTLS предоставляет возможность для взаимной аутентификации между клиентом и сервером. Это означает, что клиент и сервер должны предоставить доказательства своей подлинности друг другу, например, сертификаты X.509.
+
+- Безопасность двухстороннего соединения
+
+Так как MTLS предоставляет взаимную аутентификацию, он обеспечивает безопасность обоих сторон соединения. Клиент может быть уверен в том, что он соединяется с доверенным сервером, а сервер может быть уверен в идентификации клиента. Это делает MTLS особенно полезным в ситуациях, где требуется большая степень безопасности, например, в финансовых или медицинских приложениях.
+
+- Использование сертификатов
+
+Как TLS, так и MTLS используют сертификаты для аутентификации и шифрования данных. Однако, в случае MTLS, обе стороны соединения должны предоставить действительные сертификаты. Клиент будет использовать сертификат сервера для проверки его подлинности, а сервер будет использовать сертификат клиента для проверки его подлинности. Таким образом, MTLS обеспечивает более сильное доверие в сравнении с обычным TLS.
 
 #### HTTP
 
