@@ -2371,11 +2371,23 @@ https://fezvrasta.github.io/bootstrap-material-design/
 
 `#Axios`
 
+https://axios-http.com
+
 https://github.com/axios/axios
 
 Axios - библиотека javascript, реализующая XMLHttpRequest в браузере и поддерживающая Promise API.
 
 Axios — это широко известная JavaScript-библиотека. Она представляет собой HTTP-клиент, основанный на промисах и предназначенный для браузеров и для Node.js.
+
+Конфигурация запроса (Request Config) https://axios-http.com/docs/req_config
+
+Ответ (Response Schema) https://axios-http.com/docs/res_schema
+
+Перехватчики (Interceptors) request и response https://axios-http.com/docs/interceptors
+
+Методы https://axios-http.com/docs/api_intro
+
+Прерывание (Cancellation) https://axios-http.com/docs/cancellation
 
 ### Lodash
 
@@ -4065,9 +4077,12 @@ Swagger — это набор инструментов для разработч
 `#HTML`
 
 https://developer.mozilla.org/en-US/docs/Web/HTML
+
 https://developer.mozilla.org/ru/docs/Learn/HTML
 
 HyperText Markup Language - язык гипертекстовой разметки
+
+Спецификация https://html.spec.whatwg.org/
 
 Тег style пишется в head. Блокирует рендер страницы http://htmlbook.ru/html/style
 
