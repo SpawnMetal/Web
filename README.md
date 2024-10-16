@@ -1932,6 +1932,8 @@ esc, Shift + ; пишем :q! - выйти без сохранения
 
 ### React
 
+`#React`
+
 https://reactjs.org
 
 https://developer.mozilla.org/ru/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started
@@ -3612,6 +3614,8 @@ https://youtu.be/xq13wiqvcTc
 - Принцип инверсии зависимостей (dependency inversion principle / DIP) — модули верхних уровней не должны зависеть от модулей нижних уровней, а оба типа модулей должны зависеть от абстракций; сами абстракции не должны зависеть от деталей, а вот детали должны зависеть от абстракций.
 - Т.е. Оборачиваем классы с реализацией функционала в классы, с которыми будет происходить взаимодействие в базовом. Тем самым работаем только с вызовом базового, ничего нигде не меняя.
 
+Примеры https://www.perplexity.ai/search/pokazhi-primery-ispolzovaniia-Krk1qtY4TGW9x7zYqmwavA
+
 #### KISS
 
 `#KISS`
@@ -4960,7 +4964,7 @@ https://developer.mozilla.org/ru/docs/Web/CSS/Specificity
 
 [Flex](#Flex): положение дочерних элементов
 
-`overflow-wrap`: предотвращение переполнения строкового поля текстом, например можно для <p> применить `overflow-wrap: anywhere`
+`overflow-wrap`: предотвращение переполнения строкового поля текстом, например можно для \<p> применить `overflow-wrap: anywhere`
 
 ### Flex
 
@@ -4969,6 +4973,8 @@ https://developer.mozilla.org/ru/docs/Web/CSS/Specificity
 `flex` устанавливается родителю для управления положением дочерних элементов.
 
 Игра для изучения flexbox https://flexboxfroggy.com/#ru
+
+Установка параметров родителю:
 
 1. `justify-content` - горизонтальное выравнивание https://developer.mozilla.org/en-US/docs/Web/CSS/justify-content
 
