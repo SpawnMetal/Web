@@ -98,6 +98,8 @@
       - [useCallback](#useCallback)
       - [useRef](#useRef)
     - [memo](#memo)
+    - [StrictMode](#StrictMode)
+    - [События DOM](#События-DOM)
     - [JSX](#JSX)
     - [Throttle и Debounce](#Throttle-и-Debounce)
     - [React Router](#React-Router)
@@ -1934,7 +1936,9 @@ esc, Shift + ; пишем :q! - выйти без сохранения
 
 `#React`
 
-https://reactjs.org
+https://ru.react.dev/reference/react
+
+https://react.dev/learn
 
 https://developer.mozilla.org/ru/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/React_getting_started
 
@@ -2103,9 +2107,7 @@ export const App = () => {
 
 `#Хук #Hook`
 
-https://ru.reactjs.org/docs/hooks-intro.html
-
-https://ru.reactjs.org/docs/hooks-reference.html
+https://ru.react.dev/reference/react/hooks
 
 https://youtu.be/9KJxaFHotqI
 
@@ -2121,7 +2123,7 @@ https://youtu.be/9KJxaFHotqI
 
 `#useState`
 
-https://ru.reactjs.org/docs/hooks-reference.html#usestate
+https://ru.react.dev/reference/react/useState
 
 https://youtu.be/9KJxaFHotqI?t=71
 
@@ -2157,7 +2159,7 @@ const [state, setState] = useState(() => {
 
 `#useEffect`
 
-https://ru.reactjs.org/docs/hooks-reference.html#useeffect
+https://ru.react.dev/reference/react/useEffect
 
 https://youtu.be/9KJxaFHotqI?t=1400
 
@@ -2167,23 +2169,23 @@ https://youtu.be/9KJxaFHotqI?t=1400
 
 Он выполняет ту же роль, что и componentDidMount, componentDidUpdate и componentWillUnmount в React-классах, объединив их в единый API.
 
-StrictMode выполняет рендеринг компонентов дважды в `development` режиме, но не в `production`. По мнению разработчиков React - это позволяет обнаружить некоторые проблемы в вашем коде, если таковые будут и предупредить Вас об этом. https://ru.reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
+StrictMode выполняет рендеринг компонентов дважды в `development` режиме, но не в `production`. По мнению разработчиков React - это позволяет обнаружить некоторые проблемы в вашем коде, если таковые будут и предупредить Вас об этом. см [StrictMode](#StrictMode)
 
 При асинхронном получении данных не отображает для SEO
 
-1. `Каждый раз (componentDidMount + componentDidUpdate)`: Не передавать второй параметр. https://ru.legacy.reactjs.org/docs/hooks-reference.html#timing-of-effects
+1. `Каждый раз (componentDidMount + componentDidUpdate)`: Не передавать второй параметр. https://ru.react.dev/reference/react/useEffect#examples-dependencies
 
 ```jsx
 useEffect(() => {})
 ```
 
-2. ```Один раз (componentDidMount)`: Передаётся пустой массив вторым параметром. https://ru.legacy.reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
+2. ```Один раз (componentDidMount)`: Передаётся пустой массив вторым параметром. https://ru.react.dev/reference/react/useEffect#examples-dependencies
 
 ```jsx
 useEffect(() => {}, [])
 ```
 
-3. `Условное срабатывание эффекта` https://ru.legacy.reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
+3. `Условное срабатывание эффекта` https://ru.react.dev/reference/react/useEffect#examples-dependencies
 
 ```jsx
 useEffect(() => {}, [state1, state2, ..., stateN])
@@ -2201,7 +2203,7 @@ useEffect(() => {
 
 `#useLayoutEffect`
 
-https://ru.legacy.reactjs.org/docs/hooks-reference.html#timing-of-effects
+https://ru.react.dev/reference/react/useLayoutEffect
 
 https://codesandbox.io/p/sandbox/uselayouteffect-dg3ph5
 
@@ -2211,7 +2213,7 @@ https://codesandbox.io/p/sandbox/uselayouteffect-dg3ph5
 
 `#useContext`
 
-https://ru.reactjs.org/docs/hooks-reference.html#usecontext
+https://ru.react.dev/reference/react/useContext
 
 Может быть удобно, чтобы не тянуть всё через пропсы.
 
@@ -2219,7 +2221,7 @@ https://ru.reactjs.org/docs/hooks-reference.html#usecontext
 
 `#useMemo`
 
-https://ru.legacy.reactjs.org/docs/hooks-reference.html#usememo
+https://ru.react.dev/reference/react/useMemo
 
 https://youtu.be/9KJxaFHotqI?t=2887
 
@@ -2239,7 +2241,7 @@ useMemo, запускается во время рендеринга - до useE
 
 `#useCallback`
 
-https://ru.legacy.reactjs.org/docs/hooks-reference.html#usecallback
+https://ru.react.dev/reference/react/useCallback
 
 https://www.youtube.com/watch?v=9KJxaFHotqI&t=3579s
 
@@ -2261,12 +2263,40 @@ const memoizedCallback = useCallback(() => {
 
 `#useRef`
 
-https://ru.legacy.reactjs.org/docs/hooks-reference.html#useref
+https://ru.react.dev/reference/react/useRef
+
+https://codesandbox.io/p/sandbox/useref-element-5nk2kp
 
 https://youtu.be/Zn54xUCkh9s?si=_bxz7JRF4lNp4Lbh
 
 1. Используется для сохранения переменной, которая не будет вызывать рендер https://codesandbox.io/p/sandbox/useref-previous-r2524w
 2. Используется для создания ссылки на элемент https://codesandbox.io/p/sandbox/useref-element-5nk2kp
+
+```tsx
+import React, {useRef, useEffect, useState} from 'react'
+
+function usePrevious(value) {
+  const ref = useRef(value)
+
+  useEffect(() => {
+    ref.current = value
+  }, [value])
+
+  return ref.current
+}
+
+export default function App() {
+  const [count, setCount] = useState(0)
+  const previousCount = usePrevious(count)
+  return (
+    <>
+      Current: {count} <br />
+      Pevious: {previousCount} <br />
+      <button onClick={() => setCount(prevCount => prevCount + 5)}> +5 </button>
+    </>
+  )
+}
+```
 
 #### memo
 
@@ -2290,9 +2320,43 @@ const Greeting = memo(function Greeting({name}) {
 export default Greeting
 ```
 
+#### StrictMode
+
+`#StrictMode`
+
+https://ru.react.dev/reference/react/StrictMode
+
+`<StrictMode>` позволяет вам обнаружить распространенные баги в ваших компонентах на ранних этапах разработки.
+
+Строгий режим активирует следующие варианты поведения в режиме разработки:
+
+- Ваши компоненты будут рендерится повторно, чтобы можно было найти баги, вызванные нечистым рендерингом.
+- Ваши компоненты будут повторно запускать эффекты, чтобы можно было найти баги, возникающие из-за отсутствия сброса эффекта.
+- Ваши компоненты будут проверяться на использование устаревших API.
+
+Все эти проверки работают только в режиме разработки и не оказывают никакого эффекта в продакшен-сборке.
+
+Cтрогий режим запускает некоторые из ваших функций (только те, которые должны быть чистыми) два раза в режиме разработки. Это касается:
+
+- Тело функции компонента (только логика верхнего уровня, без учета кода внутри обработчиков событий)
+- Функции, которые передаются в функции useState, set функции, useMemo, или useReducer
+- Некоторые методы классовых компонентов, такие как constructor, render, shouldComponentUpdate
+
+#### События DOM
+
+`#События #DOM`
+
+https://react.dev/learn/typescript#typing-dom-events
+
+Чтобы явно задать тип события.
+
+Список самых популярных событиях из DOM https://developer.mozilla.org/en-US/docs/Web/Events
+
 #### JSX
 
-https://ru.reactjs.org/docs/introducing-jsx.html
+https://react.dev/learn/writing-markup-with-jsx
+
+https://react.dev/learn/javascript-in-jsx-with-curly-braces
 
 https://facebook.github.io/jsx
 
@@ -3780,7 +3844,7 @@ Utility Types (утилиты для работы с типами) https://www.t
 
 ---
 
-SyntheticEvent - тип event у некоторых событий, описанных тут https://legacy.reactjs.org/docs/events.html#event-pooling
+SyntheticEvent - тип event у некоторых событий, который является базовым типом для всех событий см [События DOM](#События-DOM)
 
 ---
 
