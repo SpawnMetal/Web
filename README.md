@@ -2015,6 +2015,8 @@ constructor               New props / setState() / forceUpdate()              |
 componentDidMount                 componentDidUpdate                 componentWillUnmount
 ```
 
+https://codesandbox.io/p/sandbox/life-cycle-dg3ph5
+
 ```jsx
 export const Child = ({num}) => {
   console.log('child: render')
@@ -2072,27 +2074,27 @@ export const App = () => {
 
 // При рендере:
 // parent: render
-// develop // parent: render
+// developer // parent: render
 // child: render
-// develop // child: render
+// developer // child: render
 // child: layout effect
 // parent: layout effect
 // child: effect
 // parent: effect
-// child: cleanup layout effect
-// parent: cleanup layout effect
-// child: cleanup effect
-// parent: cleanup effect
-// child: layout effect
-// parent: layout effect
-// child: effect
-// parent: effect
+// developer // child: cleanup layout effect
+// developer // parent: cleanup layout effect
+// developer // child: cleanup effect
+// developer // parent: cleanup effect
+// developer // child: layout effect
+// developer // parent: layout effect
+// developer // child: effect
+// developer // parent: effect
 
 // После нажатия на кнопку:
 // parent: render
-// develop // parent: render
+// developer // parent: render
 // child: render
-// develop // child: render
+// developer // child: render
 // child: cleanup layout effect
 // parent: cleanup layout effect
 // child: layout effect
@@ -2205,7 +2207,7 @@ useEffect(() => {
 
 https://ru.react.dev/reference/react/useLayoutEffect
 
-https://codesandbox.io/p/sandbox/uselayouteffect-dg3ph5
+https://codesandbox.io/p/sandbox/life-cycle-dg3ph5
 
 Необходим для вызова перед компоновкой (Layout), чтобы не выводить то, что будет снова перерисовано, а сразу скомпоновать как нужно. Происходит перед useEffect
 
@@ -2305,6 +2307,8 @@ export default function App() {
 https://react.dev/reference/react/memo
 
 Git https://github.com/SpawnMetal/react-memo
+
+https://codesandbox.io/p/sandbox/react-memo-cctr67
 
 React.memo позволяет пропустить повторный рендеринг компонента, если его свойства не изменились.
 
