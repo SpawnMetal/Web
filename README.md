@@ -108,6 +108,7 @@
     - [shouldComponentUpdate](#shouldComponentUpdate)
     - [componentDidMount](#componentDidMount)
     - [React Fragment](#React-Fragment)
+    - [Styled Components](#Styled-Components)
   - [NestJS](#NestJS)
     - [Injectable](#Injectable)
     - [Injection scopes](#Injection-scopes)
@@ -2474,6 +2475,12 @@ https://facebook.github.io/react-native
 ```
 
 Так же можно использовать структуру `<></>`
+
+#### Styled Components
+
+Styled Components — одно из популярных решений написания кода методом CSS in JS. Гибкое, простое и, главное, идеально вписывается в архитектуру React приложения.
+
+https://habr.com/ru/articles/591381/
 
 ### NestJS
 
