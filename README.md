@@ -113,6 +113,8 @@
     - [React Fiber](#React-Fiber)
     - [React Query](#React-Query)
     - [React Spring](#React-Spring)
+    - [React Developer Tools](#React-Developer-Tools)
+    - [Custom Hooks](#Custom-Hooks)
   - [NestJS](#NestJS)
     - [Injectable](#Injectable)
     - [Injection scopes](#Injection-scopes)
@@ -2537,6 +2539,81 @@ https://reactdev.ru/libs/react-spring/
 
 `React Spring` - библиотека для анимации
 
+#### React Developer Tools
+
+`#Developer #Tools`
+
+https://react.dev/learn/react-developer-tools
+
+Используйте инструменты разработчика React для проверки компонентов React , редактирования свойств и состояния , а также выявления проблем с производительностью.
+
+#### Custom Hooks
+
+`#Custom #Hooks`
+
+https://react.dev/learn/reusing-logic-with-custom-hooks
+
+Вы можете создать свои собственные хуки для нужд вашего приложения.
+
+useOnlineStatus.js
+
+```js
+import {useState, useEffect} from 'react'
+
+export function useOnlineStatus() {
+  const [isOnline, setIsOnline] = useState(true)
+  useEffect(() => {
+    function handleOnline() {
+      setIsOnline(true)
+    }
+    function handleOffline() {
+      setIsOnline(false)
+    }
+    window.addEventListener('online', handleOnline)
+    window.addEventListener('offline', handleOffline)
+    return () => {
+      window.removeEventListener('online', handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
+  return isOnline
+}
+```
+
+App.js
+
+```js
+import {useOnlineStatus} from './useOnlineStatus.js'
+
+function StatusBar() {
+  const isOnline = useOnlineStatus()
+  return <h1>{isOnline ? '✅ Online' : '❌ Disconnected'}</h1>
+}
+
+function SaveButton() {
+  const isOnline = useOnlineStatus()
+
+  function handleSaveClick() {
+    console.log('✅ Progress saved')
+  }
+
+  return (
+    <button disabled={!isOnline} onClick={handleSaveClick}>
+      {isOnline ? 'Save progress' : 'Reconnecting...'}
+    </button>
+  )
+}
+
+export default function App() {
+  return (
+    <>
+      <SaveButton />
+      <StatusBar />
+    </>
+  )
+}
+```
+
 ### NestJS
 
 `#NestJS`
@@ -2655,6 +2732,7 @@ https://habr.com/ru/post/133363/
 - `npm show package_name version`: установленная версия пакета
 - `npm view package_name version`: доступная версия пакета на сервере
 - `npm view package_name`: информация о пакете
+- `npm outdated`: проверить наличие устаревших пакетов https://docs.npmjs.com/cli/v10/commands/npm-outdated
 - `--save, --save-dev либо -D`: пакет установленный с помощью данного параметра, будет доступен только для разработки, добавлен в devDependencies
 
 dependencies - зависимости, которые идут в package.json dependencies, затем если зайти в папку с данным названием внутри node_modules и открыть там package.json, то будут отображены другие установленные пакеты в dependencies и так далее по дереву.
@@ -5098,7 +5176,7 @@ https://developer.mozilla.org/ru/docs/Web/CSS/Specificity
 
 [Flex](#Flex): положение дочерних элементов
 
-`overflow-wrap`: предотвращение переполнения строкового поля текстом, например можно для \<p> применить `overflow-wrap: anywhere`
+`overflow-wrap`: предотвращение переполнения строкового поля текстом, например можно для \<p> применить `overflow-wrap: anywhere` https://developer.mozilla.org/ru/docs/Web/CSS/overflow-wrap
 
 ### Flex
 
