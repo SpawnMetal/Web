@@ -18,6 +18,7 @@
     - [Object](#Object)
       - [Клонирование объектов](#Клонирование-объектов)
       - [Слабые ссылки](#Слабые-ссылки)
+      - [Object.groupBy()](#ObjectgroupBy)
     - [Symbol](#Symbol)
     - [Map, Set, WeakMap, WeakSet](#Map-Set-WeakMap-WeakSet)
     - [Иммутабельность](#Иммутабельность)
@@ -75,6 +76,7 @@
     - [of](#of)
     - [in](#in)
   - [Регулярные выражения](#Регулярные-выражения)
+  - [AbortController](#AbortController)
 - [Git](#Git)
   - [Обозначения](#Обозначения)
   - [Персональные данные](#Персональные-данные)
@@ -595,6 +597,62 @@ https://habr.com/ru/post/163679
 Например отображение, в котором ключом будет объект, а значением — вспомогательная информация.
 
 Пример функций `#WeakMap #WeakSet`
+
+##### Object.groupBy()
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy
+
+Позволяет переформировать объект сгруппировав значения в ключ, поэтому callbackFn должна возвращать строку либо символ, иначе нужно использовать Map.groupBy():
+
+```js
+const inventory = [
+  {name: 'asparagus', type: 'vegetables', quantity: 5},
+  {name: 'bananas', type: 'fruit', quantity: 0},
+  {name: 'goat', type: 'meat', quantity: 23},
+  {name: 'cherries', type: 'fruit', quantity: 5},
+  {name: 'fish', type: 'meat', quantity: 22},
+]
+
+const result = Object.groupBy(inventory, ({type}) => type)
+
+/* Result is:
+{
+  vegetables: [
+    { name: 'asparagus', type: 'vegetables', quantity: 5 },
+  ],
+  fruit: [
+    { name: "bananas", type: "fruit", quantity: 0 },
+    { name: "cherries", type: "fruit", quantity: 5 }
+  ],
+  meat: [
+    { name: "goat", type: "meat", quantity: 23 },
+    { name: "fish", type: "meat", quantity: 22 }
+  ]
+}
+*/
+```
+
+```js
+function myCallback({quantity}) {
+  return quantity > 5 ? 'ok' : 'restock'
+}
+
+const result2 = Object.groupBy(inventory, myCallback)
+
+/* Result is:
+{
+  restock: [
+    { name: "asparagus", type: "vegetables", quantity: 5 },
+    { name: "bananas", type: "fruit", quantity: 0 },
+    { name: "cherries", type: "fruit", quantity: 5 }
+  ],
+  ok: [
+    { name: "goat", type: "meat", quantity: 23 },
+    { name: "fish", type: "meat", quantity: 22 }
+  ]
+}
+*/
+```
 
 #### Symbol
 
@@ -1694,6 +1752,23 @@ regexp = new RegExp('шаблон', 'флаги')
 regexp = /шаблон/gim // с флагами gmi
 ```
 
+### AbortController
+
+`#AbortController`
+
+https://developer.mozilla.org/ru/docs/Web/API/AbortController
+
+Пример https://mdn.github.io/dom-examples/abort-api/
+
+Позволяет прерывать DOM запрос до момента его завершения. Это даёт возможность обрывать fetch запросы, потребителей любых ответов с Body и потоки.
+
+```js
+var controller = new AbortController()
+var signal = controller.signal
+fetch(url, {signal})
+controller.abort()
+```
+
 ## Git
 
 `#Git`
@@ -1979,6 +2054,8 @@ React (иногда React.js или ReactJS) — JavaScript-библиотека
 Топ-10 библиотек для React на GitHub https://habr.com/ru/company/ruvds/blog/345060/
 
 Material UI, React-Bootstrap, Ant-Design, StoryBook, Gatsby, Enzyme, Blueprint, Spectacle, Elemental UI, Grommet, Mozaik
+
+Ant Design от Alibaba Group, в основном для работы с таблицами приспособлен (с китайскими иероглифами), похож на Material UI, отзывы так себе https://ant.design/
 
 Пример GitHub https://github.com/SpawnMetal/test_with_questions
 
@@ -2271,6 +2348,8 @@ https://codesandbox.io/p/sandbox/life-cycle-dg3ph5
 https://ru.react.dev/reference/react/useContext
 
 Может быть удобно, чтобы не тянуть всё через пропсы.
+
+Не создавать контекст в переиспользуемом компоненте, передаваемые объекты должны быть равны принимаемым в компоненте.
 
 ##### useMemo
 
