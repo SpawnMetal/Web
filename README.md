@@ -4166,7 +4166,98 @@ type Type = (number | Type)[]
 const arr: Type = [1, [2, 3], 4, [5], [6, [7, 8]]]
 ```
 
---
+---
+
+TypeScript Номинальная и структурная типизация.
+
+Номинативная типизация в TypeScript или как защитить свой интерфейс от чужих идентификаторов https://habr.com/ru/articles/446768/
+
+Пример TS Playground https://clck.ru/3Eadds
+
+Номинативная (номинальная / nominal) типизация - принадлежность к конкретной категории / классу. Например числовой идентификатор, принадлежащий разным объектам. Следит за названиями типов
+
+Структурная типизация - следит за соблюдением структуры. Принимает решение о совместимости типов на основе их содержимого, не учитывая принадлежность к разным сущностям
+
+```ts
+// Номинальной типизации в TypeScript нет, но мы можем сэмулировать его поведение, сделав любой тип уникальным. Для этого в тип необходимо добавить уникальное свойство. Этот прием упоминается в англоязычных статьях под термином Branding, и вот как это выглядит:
+type BoatId = number & { _type: 'BoatId'};
+type CarId = number & { _type: 'CarId'};
+
+class Car {
+    id: CarId;
+    numberOfWheels: number;
+    move (x: number, y: number) {
+        // некая реализация
+    }
+}
+
+class Boat {
+    id: BoatId;
+    move (x: number, y: number) {
+        // некая реализация
+    }
+}
+
+let carId: CarId;
+let boatId: BoatId;
+
+function getCarById(id: CarId): Car {
+  // ...
+  }
+  function getBoatById(id: BoatId): Boat {
+  // ...
+  }
+
+let car: Car;
+let boat: Boat;
+
+car = getCarById(carId); // OK
+car = getCarById(boatId); // ERROR
+
+boat = getBoatById(boatId); // OK
+boat = getBoatById(carId); // ERROR
+
+carId = 1; // ERROR
+boatId = 2; // ERROR
+car = getCarById(3); // ERROR
+boat = getBoatById(4); // ERROR
+
+function makeCarIdFromVin(id: number): CarId {
+  return id as any;
+}
+
+// Все выглядит неплохо за исключением четырех последних строчек. Для создания идентификаторов понадобится функция-хелпер
+// Недостатком этого способа является то, что данная функция останется в рантайме. Этого можно избежать, не создавая её, пример в самом низу
+function makeCarIdFromVin(id: number): CarId {
+    return vin as any;
+}
+
+//В прошлом примере для создания идентификатора приходилось использовать дополнительную функцию. Избавиться от нее можно с помощью определения интерфейса Flavor:
+interface Flavoring<FlavorT> {
+  _type?: FlavorT;
+}
+export type Flavor<T, FlavorT> = T & Flavoring<FlavorT>;
+
+// Теперь задать типы для идентификаторов можно следующим образом:
+type CarId = Flavor<number, “CarId”>
+type BoatId = Flavor<number, “BoatId”>
+
+// Поскольку свойство _type является необязательным, можно воспользоваться неявным преобразованием:
+let boatId: BoatId = 5; // OK
+let carId: CarId = 3; // OK
+
+// И мы по прежнему не можем перепутать идентификаторы:
+let carId: CarId = boatId; // ERROR
+
+// Так же можно было сразу объявить типы BoatId и CarId с необязательным параметром _type, не создавая makeCarIdFromVin, тогда получим
+type BoatId = number & { _type?: 'BoatId'};
+type CarId = number & { _type?: 'CarId'};
+
+let car: Car = new Boat(); // здесь TypeScript выдаст ошибку
+let boat: Boat = new Boat(); // а на этой строчке все в порядке
+```
+
+---
 
 - Различия между псевдонимами типов и интерфейсами https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces
 - Расширение типов происходит посредством &, а интерфейсов посредством extends
