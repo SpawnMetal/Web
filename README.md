@@ -2871,58 +2871,79 @@ https://habr.com/ru/post/133363/
 Для запуска нескольких приложений, например клиента и сервера, в json используется параметр пакета concurrently: "dev": "concurrently \"npm run server\" \"npm run client\""
 
 - `npm -v`: версия npm
-- `npm install package_name`: установка пакета package_name локально. За место install можно просто i. Несколько пакетов перечисляются через пробел
-- `npm install http-server -g`: установка пакета package_name глобально
+- `npm view package_name`: информация о пакете, доступные версии и sha512
 - `npm show package_name version`: установленная версия пакета
 - `npm view package_name version`: доступная версия пакета на сервере
-- `npm view package_name`: информация о пакете
+- `npm install package_name`: установка пакета package_name локально. За место install можно просто i. Несколько пакетов перечисляются через пробел
+- `npm install http-server -g`: установка пакета package_name глобально
 - `npm outdated`: проверить наличие устаревших пакетов https://docs.npmjs.com/cli/v10/commands/npm-outdated
-- `--save, --save-dev либо -D`: пакет установленный с помощью данного параметра, будет доступен только для разработки, добавлен в devDependencies
-
-dependencies - зависимости, которые идут в package.json dependencies, затем если зайти в папку с данным названием внутри node_modules и открыть там package.json, то будут отображены другие установленные пакеты в dependencies и так далее по дереву.
-
+- `--save, --save-dev либо -D`: пакет установленный с помощью данного параметра, будет доступен только для разработки, добавлен в `devDependencies`. Без параметра ставит в `dependencies` - зависимости, которые идут в package.json dependencies, затем если зайти в папку с данным названием внутри node_modules и открыть там package.json, то будут отображены другие установленные пакеты в dependencies и так далее по дереву.
+- `npm ci` - установить пакеты в точности из package-lock.json, не создавая его
+- `npm cache clear --force`: - очистка кэша
 - `npm uninstall package_name -g`:
+
+##### Версионирование
+
+https://www.perplexity.ai/search/opishi-simvoly-ispolzuemye-v-v-GMseBa5_RnWFSnRN13UYKQ
+
+В управлении пакетами npm используются различные символы для обозначения версий, которые помогают разработчикам контролировать, какие версии зависимостей могут быть установлены. Эти символы основаны на принципах семантического версионирования (SemVer) и имеют следующие значения:
+
+Основные символы версий
+
+- Точная версия: 1.2.3 — указывает на конкретную версию пакета без возможности обновления.
+- Шапочка (^): ^1.2.3 — позволяет устанавливать версии от 1.2.3 до, но не включая, 2.0.0. Это означает, что могут быть установлены любые минорные и патч-версии, которые не нарушают основную версию12.
+- Тильда (~): ~1.2.3 — разрешает обновления только патчей, то есть от 1.2.3 до, но не включая, 1.3.0. Это более строгий подход по сравнению с шапочкой12.
+- Звёздочка (_): _ — обозначает любую доступную версию пакета, что может привести к установке последней версии без ограничений12.
+
+Операторы сравнения
+
+- Больше (>): >1.2.3 — устанавливает версии выше указанной.
+- Меньше (<): <1.2.3 — устанавливает версии ниже указанной.
+- Больше или равно (>=): >=1.2.3 — включает указанную версию и все более новые.
+- Меньше или равно (<=): <=1.2.3 — включает указанную версию и все более старые.
+
+Диапазоны и комбинации
+
+- Диапазон с тире: 1.2.0 - 1.3.4 — указывает на допустимый диапазон версий от 1.2.0 до 1.3.4, включая обе границы12.
+- Двойное вертикальное ИЛИ (||): 1.0.3 || >1.5.0 — позволяет использовать несколько диапазонов версий одновременно.
+
+Пререлизы
+
+Версии могут также содержать метки пререлиза, такие как alpha, beta, например, 1.2.3-alpha, что указывает на предварительную версию пакета1.
+
+##### Основные
+
+- `npm i -D typescript @types/jest @types/node @types/react @types/react-dom`: TypeScript
+- `npm i react react-dom react-router-dom react-scripts`: React
+- `npm i mobx mobx-react-lite`: MobX. Хранилище состояний, lite пакет для функциональных компонентов
+- `npm i @reduxjs/toolkit react-redux`: Redux Toolit. Хранилище состояний.
+- `npm i @mui/icons-material @mui/material @mui/system`: MaterialUI
+- `npm i @nestjs/axios @nestjs/common @nestjs/config @nestjs/core @nestjs/jwt @nestjs/schedule @nestjs/swagger @nestjs/typeorm`: NestJS
+
+##### Второстепенные
+
+- `npm i redux-thunk`: #Redux #middleware для работы с асинхроном https://www.npmjs.com/package/redux-thunk
+- `npm i -D @nestjs/testing`: для использования в тестах, например jest
+
+##### Дополнительные
+
+- `npm install dotenv --save`: Dotenv - загружает переменные среды из .env файла process.env. `require('dotenv').config()` л ибо `import \* as dotenv from 'dotenv'`, затем `dotenv.config()`. https://www.npmjs.com/package/dotenv
+- `npm i @vitejs/plugin-react`: быстрое обновление в React
 - `npm i nodemon`: динамическое обновление сайта при внесении изменения в код, используется для разработки и запускается с помощью команды nodemon script.js
-
-Предшествующее сообщение в консоли сервера: [nodemon] app crashed - waiting for file changes before starting...
-
-Ошибка: Proxy error: Could not proxy request /api/auth/register from localhost:3000 to http://localhost:5000/
-
-Решение: Не смог приконнектиться к БД, исправить доступ к БД и перезапустить сервер
-
 - `npm i concurrently`: для одновременного запуска скриптов, например backend и frontend
 - `npm i config`: пакет для работы с конфигурационным файлом. Создаётся папка config в которой default.json и production.json https://www.npmjs.com/package/config
 - `npm i request-ip`: Получени ip клиента на сервере https://www.npmjs.com/package/request-ip
 - `npm i ai-switcher-translit`: Смена раскладки и транслит https://github.com/alexanderkx/ai-switcher-translit
 - `npm i bcryptjs`: Библиотека для шифрования / хеширования https://www.npmjs.com/package/bcryptjs
 - `npm i jsonwebtoken`: #Токен jsonwebtoken библиотека для генерации веб-токенов JSON https://www.npmjs.com/package/jsonwebtoken
-- `npm install materialize-css@next`: Materialize, Material Design https://materializecss.com/
 - `npm i shortid`: Сокращение ссылок https://www.npmjs.com/package/shortid
 - `npm install --save-dev cross-env`: Добавление кросс-операционных переменных для запуска скрипта, настройки прописываются у команд в package.json - scripts https://www.npmjs.com/package/cross-env
 - `npm install -g json-server`: Поддельный REST API. Запуск сервера с db: json-server --watch db.json --port 4200 --delay 450 (сокращённо: json-server -w db.json -p 4200 -d 450) https://www.npmjs.com/package/json-server
 - `npm i --save isomorphic-unfetch`: Серверный fetch https://www.npmjs.com/package/isomorphic-fetch
 - `npm i nextjs-progressbar`: Индикатор загрузки https://www.npmjs.com/package/nextjs-progressbar
-
-typescript typescriptreact
-https://www.npmjs.com/package/typescript
-https://www.npmjs.com/package/@types/react
-npm install --save-dev typescript @types/react
-
-- `npm install dotenv --save`: Dotenv - загружает переменные среды из .env файла process.env. `require('dotenv').config()` л ибо `import \* as dotenv from 'dotenv'`, затем `dotenv.config()`. https://www.npmjs.com/package/dotenv
-- `npm i @material-ui/core`: #MaterialUI https://www.npmjs.com/package/@material-ui/core
-- `npm i redux`: #Redux https://www.npmjs.com/package/redux
-- `npm install react-redux`: Официальные привязки React для #Redux https://www.npmjs.com/package/react-redux
-- `npm i redux-thunk`: #Redux #middleware для работы с асинхроном https://www.npmjs.com/package/redux-thunk
-- `npm i redux-logger`: #Регистратор для #Redux https://www.npmjs.com/package/redux-logger
-- `npm install redux-devtools-extension`: Расширение Redux DevTools. Например applyMiddleware, который позволяет диспатчить асинхроны. store = createStore(rootReducer, applyMiddleware(thunk, logger)) https://www.npmjs.com/package/redux-devtools-extension
-- `npm i mobx mobx-react-lite`: MobX. Хранилище состояний, lite пакет для функциональных компонентов
-  clipboard-copy
 - `npm install clipboard-copy`: Копирование в буфер, подключать через require https://www.npmjs.com/package/clipboard-copy
-- `npm cache clear --force`: - очистка кэша
 
 ##### Ошибки при установке пакета
-
-###### 1
 
 N:\web\htdocs_php5\php_site\files\11736>npm i --save-dev @babel/core @babel/cli
 
@@ -2942,7 +2963,7 @@ npm ERR! C:\Users\kushkov-pa.ALPHA\AppData\Roaming\npm-cache_logs\2021-03-25T04_
 
 Если не поможет, удалить node_modules и заново установить все пакеты
 
-###### 2
+---
 
 npm ERR! code ENOSELF
 
@@ -2953,6 +2974,14 @@ npm ERR! also called "mobx". Did you name your project the same
 npm ERR! as the dependency you're installing?
 
 Переименовать name в package.json, имя проекта не должно называться так же, как зависимость
+
+---
+
+Предшествующее сообщение в консоли сервера: [nodemon] app crashed - waiting for file changes before starting...
+
+Ошибка: Proxy error: Could not proxy request /api/auth/register from localhost:3000 to http://localhost:5000/
+
+Решение: Не смог приконнектиться к БД, исправить доступ к БД и перезапустить сервер
 
 #### npx
 
