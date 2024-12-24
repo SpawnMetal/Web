@@ -4890,6 +4890,8 @@ Jest - автотесты, файлы должны содержать назва
 
 https://jestjs.io/
 
+Конфигурация https://jestjs.io/docs/configuration
+
 https://youtu.be/IEDe8jl5efU
 
 Основные методы: https://habr.com/ru/post/502302/
