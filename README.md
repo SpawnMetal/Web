@@ -292,6 +292,7 @@
 - [Typescript](#Typescript)
 - [Jest](#Jest)
 - [Git](#Git)
+  - [GitHub Pages](#GitHub-Pages)
 - [MVC](#MVC)
 - [Material Design](#Material-Design)
 - [WebSocket](#WebSocket), [Socket.IO](#SocketIO)
@@ -1796,6 +1797,20 @@ https://habr.com/ru/post/106912
 
 Плагин для Chrome - Octotree - GitHub code tree: https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc?hl=ru
 
+### GitHub Pages
+
+`#GitHub #Pages`
+
+https://pages.github.com/
+
+Можно опубликовать живую версию своего приложения
+
+Инструкция https://docs.github.com/en/pages/quickstart
+
+В index.html пути к бандлам должны быть прописаны так: ./имя_bundle...
+
+Так же в бандле путь к иконке должен быть ./favicon.ico
+
 ### Обозначения
 
 Repository - репозиторий, в нём находится весь проект, как правило ему задаём имя upstream
@@ -2124,6 +2139,10 @@ localhost\react https://github.com/SpawnMetal/react
 localhost\react2 https://github.com/SpawnMetal/react2 https://youtu.be/xJZa2_aldDs
 
 #### Жизненный цикл
+
+`#Жизненный #цикл #Life #Cycle`
+
+Life Cycle
 
 https://disk.yandex.ru/i/4N5roTR26xwcsw
 
