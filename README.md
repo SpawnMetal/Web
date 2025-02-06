@@ -123,6 +123,8 @@
     - [Portal](#Portal)
     - [Lazy](#Lazy)
     - [React Testing Library](#React-Testing-Library)
+    - [Render Props](#Render-Props)
+  - [Feature-Sliced Design](#Feature-Sliced-Design)
   - [NestJS](#NestJS)
     - [Injectable](#Injectable)
     - [Injection scopes](#Injection-scopes)
@@ -146,6 +148,7 @@
     - [Material Design Lite](#Material-Design-Lite)
     - [Bootstrap Material Theme](#Bootstrap-Material-Theme)
   - [UI-Kit](#UI-Kit)
+  - [Tailwind CSS](#Tailwind-CSS)
   - [Axios](#Axios)
   - [Lodash](#Lodash)
   - [Сборщики](#Сборщики)
@@ -193,6 +196,8 @@
   - [MobX](#MobX)
   - [Redux](#Redux)
   - [Effector](#Effector)
+  - [Zustand](#Zustand)
+  - [Recoil](#Recoil)
 - [Принципы](#Принципы)
   - [Принципы, схемы и подходы программирования](#Принципы-схемы-и-подходы-программирования)
     - [Соглашения JavaScript](#Соглашения-JavaScript)
@@ -2891,6 +2896,52 @@ https://testing-library.com/docs/react-testing-library/intro/
 
 В waitFor нужно использовать одно ожидание, не больше и не юзать сайд эффекты по типу нажатия клавиши, снимки, так как они могут вызваться несколько раз
 
+#### Render Props
+
+`#Render #Props`
+
+https://habr.com/ru/articles/876758/
+
+https://reactdev.ru/archive/react16/render-props/#use-render-props-for-cross-cutting-concerns
+
+Главный смысл шаблона - передача в качестве props функции, которая будет принимать какие-то данные от дочернего компонента и отрисовывать их так, как будет указано в родительском.
+
+Иными словами, рендер-проп – функция, которая сообщает компоненту что необходимо рендерить.
+
+На самом деле, любой проп, который используется компонентом и является функцией рендеринга, технически является и «рендер-пропом».
+
+```jsx
+const ParentComponent = () => {
+  return <ChildComponent render={text => <h1>{text}</h1>} />
+}
+
+const ChildComponent = ({render}) => {
+  const text = 'Hello World'
+  return <div>{render(text)}</div>
+}
+
+// Получаем такой код
+;<div>
+  <h1>Hello World</h1>
+</div>
+
+// В качестве названия рендер-пропса можно использовать
+// любой текст. "render" в примере используется исключительно
+// в целях удобства понимания.
+```
+
+### Feature-Sliced Design
+
+`#Feature #Sliced #Design`
+
+https://feature-sliced.design/ru/
+
+https://habr.com/ru/companies/inDrive/articles/693768/
+
+https://youtu.be/af-PD2yIUiU?si=FdeMxhnlE3LTIe3V
+
+Архитектурная методология для фронтенд проектов
+
 ### NestJS
 
 `#NestJS`
@@ -3374,6 +3425,16 @@ https://fezvrasta.github.io/bootstrap-material-design/
 
 UI-Kit - набор готовых решений пользовательского интерфейса. Это могут быть кнопки, поля ввода, «хлебные крошки», меню, переключатели, формы — все те элементы, что помогают пользователям взаимодействовать с сайтом или приложением.
 
+### Tailwind CSS
+
+`#Tailwind`
+
+https://tailwindcss.com/
+
+https://habr.com/ru/companies/kuper/articles/737474/
+
+CSS-фреймворк с собственными компонентами интерфейса и возможностями, позволяющий использовать имена классов в html, не прибегая к редактированию файлов css
+
 ### Axios
 
 `#Axios`
@@ -3520,6 +3581,10 @@ AngularJS — JavaScript-фреймворк с открытым исходным
 ### RxJS
 
 `#RxJS`
+
+https://www.learnrxjs.io/
+
+https://youtu.be/PXoWHqKtHGA?si=4yCzPElf2suNw7FK
 
 RxJS - это библиотека для работы с асинхронными и основанными на событиях программами с использованием наблюдаемых последовательностей.
 
@@ -4073,6 +4138,24 @@ connect(f(state) return {key: state...}, {{type: action}, ...})(Component) arg1:
 https://effector.dev/ru/
 
 Отечественная попытка реализовать собственный стейт менеджер. Абсолютно нет ни малейшей необходимости этого делать, так как MobX отлично справляется со своей задачей. Так же Effector, как и Redux загрязняет проект, делая код не экологичным. Не использовать!
+
+### Zustand
+
+`#Zustand`
+
+https://github.com/pmndrs/zustand
+
+Довольно простой в использовании менеджер состояний. MobX проще
+
+### Recoil
+
+`#Recoil`
+
+https://recoiljs.org/
+
+https://habr.com/ru/articles/656839/
+
+Менеджер состояний для React от тех же разработчиков
 
 ## Принципы
 
