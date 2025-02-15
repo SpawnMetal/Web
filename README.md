@@ -123,6 +123,7 @@
     - [Lazy](#Lazy)
     - [React Testing Library](#React-Testing-Library)
     - [Render Props](#Render-Props)
+    - [React Final Form](#React-Final-Form)
   - [Feature-Sliced Design](#Feature-Sliced-Design)
   - [NestJS](#NestJS)
     - [Injectable](#Injectable)
@@ -2925,6 +2926,16 @@ const ChildComponent = ({render}) => {
 // в целях удобства понимания.
 ```
 
+#### React Final Form
+
+`#Final #Form #RFF`
+
+https://final-form.org/react
+
+Формы для React.
+
+В принципе можно и из отдельных компонентов, например MUI делать формы спокойно.
+
 ### Feature-Sliced Design
 
 `#Feature #Sliced #Design`
@@ -5373,7 +5384,14 @@ Google Cloud (Google Cloud Platform)
 ## Cookie
 
 `#Cookie`
-https://github.com/js-cookie/js-cookie
+
+HTTP-cookie — это небольшой фрагмент данных, хранимый браузером пользователя. Файлы cookie были разработаны как надежный механизм для веб-сайтов, позволяющий им запоминать информацию о состоянии. Когда пользователь снова посещает веб-сайт, файл cookie автоматически отправляется вместе с запросом.
+
+Хранятся в одном файле, например в Chrome C:\Users\user\AppData\Local\Google\Chrome\User Data\Default\Network\Cookies
+
+Front https://github.com/js-cookie/js-cookie
+
+Back NestJS https://docs.nestjs.com/techniques/cookies
 
 ## Определения
 
