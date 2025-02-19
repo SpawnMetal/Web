@@ -338,6 +338,8 @@ JavaScript интерпретируемый язык - выполняется с
 
 Нововведения https://exploringjs.com/js/book/ch_new-javascript-features.html#ch_new-javascript-features
 
+33 Концепта. Каждый JavaScript Разработчик Должен Знать https://github.com/gumennii/33-js-concepts
+
 ### ECMAScript
 
 `#ECMAScript #ES`
@@ -4462,6 +4464,8 @@ TypeScript — это строго типизированный язык про�
 ---
 
 TS Playground https://www.typescriptlang.org/play
+
+TS Exercises https://typescript-exercises.github.io
 
 ---
 
