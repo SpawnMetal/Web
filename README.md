@@ -3848,6 +3848,8 @@ https://www.docker.com/
 
 Зачем нужен и как работает Docker — ликбез https://youtu.be/KS80Knz-1Z4
 
+Docker за 20 минут https://youtu.be/Z_cUS7kCAsE?si=eXdaHj9eIcCBJE9B
+
 `#Wasm #WebAssembly`
 
 https://docs.docker.com/desktop/wasm/
