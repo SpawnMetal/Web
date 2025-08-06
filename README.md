@@ -3265,6 +3265,8 @@ Express.js, или просто Express, фреймворк web-приложен
 
 Де-факто является стандартным каркасом для Node.js.
 
+Основы Express.js для веб-разработки https://chat.deepseek.com/a/chat/s/c7f16d5d-fa9e-4310-9b59-26758e557e21
+
 ### Fastify
 
 `#Fastify`
@@ -4984,6 +4986,8 @@ Swagger — это набор инструментов для разработч
 Транзакция — это архив для запросов к базе. Он защищает ваши данные благодаря принципу «всё, или ничего».
 
 Уровни изоляции в SQL на примере Postgres и особенности управления конфликтами https://www.perplexity.ai/search/opishi-urovni-izoliatsii-v-sql-amdKKi8KTPymFepjMxz9og
+
+Примеры SQL-запросов в PostgreSQL https://chat.deepseek.com/a/chat/s/a5b1ef02-4938-46e7-bd37-2df14190eaaa
 
 ## NoSQL
 
