@@ -3222,9 +3222,10 @@ https://habr.com/ru/post/133363/
 Для запуска нескольких приложений, например клиента и сервера, в json используется параметр пакета concurrently: "dev": "concurrently \"npm run server\" \"npm run client\""
 
 - `npm -v`: версия npm
-- `npm view package_name`: информация о пакете, доступные версии и sha512
+- `npm view package_name`: информация о пакете, зависимости и sha512
+- `npm view package_name version`: последняя доступная версия пакета на сервере
+- `npm view package_name versions`: доступные версии пакета на сервере
 - `npm show package_name version`: установленная версия пакета
-- `npm view package_name version`: доступная версия пакета на сервере
 - `npm install package_name`: установка пакета package_name локально. За место install можно просто i. Несколько пакетов перечисляются через пробел
 - `npm install http-server -g`: установка пакета package_name глобально
 - `npm outdated`: проверить наличие устаревших пакетов https://docs.npmjs.com/cli/v10/commands/npm-outdated
