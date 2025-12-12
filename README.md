@@ -123,6 +123,7 @@
     - [Render Props](#Render-Props)
     - [React Final Form](#React-Final-Form)
     - [React Profiler](#React-Profiler)
+    - [React Hook Form](#React-Hook-Form)
   - [Throttle и Debounce](#Throttle-и-Debounce)
   - [Feature-Sliced Design](#Feature-Sliced-Design)
   - [NestJS](#NestJS)
@@ -2969,6 +2970,16 @@ https://habr.com/ru/companies/ruvds/articles/497988/
 
 `API React Profiler` предназначен для оценки скорости работы рендеринга и помогает выявлять узкие места производительности приложений.
 
+#### React Hook Form
+
+`#Hook #Form #RHF`
+
+https://react-hook-form.com/
+
+https://habr.com/ru/companies/otus/articles/829326/
+
+React Hook Form — это библиотека, которая использует концепцию неконтролируемых компонентов, чтобы минимизировать количество повторных рендеров и повысить производительность приложения.
+
 ### Throttle и Debounce
 
 `#Throttle #Debounce`
@@ -3256,7 +3267,7 @@ https://www.perplexity.ai/search/opishi-simvoly-ispolzuemye-v-v-GMseBa5_RnWFSnRN
 
 Диапазоны и комбинации
 
-- Диапазон с тире: 1.2.0 - 1.3.4 — указывает на допустимый диапазон версий от 1.2.0 до 1.3.4, включая обе границы12.
+- Диапазон с тире: 1.2.0 - 1.3.4 — указывает на допустимый диапазон версий от 1.2.0 до 1.3.4, включая обе границы.
 - Двойное вертикальное ИЛИ (||): 1.0.3 || >1.5.0 — позволяет использовать несколько диапазонов версий одновременно.
 
 Пререлизы
@@ -3294,6 +3305,7 @@ https://www.perplexity.ai/search/opishi-simvoly-ispolzuemye-v-v-GMseBa5_RnWFSnRN
 - `npm i --save isomorphic-unfetch`: Серверный fetch https://www.npmjs.com/package/isomorphic-fetch
 - `npm i nextjs-progressbar`: Индикатор загрузки https://www.npmjs.com/package/nextjs-progressbar
 - `npm install clipboard-copy`: Копирование в буфер, подключать через require https://www.npmjs.com/package/clipboard-copy
+- `npm i yup`: Библиотека для валидации https://www.npmjs.com/package/yup
 
 ##### Ошибки при установке пакета
 
