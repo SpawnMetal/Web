@@ -2072,6 +2072,8 @@ https://www.atlassian.com/ru/git/tutorials/undoing-changes
 
 Откатить до коммита: git restore
 
+Удаляет изменения в коммите, откатывая с сохранением истории: git revert <hash>
+
 Удалить из индексирования и откатить до коммита всё и без вопросов: git reset . --quiet & git restore .
 
 При pull, если необходимо отменить всё: git clean -f, ээфект такой же, как при git checkout другая_ветка --force, затем переключаемся обратно
