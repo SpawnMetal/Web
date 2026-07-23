@@ -487,7 +487,7 @@ https://learn.javascript.ru/number
 
 В соответствии со стандартом ECMAScript, существует только один числовой тип, который представляет собой 64-битное (8 байт) число двойной точности согласно стандарту `IEEE 754`
 
-`52` из них используется для `хранения цифр`, `11` из них для `хранения положения десятичной точки` (если число целое, то хранится `0`), и `один бит отведён на хранение знака`
+`52` из них используется для `хранения цифр`, `11` из них для `хранения положения десятичной точки` (если число целое, то хранится `0`, знак `1` отрицательным), и `один бит отведён на хранение знака`
 
 `Число двойной точности (Double precision, Double)` https://ru.wikipedia.org/wiki/Число_двойной_точности
 
@@ -1385,7 +1385,8 @@ const promise = new Promise(function (resolve, reject) {
   // reject(ошибка) при ошибке. Вызывается 1 раз, второй вызов будет проигнорирован
 
   setTimeout(() => {
-    if (data) resolve(data) // promise.then
+    if (data)
+      resolve(data) // promise.then
     else reject(new Error('error')) // promise.catch
   })
 })
@@ -1955,7 +1956,7 @@ git fetch \<remote_name\> \<branch\> - получить изменения, но
 
 git merge \<branch\> - объединить скачанные изменения с текущей веткой, либо branch, если указана, в таком случае из branch будут получены все изменения
 
-git commit -m \<text\> - зафиксировать отслеживаемые файлы, создав коммит. -m = -message. text указывается в двойных кавычках. После ввода команды будет выведен хэш коммита
+git commit -m \<text\> - зафиксировать отслеживаемые файлы, создав коммит. -m = -message. text указывается в двойных кавычках. После ввода команды будет выведен хэш коммита. Если после commit указать `--allow-empty`, то можно зафиксировать текст коммита с пустыми изменениями в файлах
 
 git show \<id\> просмотр информации о теге, коммите, ветке
 
@@ -4925,7 +4926,7 @@ const myCanvas = <HTMLCanvasElement>document.getElementById('main_canvas')
 ```ts
 type DescribableFunction = {
   description: string // Свойство
-  fn: () => void // Свойство
+  fn: () => void; // Свойство
   (someArg: number): boolean // Текущая функция
   new (s: string): Date // Можно комбинировать и вызвать текущую функцию с помощью new
 }
@@ -5619,6 +5620,7 @@ Word wrap - настройка переноса строк, Word Wrap Column п�
 - `vscode-graphiql-explorer`: https://marketplace.visualstudio.com/items?itemName=GabrielNordeborn.vscode-graphiql-explorer
 - `GraphQL for VSCode`: https://marketplace.visualstudio.com/items?itemName=kumar-harsh.graphql-for-vscode
 - `Architecture View NestJS`: https://marketplace.visualstudio.com/items?itemName=archsense.architecture-view-nestjs
+- `GitLens — Git supercharged`: для работы с git, просмотр последних изменений, кто менял и т. д. https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens
 - `Prettier`
 
 `#Prettier`
