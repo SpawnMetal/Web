@@ -16,6 +16,7 @@
     - [null](#null)
     - [Object](#Object)
       - [Клонирование объектов](#Клонирование-объектов)
+        - [structuredClone](#structuredClone)
       - [Слабые ссылки](#Слабые-ссылки)
       - [Object.groupBy()](#ObjectgroupBy)
     - [Symbol](#Symbol)
@@ -44,6 +45,7 @@
   - [Стрелочные функции](#Стрелочные-функции)
   - [Анонимная функция](#Анонимная-функция)
   - [JSON](#JSON)
+  - [YAML](#YAML)
   - [use strict](#use-strict)
   - [Генераторы](#Генераторы)
   - [Шаблонные литералы](#Шаблонные-литералы)
@@ -291,7 +293,10 @@
   - [Side effect](#Side-effect)
   - [Профилирование](#Профилирование)
   - [Сериализация](#Сериализация)
+  - [Feature Flag](#Feature-Flag)
+  - [AB-тестирование](AB-тестирование)
 - [HTML](#HTML)
+  - [async defer](#async-defer)
 - [CSS](#CSS)
   - [Единицы измерения](#Единицы-измерения)
   - [Селекторы](#Селекторы)
@@ -605,7 +610,7 @@ https://learn.javascript.ru/object-copy
 
 Переприсвоенная ссылка аргументу функции не повлияет на исходный объект.
 
-Для глубокого копирования необходимо использовать функцию `const clone = structuredClone(original, options?)` https://developer.mozilla.org/en-US/docs/Web/API/structuredClone
+Для глубокого копирования необходимо использовать функцию `structuredClone` см [structuredClone](#structuredClone)
 
 Алгоритм структурированного клонирования https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm
 
@@ -634,6 +639,73 @@ console.log(obj2.item) // unchanged
 ```
 
 Ранее для создания !== клона объекта можно было воспользоваться методом из сторонней JavaScript-библиотеки `lodash` - `_.cloneDeep(obj)`, но рекурсивная вложенность не поддерживается, а так же сложные типы, как например дата, будут преобразованы в строку, таких изъян нет у `structuredClone`, поэтому лучше пользоваться именно `structuredClone`. Так же был встроенный в JS способ с использованием `JSON.stringify` и `JSON.parse`, но если есть объекты, которые ссылаются друг на друга, то будет ошибка рекурсии.
+
+###### structuredClone
+
+`#structuredClone`
+
+https://developer.mozilla.org/en-US/docs/Web/API/structuredClone
+
+Для глубокого копирования необходимо использовать функцию `const clone = structuredClone(original, options?)`
+
+clone не равен original
+
+structuredClone — это мощный нативный инструмент для глубокого копирования, но его главный минус в том, что он создавался для передачи данных между потоками (postMessage), а не как универсальный клонер объектов. Из-за этого он имеет ряд жестких ограничений, которые могут стать неприятным сюрпризом.
+
+Главные минусы: что нельзя клонировать или теряется
+
+1. Функции вызывают ошибку
+   Если в объекте есть хоть один метод, `structuredClone` выбросит `DataCloneError`. Он не может клонировать функции, так как замыкания (lexical scope) скопировать невозможно.
+
+```js
+structuredClone({fn: () => {}}) // Uncaught DOMException
+```
+
+2. Теряется prototype (цепочка прототипов)
+
+Классовые экземпляры превращаются в обычные объекты. Методы прототипа не копируются, и `instanceof` перестает работать.
+
+```js
+class Foo {
+  method() {}
+}
+const copy = structuredClone(new Foo())
+copy instanceof Foo // false
+```
+
+3. Теряются дескрипторы и аксессоры
+
+- **Геттеры/сеттеры:** В момент клонирования геттер просто вычисляется, и в копию попадает его **значение** как обычное поле. Логика сеттера/геттера теряется.
+- **Дескрипторы:** Если свойство было `readonly` или `non-enumerable`, в копии оно станет обычным перечисляемым свойством.
+
+4. Symbol-ключи игнорируются
+
+Свойства, ключами которых являются `Symbol`, просто выпадают из клона, причем без предупреждения (silent failure).
+
+5. Проблемы с DOM и хостовыми объектами
+
+Клонирование DOM-узлов (`Node`, `Element`) невозможно — будет ошибка. То же самое касается `Window`, `WeakMap`, `WeakSet` и прокси-объектов.
+
+6. Неполнота Error и RegExp
+
+- **RegExp:** Свойство `lastIndex` не сохраняется.
+- **Error:** Хотя основные типы ошибок поддерживаются, некоторые кастомные поля могут не скопироваться.
+
+### 💡 Когда использовать, а когда нет
+
+Используйте structuredClone, если:
+
+- Данные представляют собой **чистый JSON-подобный граф** (простые объекты, массивы, Date, Map, Set).
+- Есть **циклические ссылки** (JSON-метод здесь упадет).
+- Нужна поддержка **бинарных данных** (ArrayBuffer, Blob, TypedArray) — здесь он очень эффективен.
+
+Не используйте structuredClone, если:
+
+- В объекте есть **методы, геттеры или Symbol-ключи**.
+- Нужно сохранить **класс экземпляра** и его методы.
+- Это **Vue/React** реактивные объекты (они часто содержат функции или Proxy, что приведет к ошибке).
+
+В таких случаях лучше подойдет `lodash.cloneDeep` (хотя он тоже не идеален и может быть медленнее) или написание собственного клонера под конкретную задачу.
 
 ##### Слабые ссылки
 
@@ -1265,6 +1337,33 @@ https://ru.wikipedia.org/wiki/JSON
 JSON (англ. JavaScript Object Notation) — текстовый формат обмена данными, основанный на JavaScript.
 
 JSON сервер для тестовых запросов https://jsonplaceholder.typicode.com/
+
+### YAML
+
+`#YAML`
+
+YAML — это рекурсивная аббревиатура от "YAML Ain't Markup Language" (YAML — не язык разметки). Это удобный для чтения человеком формат сериализации данных, который используется для настройки и обмена информацией между программами https://chat.deepseek.com/a/chat/s/bddc8571-5111-4d5b-953e-ba11630150bf
+
+Зачем он нужен и где применяется:
+
+Основное назначение YAML — хранение структурированных данных в максимально читаемом виде. Он получил широкое распространение в DevOps и облачных технологиях как язык конфигурации. Вы найдете его в:
+
+- Kubernetes (описание манифестов)
+- CI/CD системах (GitHub Actions, GitLab CI, Ansible)
+- Docker Compose и многих других инструментах автоматизации
+
+В чём отличие от JSON: Несмотря на то что оба формата решают схожие задачи, между ними есть существенная разница. JSON является подмножеством YAML (начиная со спецификации YAML 1.2), то есть любой корректный JSON-код часто является валидным YAML, но не наоборот.
+
+Характеристика YAML JSON:
+
+- Читаемость Очень высокая. Использует отступы и минимальный синтаксис, похож на текст. Средняя. Требует использования фигурных скобок и кавычек, более многословен.
+- Синтаксис Отступы (как в Python). Пробелы важны для структуры. Фигурные скобки {} и квадратные []. Структура задается символами.
+- Комментарии Поддерживаются (символ #). Не поддерживаются.
+- Строки Кавычки часто не нужны (кроме особых случаев). Кавычки обязательны для строк.
+- Сложные функции Поддерживает якоря и ссылки (anchors & aliases) для переиспользования блоков данных. Не имеет аналогов якорей.
+- Основное применение Конфигурации (K8s, CI/CD), файлы для людей. API, передача данных между программами (машиночитаемый).
+
+Краткий итог: JSON лучше подходит для передачи данных между машинами (он строже и быстрее парсится), а YAML — для написания конфигураций вручную (он читабельнее и поддерживает комментарии).
 
 ### use strict
 
@@ -2216,6 +2315,8 @@ PUBLIC_URL ведёт в папку public, Например <link rel="icon" hr
 
 prop drilling - Передача свойств на прямую от родителя к ребенку через сложную и длинную иерархию компонентов. Избежать можно используя useContext или менеджер состояний (Flux)
 
+Защита React компонента при изменении командой https://chat.deepseek.com/a/chat/s/f37a43cd-a055-4f63-bdf4-7664fc2decd4
+
 #### Жизненный цикл
 
 `#Жизненный #цикл #Life #Cycle`
@@ -2386,7 +2487,7 @@ const [state, setState] = useState(() => {
 })
 ```
 
-Аргумент функции обновления принято называть по первым буквам соответствующей переменной состояния.Если вы предпочитаете более подробный код, другим распространенным соглашением является повторение полного имени переменной состояния, например setEnabled(enabled => !enabled), или использование префикса, например setEnabled(prevEnabled => !prevEnabled) https://react.dev/learn/queueing-a-series-of-state-updates#naming-conventions
+Аргумент функции обновления принято называть по первым буквам соответствующей переменной состояния. Если вы предпочитаете более подробный код, другим распространенным соглашением является повторение полного имени переменной состояния, например setEnabled(enabled => !enabled), или использование префикса, например setEnabled(prevEnabled => !prevEnabled) https://react.dev/learn/queueing-a-series-of-state-updates#naming-conventions
 
 ```jsx
 setEnabled(e => !e)
@@ -2396,7 +2497,7 @@ setFriendCount(fc => fc * 2)
 
 Батчинг / Пакетирование (Batching) https://react.dev/learn/queueing-a-series-of-state-updates
 
-- Использует значение flag из замыкания текущего рендера.
+- Использует значение flag = false из замыкания текущего рендера.
 - Если между рендером и вызовом сеттера flag уже изменился (например, из-за другого вызова setFlag в том же обработчике или в батчинге), вы перезапишете его устаревшим значением.
 
 ```jsx
@@ -2458,6 +2559,8 @@ useEffect(() => {}, [])
 
 3. `Условное срабатывание эффекта` https://ru.react.dev/reference/react/useEffect#examples-dependencies
 
+Правило из документации React (Rules of Hooks / exhaustive-deps) гласит, что в массив зависимостей нужно включать все реактивные значения, которые используются внутри эффекта: пропсы, состояния, переменные и функции, объявленные в теле компонента. React гарантирует, что сеттеры из useState (и dispatch из useReducer) имеют стабильную идентичность между рендерами. То есть setState === setState всегда true, ссылка никогда не меняется. Поэтому Технически можно не указывать setState в зависимостях — эффект не будет перезапускаться лишний раз.
+
 ```jsx
 useEffect(() => {}, [state1, state2, ..., stateN])
 ```
@@ -2465,12 +2568,12 @@ useEffect(() => {}, [state1, state2, ..., stateN])
 Для срабатывания при обновлении зависимостей, но не первом рендеринге componentDidUpdate можно реализовать так:
 
 ```jsx
-const [num, setNum] = React.useState(0)
+const [num, setNum] = useState(0)
 
 const useDidUpdate = (callback = () => console.log('callback')) => {
-  const didMount = React.useRef(false)
+  const didMount = useRef(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!didMount.current) didMount.current = true
     else callback()
   }, [num])
@@ -2478,6 +2581,8 @@ const useDidUpdate = (callback = () => console.log('callback')) => {
 
 useDidUpdate()
 ```
+
+ref переменные используются как раз, чтобы не вызывать рендер, поэтому указывать didMount в зависимостях useEffect нельзя, это не даст результата, а использование didMount.current в зависимостях useEffect является антипаттерном и не гарантирует рендер, так как react не знает об обновлении свойства current. В этом случае в зависимости передаются переменные состояния, в данном случае num. https://chat.deepseek.com/a/chat/s/fa785fac-8857-4832-a694-a6ad5db914f9
 
 4. `Очистка эффекта (componentWillUnmount)`: Вернуть функцию. https://ru.react.dev/reference/react/useEffect https://ru.legacy.reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect
 
@@ -2510,6 +2615,16 @@ https://ru.react.dev/reference/react/useContext
 Может быть удобно, чтобы не тянуть всё через пропсы.
 
 Не создавать контекст в переиспользуемом компоненте, передаваемые объекты должны быть равны принимаемым в компоненте.
+
+```tsx
+// Вне комипонента const SomeContext = createContext(undefined, []);
+// Например user и rules - это пропсы компонента
+const context = useMemo(() => ({user, rules}), [user, rules]) // Чтобы не терять смысл в провайдере и не вызывать ререндер каждый раз
+<SomeContext.Provider value={context}>
+  <Form />
+</SomeContext.Provider>
+// В Form можно получить const context = useContext(SomeContext)
+```
 
 ##### useMemo
 
@@ -2571,6 +2686,8 @@ https://youtu.be/Zn54xUCkh9s?si=_bxz7JRF4lNp4Lbh
 
 1. Используется для сохранения переменной, которая не будет вызывать рендер https://codesandbox.io/p/sandbox/useref-previous-r2524w
 2. Используется для создания ссылки на элемент https://codesandbox.io/p/sandbox/useref-element-5nk2kp
+
+Так же см нюанс в useEffect - 3. `Условное срабатывание эффекта`
 
 ```tsx
 import React, {useRef, useEffect, useState} from 'react'
@@ -2790,11 +2907,15 @@ https://facebook.github.io/react-native
 
 `#shouldComponentUpdate`
 
+Устарел, см [useEffect](#useEffect)
+
 Используется для отмены рендера, если его делать не нужно, а состояние поменялось
 
 #### componentDidMount
 
 `#componentDidMount`
+
+Устарел, см [useEffect](#useEffect)
 
 Срабатывает, когда компонент готов для работы. После этого можно использовать асинхрон.
 
@@ -2839,6 +2960,22 @@ React полагается на эвристику, следовательно, 
 При сравнении двух React DOM-элементов одного типа, React смотрит на атрибуты обоих, сохраняет лежащий в основе этих элементов DOM-узел и обновляет только изменённые атрибуты.
 
 Рекурсия по дочерним элементам - в списках добавлять новый элемент без key нужно в конец https://ru.legacy.reactjs.org/docs/reconciliation.html#recursing-on-children
+
+key нужен только для элементов внутри массива (или другого итерируемого списка), чтобы React мог отслеживать их идентичность между рендерами.
+
+```tsx
+<>
+  <Button />
+  <Button />
+  {flag && <Button />}
+  /* Когда key обязателен */
+  {items.map(item => (
+    <Button key={item.id} />
+  ))}
+</>
+```
+
+React сохраняет состояние компонента по его позиции в дереве, а не по «логическому месту» в JSX. Пока компонент остаётся на той же позиции с тем же типом — состояние живёт. Как только позиция или тип меняется — состояние сбрасывается. https://chat.deepseek.com/a/chat/s/a8bc4323-6b5a-481a-8712-1a754a400cb7
 
 #### React Fiber
 
@@ -2987,7 +3124,7 @@ import {createPortal} from 'react-dom'
 
 https://react.dev/reference/react/lazy
 
-lazyпозволяет отложить загрузку кода компонента до тех пор, пока он не будет отрисован в первый раз.
+lazy позволяет отложить загрузку кода компонента до тех пор, пока он не будет отрисован в первый раз.
 
 В React отсутствует возможность динамического импорта из import, подобный метод позволяет это обойти
 
@@ -3047,14 +3184,10 @@ const ChildComponent = ({render}) => {
   return <div>{render(text)}</div>
 }
 
-// Получаем такой код
+// Получаем такой код. В качестве названия рендер-пропса можно использовать любой текст. "render" в примере используется исключительно в целях удобства понимания.
 ;<div>
   <h1>Hello World</h1>
 </div>
-
-// В качестве названия рендер-пропса можно использовать
-// любой текст. "render" в примере используется исключительно
-// в целях удобства понимания.
 ```
 
 #### React Final Form
@@ -3785,6 +3918,15 @@ Axios — это широко известная JavaScript-библиотека
 
 Прерывание (Cancellation) https://axios-http.com/docs/cancellation
 
+Главные плюсы Axios:
+
+- Автоматический парсинг JSON: Данные из ответа сразу приходят в готовом виде через свойство response.data, не нужно вызывать метод .json(), как в fetch
+- Перехватчики (Interceptors): Позволяют перехватывать запросы и ответы до их отправки или обработки, что удобно для добавления токенов авторизации или логирования
+- Обработка ошибок: Ошибочные HTTP-статусы (например, 404 или 500) автоматически попадают в блок catch, в отличие от fetch, где нужно вручную проверять флаг response.ok
+- Таймауты: Поддерживает простую настройку времени ожидания запроса (timeout) из коробки
+- Отмена запросов: Позволяет легко отменять отправленные запросы с помощью механизма AbortController или токенов отмены (CancelToken)
+- Защита от XSRF: Имеет встроенные механизмы для защиты от межсайтовой подделки запросов, см [CSRF](#CSRF)
+
 ### SWR
 
 `#SWR`
@@ -4308,7 +4450,7 @@ https://ru.wikipedia.org/wiki/Система_управления_содержи
 
 CMS (Content management system) - Система управления содержимым.
 
-Например Joomla!.
+Например Joomla
 
 Headless CMS – это системы, которые предоставляют функционал администрирования контента (админка) и генерируют API, к которому можно подключить любой клиент (веб-приложение, мобильное приложение и т.д.). Поскольку Headless CMS – это просто API, они никак не ограничивают клиент и не влияют на реализацию других сервисов бэкенда.
 
@@ -4835,25 +4977,63 @@ TS Exercises https://typescript-exercises.github.io
 
 Utility Types (утилиты для работы с типами) https://www.typescriptlang.org/docs/handbook/utility-types.html
 
-`Record<Keys, Type>` - Создает тип объекта, ключи свойств которого — Keys и значения свойств — Type. Эту утилиту можно использовать для сопоставления свойств одного типа с другим типом. https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type
-
-`Record` — более предпочтителен при описании объектных типов в TypeScript. Это позволяет гибко и лаконично описывать динамические структуры и использовать Record совместно с другими типами данных.
-
-`Awaited` - для получения типа , который вернёт промис. В каком случае нужно использовать Awaited в Typescript https://www.perplexity.ai/search/kogda-ispolzovat-awaited-v-typ-Td_loD0PRFqnnZkpJuwt0Q
-
 ---
 
 SyntheticEvent - тип event у некоторых событий, который является базовым типом для всех событий см [События DOM](#События-DOM)
 
 ---
 
+`#tsconfig tsconfig.json`
+
 В конфиге выставить "strict": true https://medium.com/webhint/going-strict-with-typescript-be3f3f7e3295
+
 "noImplicitAny": true - выдавать ошибку везде, где тип не указан и используется any https://www.typescriptlang.org/tsconfig#noImplicitAny
+
 "strictNullChecks": true - для проверки null и undefined https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#null-and-undefined https://www.typescriptlang.org/tsconfig#strictNullChecks
 
 ---
 
-Type Guards - это очевидное обычное написание кода, при использовании которого, метода может не быть, так как тип может быть number | string. Линтер подсветит такое место, а данные понятия как type guards уже слишком банальны. К ним же относятся очевидный typeof и instanceof https://www.dev-notes.ru/articles/typescript/how-to-use-type-guards-typescript/#:~:text=Защита%20типа%20—%20техника%20TypeScript%2C%20используемая,до%20чего-то%20более%20конкретного
+Type Guards - это очевидное обычное написание кода, при использовании которого, метода может не быть, так как тип может быть number | string. Линтер подсветит такое место, а данные понятия как type guards уже слишком банальны. К ним же относятся очевидный in, typeof и instanceof https://www.dev-notes.ru/articles/typescript/how-to-use-type-guards-typescript/#:~:text=Защита%20типа%20—%20техника%20TypeScript%2C%20используемая,до%20чего-то%20более%20конкретного
+
+- Защита типа сужения равенства
+
+Сужение равенства проверяет значение выражения. Для того чтобы две переменные были равны, обе переменные должны иметь одинаковый тип. Если тип переменной неизвестен, но она равна другой переменной с точным типом, то TypeScript сузит тип первой переменной с помощью информации, которую предоставляет известная переменная:
+
+```ts
+function getValues(a: number | string, b: string) {
+  if (a === b) {
+    // здесь происходит сужение, сужение до string
+    console.log(typeof a) // string
+  } else {
+    // если сужение не происходит, тип остаётся неизвестным
+    console.log(typeof a) // number или string
+  }
+}
+```
+
+- Пользовательская защита типа с предикатом
+
+Создание пользовательской защиты типов — это, как правило, самый мощный вариант использования защит типов. Когда вы создаёте пользовательскую защиту типов, написав её самостоятельно, нет никаких ограничений на то, что вы можете проверить. Однако если пользовательская защита типов написана неправильно, это может привести к множеству ошибок. Поэтому точность является ключевым фактором.
+
+```ts
+interface Necklace {
+  kind: string
+  brand: string
+}
+interface bracelet {
+  brand: string
+  year: number
+}
+type Accessory = Necklace | bracelet
+
+const isNecklace = (b: Accessory): b is Necklace => {
+  return (b as Necklace).kind !== undefined
+}
+const Necklace: Accessory = {kind: 'Choker', brand: 'TASAKI'}
+const bracelet: Accessory = {brand: 'Cartier', year: 2021}
+console.log(isNecklace(bracelet)) //Выводит false
+console.log(isNecklace(Necklace)) //Выводит true
+```
 
 ---
 
@@ -4890,6 +5070,37 @@ type StringNumberPair = [string, number]
 ```ts
 type Type = (number | Type)[]
 const arr: Type = [1, [2, 3], 4, [5], [6, [7, 8]]]
+```
+
+---
+
+Type Inference https://www.typescriptlang.org/docs/handbook/type-inference.html
+
+Это определение типа тайпскриптом автоматически, так как оно очевидное и логичное
+
+Так же может быть получен тип из контекста:
+
+```ts
+window.onmousedown = function (mouseEvent) {
+  console.log(mouseEvent.button)
+  console.log(mouseEvent.kangaroo) // Property 'kangaroo' does not exist on type 'MouseEvent'.
+}
+```
+
+Может быть потеря типа, как в случае с output2:
+
+```ts
+function identity<Type>(arg: Type): Type {
+  return arg
+}
+
+function identity2<Type>(): Type {
+  return '' as Type
+}
+
+let output = identity<string>('myString') // output - string
+let output2 = identity2() //  output - unknown
+let output3 = identity2<string>() // output - string
 ```
 
 ---
@@ -4994,7 +5205,17 @@ let boat: Boat = new Boat(); // а на этой строчке все в пор
 
 ---
 
-`.!` - Оператор ненулевого утверждения (Postfix !). Необходим для утверждения, что значение не nullable, например x!.toFixed() https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-
+Оператор ненулевого утверждения (Postfix !)
+
+https://chat.deepseek.com/a/chat/s/bfd4829e-5dee-4026-98b3-5a16a47ac129
+
+`!` - Используется для удаления операторов null и undefined из типа без явной проверки
+
+`!.` - утверждает, что значение не nullable, например x!.toFixed() https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-
+
+`!:` - утверждает, что присвоение значения будет осуществлено позже https://www.typescriptlang.org/docs/handbook/2/generics.html
+
+---
 
 `|` - объединения. Например number | string, оба типа будут допускаться, но при использовании метода относящегося к конкретному типу сначала необходимо сделать проверку на тип https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#working-with-union-types
 
@@ -5079,6 +5300,10 @@ SomeType extends OtherType ? TrueType : FalseType;
 type Flatten<Type> = Type extends Array<infer Item> ? Item : Type
 ```
 
+То есть если мы передаём Flatten<number>, то тут получим просто Type, так как он не extends Array, поэтому вернёт тип number
+
+А если передаём Flatten<number[]>, то вернёт number, который равен Item, так как Type extends Array<infer Item> = Type extends Array<number>
+
 ---
 
 Сопоставленные типы и модификаторы https://www.typescriptlang.org/docs/handbook/2/mapped-types.html
@@ -5126,11 +5351,33 @@ type Flatten<Type> = Type extends Array<infer Item> ? Item : Type
 
 Директивы с тройной косой чертой `///` https://www.typescriptlang.org/docs/handbook/triple-slash-directives.html
 
+---
+
+Если у библиотеки нет типов, то:
+
+- Установите из @types: Многие популярные JS-библиотеки имеют типы в пакете @types/имя-библиотеки
+
+```bash
+npm install --save-dev @types/имя-библиотеки
+```
+
+- Если в @types отсутствует, чтобы получить автодополнение и проверку типов, опишите структуру модуля вручную.
+
+```ts
+// types/имя-библиотеки.d.ts
+declare module 'имя-библиотеки' {
+  export function getArrayLength(arr: any[]): number
+  export const maxInterval: 12
+}
+```
+
 ### Generics
 
 `#Generics #Генерики`
 
-`!:` - утверждает, что присвоение значения будет осуществлено позже https://www.typescriptlang.org/docs/handbook/2/generics.html
+https://www.typescriptlang.org/docs/handbook/2/generics.html#handbook-content
+
+Гереники - это универсальные типы данных
 
 ```ts
 const foo: Array<number> = [1, 2, 3] // Array - класс / объект, состоящий из number
@@ -5138,7 +5385,26 @@ function f<T>(array: T[]): T[]
 f([1, 2]) либо f(['a', 'b']) // Подставит тип переданных значений за место T
 ```
 
-Можно ограничить Type по наличию свойства https://www.typescriptlang.org/docs/handbook/2/functions.html#constraints
+Можно ограничить (Constraints) Type по наличию свойства https://www.typescriptlang.org/docs/handbook/2/functions.html#constraints
+
+Когда стоит использовать генерики, а когда стоит обойти? https://chat.deepseek.com/a/chat/s/c53d0e3c-4ad9-4b37-bf29-bbbfc953602d
+
+Используем:
+
+- Функции, работающие с любым типом, но сохраняющие связь между входом и выходом
+- API-обёртки
+- Переиспользуемые структуры данных
+- Ограничения через extends (constraints)
+- Связь между несколькими аргументами (key, value) // function pair<K, V>(key: K, value: V): [K, V] {return [key, value]}
+
+Не используем:
+
+- Тип известен заранее — не нужен параметр в <>
+- Генерик используется только один раз не связывая передаваемый и возвращаемый тип, а так же не используемый в теле функции
+- any / unknown, если всё равно на тип
+- Обычные типы проще и читаемей, extends не нужен от объединения number | string, можно так и указать переменной
+- Перегрузки читаемее больших условных генериков // function split(s: string): string[]; // function split(n: number): number[];
+- Сложные условные типы, которые никто не сможет поддерживать
 
 ### enum
 
@@ -6194,7 +6460,7 @@ CORS работает только в браузере https://chat.deepseek.com
 
 ### CSRF
 
-`#CSRF`
+`#CSRF #XSRF`
 
 https://ru.wikipedia.org/wiki/Межсайтовая_подделка_запроса
 
@@ -6202,7 +6468,7 @@ https://ru.wikipedia.org/wiki/Межсайтовая_подделка_запро
 
 Хакер пытается выполнить авторизованный запрос через доступ пользователя.
 
-CSRF расшифровывается как cross-site request forgery или межсайтовая подделка запроса. Это вид атаки, когда злоумышленник получает доступ к данным из браузера другого человека и выполняет действия от его лица. Например, изменяет пароль от личного кабинета на сайте, где уже авторизован этот пользователь.
+CSRF (XSRF) расшифровывается как cross-site request forgery или межсайтовая подделка запроса. Это вид атаки, когда злоумышленник получает доступ к данным из браузера другого человека и выполняет действия от его лица. Например, изменяет пароль от личного кабинета на сайте, где уже авторизован этот пользователь.
 
 Способы защиты https://habr.com/ru/companies/banki/articles/759058/
 
@@ -6264,6 +6530,20 @@ const jsonString = JSON.stringify(user) // Сериализация в стро�
 const parsedUser: User = JSON.parse(jsonString) // Восстановление - десериализация объекта
 ```
 
+### Feature Flag
+
+`#Feature #Flag #Toggle #Фича #Флаг`
+
+Фича-флаг (Feature Flag или Feature Toggle) — это программный переключатель в коде, который позволяет включать или выключать определенные функции приложения без выпуска нового релиза или повторного деплоя
+
+### AB-тестирование
+
+`#AB #сплит #тест`
+
+https://ru.wikipedia.org/wiki/A/B-тестирование
+
+A/B-тестирование (сплит-тест) — это метод исследования, при котором аудиторию делят случайным образом на две группы и сравнивают два варианта продукта (например, сайт, дизайн кнопки или рекламное объявление), чтобы выбрать более эффективный. Используется с помощью [Feature Flag](#Feature-Flag)
+
 ## HTML
 
 `#HTML`
@@ -6281,6 +6561,60 @@ HyperText Markup Language - язык гипертекстовой разметк
 Тег script пишется в head либо body. Блокирует загрузку страницы до завершения скрипта, если без параметров async или defer (в случае, если порядок загрузки скриптов важен) https://developer.mozilla.org/ru/docs/Web/Performance/How_browsers_work
 
 Поток документа - Это принцип организации элементов на странице при отсутствии стилей https://doka.guide/html/flow/
+
+### async defer
+
+`#async #defer`
+
+async:
+
+```html
+<script src="app.js" async></script>
+```
+
+- Скачивается параллельно с парсингом HTML.
+- Выполняется сразу после загрузки, как только готов — прерывая парсинг.
+- Порядок не гарантирован: кто быстрее скачался, тот и выполнился первым.
+- Не ждёт DOMContentLoaded (может выполниться до или после).
+
+defer:
+
+```html
+<script src="app.js" defer></script>
+```
+
+- Скачивается параллельно с парсингом HTML.
+- Выполняется после полного парсинга HTML, но до DOMContentLoaded.
+- Порядок гарантирован: скрипты выполняются в том порядке, в котором указаны в HTML.
+
+---
+
+- обычный: [HTML парсинг]--[скачал+выполнил]--[HTML парсинг]
+- async: [HTML парсинг.............]
+- [скачал]→[выполнил] (когда готов, прерывает)
+- defer: [HTML парсинг.............][выполнил][DOMContentLoaded]
+
+Когда что использовать:
+
+async — независимые скрипты: аналитика (Google Analytics), реклама, счётчики. Важен сам факт выполнения, а не порядок.
+
+defer — скрипты, которым нужен DOM или которые зависят друг от друга (библиотека + код, её использующий).
+
+Обычный — только если скрипт обязан выполниться до отрисовки (редко; например, анти-мерцание темы).
+
+⚠️ Оба атрибута работают только для внешних скриптов (src), для inline-кода они игнорируются.
+
+💡 На практике для большинства приложений defer — безопасный дефолт, async — для независимых сторонних скриптов.
+
+---
+
+Сравнительная таблица
+Свойство обычный async defer
+Блокирует парсинг Да Нет Нет
+Момент выполнения сразу как загрузится после парсинга
+Порядок сохраняется Да Нет Да
+Ждёт DOM Нет Нет Да
+До DOMContentLoaded — не гарантировано Да
 
 ## CSS
 
